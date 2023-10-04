@@ -14,6 +14,7 @@ class Table(TabbedPanelItem):
         self.app = app
         self.clock_action = None
         self.clock_doseek = None
+        self.clock_play = None
         self.app.sound = None
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
@@ -79,6 +80,9 @@ class Table(TabbedPanelItem):
 
     def touch_up_click(self, instance, event):
         print("DEBUG: enter to function 'touch_up_click'")
+        if not(self.clock_play is None):
+            print("DEBUG: exit from function 'touch_up_click'")
+            return
         if not (self.clock_action is None):
             self.clock_action.cancel()
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
@@ -111,7 +115,7 @@ class Table(TabbedPanelItem):
                 self.app.set_sound_pos(sync[i][TIME_START])
                 self.app.save_options()
                 print(f"DEBUG: create clock Clock.schedule_once(self.play_button_click, 2)")
-                Clock.schedule_once(self.play_button_click, 2)
+                self.clock_play = Clock.schedule_once(self.play_button_click, 1)
                 return
 
     def clock_action_time(self, event=None):
@@ -179,6 +183,7 @@ class Table(TabbedPanelItem):
     def play_button_click(self, event=None):
         if not (self.app.sound is None):
             print("DEBUG: enter to function 'play_button_click'")
+            self.clock_play = None
             if not (self.clock_action is None):
                 self.clock_action.cancel()
             if not (self.clock_doseek is None):
@@ -188,7 +193,7 @@ class Table(TabbedPanelItem):
             self.app.sound.play()
             if self.app.sound.state == "play":
                 print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
-                self.clock_doseek = Clock.schedule_once(self.do_seek, 1)
+                self.clock_doseek = Clock.schedule_once(self.do_seek, 0)
 
     def stop_button_click(self, event=None):
         if not (self.app.sound is None):

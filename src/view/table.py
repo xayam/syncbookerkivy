@@ -205,7 +205,7 @@ class Table(TabbedPanelItem):
             print("DEBUG: do seek self.sound.seek(self.app.get_sound_pos())")
             print(f"DEBUG:self.sound.get_pos()={self.sound.get_pos()}")
             print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
-            self.sound._ffplayer.seek(self.app.get_sound_pos())
+            self.sound._ffplayer.seek(self.app.get_sound_pos(), relative=False, accurate=False)
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def pause_button_click(self, event=None):

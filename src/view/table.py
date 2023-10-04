@@ -87,22 +87,22 @@ class Table(TabbedPanelItem):
             if sync[i][POS_START] > pos:
                 try:
                     if instance == self.app.table_label_left:
-                        if self.app.option[POSITIONS][self.app.current_select][AUDIO] != EN:
-                            self.app.sound.stop()
-                            self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
-                            self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
+                        # if self.app.option[POSITIONS][self.app.current_select][AUDIO] != EN:
+                        self.app.sound.stop()
+                        self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
+                        self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
-                        if self.app.option[POSITIONS][self.app.current_select][AUDIO] != RU:
-                            self.app.sound.stop()
-                            self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
-                            self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
+                        # if self.app.option[POSITIONS][self.app.current_select][AUDIO] != RU:
+                        self.app.sound.stop()
+                        self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
+                        self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
                     self.app.container.switch_to(self.app.catalog)
                     return
                 self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                 self.app.set_sound_pos(sync[i][TIME_START])
                 self.app.save_options()
-                Clock.schedule_once(self.play_button_click, 0)
+                Clock.schedule_once(self.play_button_click, 2)
                 return
 
     def clock_action_time(self, event=None):

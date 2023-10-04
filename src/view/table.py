@@ -106,8 +106,8 @@ class Table(TabbedPanelItem):
                 return
 
     def clock_action_time(self, event=None):
-        self.table_next.text = f"P:{self.app.get_sound_pos():0.2f}"
-        self.table_prev.text = f"S:{self.app.sound.get_pos():0.2f}"
+        self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
+        self.table_prev.text = f"A:{self.app.sound.get_pos():0.1f}"
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS

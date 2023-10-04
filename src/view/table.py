@@ -115,8 +115,8 @@ class Table(TabbedPanelItem):
                 self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                 self.app.set_sound_pos(sync[i][TIME_START])
                 self.app.save_options()
-                print(f"DEBUG: create clock Clock.schedule_once(self.play_button_click, 2)")
-                self.clock_play = Clock.schedule_once(self.play_button_click, 0)
+                print(f"DEBUG: create clock Clock.schedule_once(self.play_button_click, 1)")
+                self.clock_play = Clock.schedule_once(self.play_button_click, 1)
                 return
 
     def clock_action_time(self, event=None):

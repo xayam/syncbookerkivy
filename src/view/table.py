@@ -13,6 +13,7 @@ class Table(TabbedPanelItem):
     def __init__(self, app):
         self.app = app
         self.clock_action = None
+        self.app.sound = None
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
 
@@ -142,7 +143,7 @@ class Table(TabbedPanelItem):
 
                                     if sync[i][POS_START] < len(text_area.text) - 1:
                                         text_area.select_text(0, sync[i][POS_START])
-                                        text_area.cursor = (0, text_area. \
+                                        text_area.cursor = (0, text_area.
                                                             get_cursor_from_index(
                                                             text_area.selection_to)[1])
                                         y = text_area.cursor_pos[1] - book_area.height // 2
@@ -151,9 +152,9 @@ class Table(TabbedPanelItem):
 
                                     if self.app.pos_end_other < len(text_area_other.text) - 1:
                                         text_area_other.select_text(0, self.app.pos_end_other)
-                                        text_area_other.cursor = (0, text_area_other. \
+                                        text_area_other.cursor = (0, text_area_other.
                                                                   get_cursor_from_index(
-                                                                  text_area_other.selection_to)[1])
+                                            text_area_other.selection_to)[1])
                                         y = text_area_other.cursor_pos[1] - book_area_other.height // 2
                                         book_area_other.scroll_y = book_area_other. \
                                             convert_distance_to_scroll(0, y)[1]

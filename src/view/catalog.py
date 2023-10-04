@@ -51,8 +51,8 @@ class Catalog(TabbedPanelItem):
     def catalog_button_click(self, current, value=None):
         if not(self.app.table.clock_action is None):
             self.app.table.clock_action.cancel()
-        if not(self.app.sound is None):
-            self.app.sound.stop()
+        # if not(self.app.sound is None):
+        #     self.app.sound.stop()
         if platform == 'android':
             from android.permissions import request_permissions, Permission
             request_permissions([Permission.INTERNET,
@@ -64,16 +64,18 @@ class Catalog(TabbedPanelItem):
                                  # Permission.READ_ASSISTANT_APP_SEARCH_DATA
                                  Permission.READ_MEDIA_AUDIO
                                  ])
-        Proxy.load_text_book(self, self.app.table_label_left, self.app.eng_txt)
-        Proxy.load_text_book(self, self.app.table_label_right, self.app.rus_txt)
         self.app.current_select = current
         try:
             self.app.set_sound_pos(float(self.app.option[POSITIONS][self.app.current_select][POSI]))
         except KeyError:
             self.app.set_sound_pos(0.0)
             self.app.option[POSITIONS][self.app.current_select] = {POSI: "0", AUDIO: EN}
-        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
-            self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
-        else:
-            self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
         self.app.container.switch_to(self.app.table)
+        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
+            Proxy.load_sound(self, self.app,
+                             self.app.current_select + self.app.ENG_FLAC)
+        else:
+            Proxy.load_sound(self, self.app,
+                             self.app.current_select + self.app.RUS_FLAC)
+        Proxy.load_text_book(self, self.app.table_label_left, self.app.eng_txt)
+        Proxy.load_text_book(self, self.app.table_label_right, self.app.rus_txt)

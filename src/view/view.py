@@ -12,8 +12,8 @@ class View(KivyApp):
         self.app = app
         self.app.container = TabbedPanel()
         # self.app.options = Options(self.app)
-        self.app.catalog = Catalog(self.app)
         self.app.table = Table(self.app)
+        self.app.catalog = Catalog(self.app)
 
     def build(self):
         self.app.container.size_hint = (1, 1)

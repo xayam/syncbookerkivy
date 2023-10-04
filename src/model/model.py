@@ -8,7 +8,6 @@ class Model(Config):
     def __init__(self, app):
         self.app = app
         self.sound_pos = 0.0
-        self.sound = None
         self.app.current_dir = self.app.FRAGMENT_BOOK_DIR
         Config.__init__(self, self.app)
 

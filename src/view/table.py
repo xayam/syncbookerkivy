@@ -94,11 +94,13 @@ class Table(TabbedPanelItem):
                     if instance == self.app.table_label_left:
                         # if self.app.option[POSITIONS][self.app.current_select][AUDIO] != EN:
                         self.app.sound.stop()
+                        self.app.sound = None
                         self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
                         # if self.app.option[POSITIONS][self.app.current_select][AUDIO] != RU:
                         self.app.sound.stop()
+                        self.app.sound = None
                         self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:

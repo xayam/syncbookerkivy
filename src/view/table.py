@@ -135,7 +135,8 @@ class Table(TabbedPanelItem):
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
         pos = max([self.app.get_sound_pos(), self.app.sound.get_pos()])
-        print(f"DEBUG: pos={pos}")
+        print(f"DEBUG:self.app.sound.get_pos()={self.app.sound.get_pos()}")
+        print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
                 for k in range(len(self.app.micro)):
@@ -181,11 +182,11 @@ class Table(TabbedPanelItem):
             if not (self.clock_doseek is None):
                 print("DEBUG: self.clock_doseek.cancel()")
                 self.clock_doseek.cancel()
-            if self.app.sound.state != 'play':
-                print("DEBUG: self.app.sound.play()")
-                self.app.sound.play()
-            print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
-            self.clock_doseek = Clock.schedule_once(self.do_seek, 0)
+            print("DEBUG: self.app.sound.play()")
+            self.app.sound.play()
+            if self.app.sound.state == "play":
+                print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
+                self.clock_doseek = Clock.schedule_once(self.do_seek, 0)
 
     def stop_button_click(self, event=None):
         if not (self.app.sound is None):
@@ -199,6 +200,8 @@ class Table(TabbedPanelItem):
     def do_seek(self, event=None):
         if self.app.get_sound_pos() > 0.0:
             print("DEBUG: do seek self.app.sound.seek(self.app.get_sound_pos())")
+            print(f"DEBUG:self.app.sound.get_pos()={self.app.sound.get_pos()}")
+            print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
             self.app.sound.seek(self.app.get_sound_pos())
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 

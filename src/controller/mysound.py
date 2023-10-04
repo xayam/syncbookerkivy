@@ -13,8 +13,8 @@ class MySound(SoundFFPy):
 
     def load_seek(self, source, position):
         self.source = source
-        print("DEBUG: self.unload()")
-        self.unload()
+        # print("DEBUG: self.unload()")
+        # self.unload()
         ff_opts = {'vn': True, 'sn': True, 'ss': position}
         print("DEBUG: self._ffplayer = MediaPlayer()")
         self._ffplayer = MediaPlayer(self.source,

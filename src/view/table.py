@@ -221,6 +221,7 @@ class Table(TabbedPanelItem):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            self.app.table_label_left.line_height
         self.clock_left.cancel()
+        print("DEBUG: MySound().load_seek")
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.sound = MySound().load_seek(
                 self.app.current_select + self.app.ENG_FLAC,
@@ -231,6 +232,7 @@ class Table(TabbedPanelItem):
                 self.app.current_select + self.app.RUS_FLAC,
                 self.app.get_sound_pos()
             )
+        print("DEBUG: Clock.schedule_interval(self.clock_action_time")
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def on_text_table_label_right(self, instance, value):

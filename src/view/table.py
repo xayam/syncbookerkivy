@@ -13,6 +13,7 @@ class Table(TabbedPanelItem):
     def __init__(self, app):
         self.app = app
         self.clock_action = None
+        self.clock_doseek = None
         self.app.sound = None
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
@@ -174,11 +175,14 @@ class Table(TabbedPanelItem):
         if not (self.app.sound is None):
             if not (self.clock_action is None):
                 self.clock_action.cancel()
+            if not (self.clock_doseek is None):
+                print("DEBUG: self.clock_doseek.cancel()")
+                self.clock_doseek.cancel()
             print("DEBUG: enter to function 'play_button_click'")
             if self.app.sound.state != 'play':
                 self.app.sound.play()
             print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
-            Clock.schedule_once(self.do_seek, 0)
+            self.clock_doseek = Clock.schedule_once(self.do_seek, 0)
 
     def stop_button_click(self, event=None):
         if not (self.app.sound is None):

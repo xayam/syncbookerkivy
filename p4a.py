@@ -1,6 +1,6 @@
 import subprocess
 
-version = "0.68"
+version = "0.69"
 
 command = \
     "p4a apk " + \
@@ -18,7 +18,6 @@ command = \
     "android.permission.MEDIA_CONTENT_CONTROL " + \
     "android.permission.READ_MEDIA_AUDIO " + \
     "--orientation=landscape " + \
-    "--orientation=landscape-reverse " + \
     "--icon=$HOME/PycharmProjects/syncbookerkivy-main/img/icon.png " + \
     "--presplash=$HOME/PycharmProjects/syncbookerkivy-main/img/presplash.png " + \
     "--version=" + version +  " " + \

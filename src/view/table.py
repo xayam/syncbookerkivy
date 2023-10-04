@@ -94,17 +94,18 @@ class Table(TabbedPanelItem):
         for i in range(len(sync)):
             if sync[i][POS_START] > pos:
                 print("DEBUG: self.app.sound stop and reload")
+                self.pause_button_click()
                 try:
                     if instance == self.app.table_label_left:
                         if self.app.option[POSITIONS][self.app.current_select][AUDIO] != EN:
-                            self.app.sound.stop()
-                            self.app.sound = None
+                            # self.app.sound.stop()
+                            # self.app.sound = None
                             self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
                             self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
                         if self.app.option[POSITIONS][self.app.current_select][AUDIO] != RU:
-                            self.app.sound.stop()
-                            self.app.sound = None
+                            # self.app.sound.stop()
+                            # self.app.sound = None
                             self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
                             self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
@@ -115,7 +116,7 @@ class Table(TabbedPanelItem):
                 self.app.set_sound_pos(sync[i][TIME_START])
                 self.app.save_options()
                 print(f"DEBUG: create clock Clock.schedule_once(self.play_button_click, 2)")
-                self.clock_play = Clock.schedule_once(self.play_button_click, 1)
+                self.clock_play = Clock.schedule_once(self.play_button_click, 0)
                 return
 
     def clock_action_time(self, event=None):
@@ -191,9 +192,8 @@ class Table(TabbedPanelItem):
                 self.clock_doseek.cancel()
             print("DEBUG: self.app.sound.play()")
             self.app.sound.play()
-            if self.app.sound.state == "play":
-                print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
-                self.clock_doseek = Clock.schedule_once(self.do_seek, 0)
+            print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
+            self.clock_doseek = Clock.schedule_once(self.do_seek, 0)
 
     def stop_button_click(self, event=None):
         if not (self.app.sound is None):

@@ -77,15 +77,18 @@ class Table(TabbedPanelItem):
         self.add_widget(self.table_gridlayout)
 
     def touch_up_click(self, instance, event):
+        print("DEBUG: enter to function 'touch_up_click'")
         if not (self.clock_action is None):
             self.clock_action.cancel()
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
+        print(f"DEBUG: touch pos={pos}")
         if instance == self.app.table_label_left:
             sync = self.app.eng_sync
         else:
             sync = self.app.rus_sync
         for i in range(len(sync)):
             if sync[i][POS_START] > pos:
+                print("DEBUG: self.app.sound stop and reload")
                 try:
                     if instance == self.app.table_label_left:
                         # if self.app.option[POSITIONS][self.app.current_select][AUDIO] != EN:
@@ -98,11 +101,13 @@ class Table(TabbedPanelItem):
                         self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
+                    print("WARNING: AttributeError (ignored this)")
                     self.app.container.switch_to(self.app.catalog)
                     return
                 self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                 self.app.set_sound_pos(sync[i][TIME_START])
                 self.app.save_options()
+                print(f"DEBUG: create clock Clock.schedule_once(self.play_button_click)")
                 Clock.schedule_once(self.play_button_click, 0)
                 return
 
@@ -169,8 +174,10 @@ class Table(TabbedPanelItem):
         if not (self.app.sound is None):
             if not (self.clock_action is None):
                 self.clock_action.cancel()
+            print("DEBUG: enter to function 'play_button_click'")
             if self.app.sound.state != 'play':
                 self.app.sound.play()
+            print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
             Clock.schedule_once(self.do_seek, 0)
 
     def stop_button_click(self, event=None):
@@ -184,6 +191,7 @@ class Table(TabbedPanelItem):
 
     def do_seek(self, event=None):
         if self.app.get_sound_pos() > 0.0:
+            print("DEBUG: do seek self.app.sound.seek(self.app.get_sound_pos())")
             self.app.sound.seek(self.app.get_sound_pos())
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 

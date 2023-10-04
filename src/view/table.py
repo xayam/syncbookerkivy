@@ -15,7 +15,7 @@ class Table(TabbedPanelItem):
         self.clock_action = None
         self.clock_doseek = None
         self.clock_play = None
-        self.app.sound = None
+        self.sound = None
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
 
@@ -93,20 +93,16 @@ class Table(TabbedPanelItem):
             sync = self.app.rus_sync
         for i in range(len(sync)):
             if sync[i][POS_START] > pos:
-                print("DEBUG: self.app.sound stop and reload")
+                print("DEBUG: self.sound stop and reload")
                 self.pause_button_click()
                 try:
                     if instance == self.app.table_label_left:
                         if self.app.option[POSITIONS][self.app.current_select][AUDIO] != EN:
-                            # self.app.sound.stop()
-                            # self.app.sound = None
-                            self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
+                            self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
                             self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
                         if self.app.option[POSITIONS][self.app.current_select][AUDIO] != RU:
-                            # self.app.sound.stop()
-                            # self.app.sound = None
-                            self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
+                            self.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
                             self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
                     print("WARNING: AttributeError (ignored this)")
@@ -122,7 +118,7 @@ class Table(TabbedPanelItem):
     def clock_action_time(self, event=None):
         print("DEBUG: enter to function 'clock_action_time'")
         self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
-        self.table_prev.text = f"A:{self.app.sound.get_pos():0.1f}"
+        self.table_prev.text = f"A:{self.sound.get_pos():0.1f}"
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS
@@ -141,8 +137,8 @@ class Table(TabbedPanelItem):
             text_area_other = self.app.table_label_left
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
-        pos = self.app.sound.get_pos()
-        print(f"DEBUG:self.app.sound.get_pos()={self.app.sound.get_pos()}")
+        pos = self.sound.get_pos()
+        print(f"DEBUG:self.sound.get_pos()={self.sound.get_pos()}")
         print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
@@ -182,7 +178,7 @@ class Table(TabbedPanelItem):
                                     return
 
     def play_button_click(self, event=None):
-        if not (self.app.sound is None):
+        if not (self.sound is None):
             print("DEBUG: enter to function 'play_button_click'")
             self.clock_play = None
             if not (self.clock_action is None):
@@ -190,34 +186,34 @@ class Table(TabbedPanelItem):
             if not (self.clock_doseek is None):
                 print("DEBUG: self.clock_doseek.cancel()")
                 self.clock_doseek.cancel()
-            print("DEBUG: self.app.sound.play()")
-            self.app.sound.play()
+            print("DEBUG: self.sound.play()")
+            self.sound.play()
             print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
             self.clock_doseek = Clock.schedule_once(self.do_seek, 0)
 
     def stop_button_click(self, event=None):
-        if not (self.app.sound is None):
+        if not (self.sound is None):
             if not (self.clock_action is None):
                 self.clock_action.cancel()
             self.app.set_sound_pos(0.0)
-            self.app.sound.stop()
+            self.sound.stop()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0"
             self.app.save_options()
 
     def do_seek(self, event=None):
         if self.app.get_sound_pos() > 0.0:
-            print("DEBUG: do seek self.app.sound.seek(self.app.get_sound_pos())")
-            print(f"DEBUG:self.app.sound.get_pos()={self.app.sound.get_pos()}")
+            print("DEBUG: do seek self.sound.seek(self.app.get_sound_pos())")
+            print(f"DEBUG:self.sound.get_pos()={self.sound.get_pos()}")
             print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
-            self.app.sound.seek(self.app.get_sound_pos())
+            self.sound.seek(self.app.get_sound_pos())
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def pause_button_click(self, event=None):
-        if not (self.app.sound is None):
+        if not (self.sound is None):
             if not (self.clock_action is None):
                 self.clock_action.cancel()
-            self.app.set_sound_pos(self.app.sound.get_pos())
-            self.app.sound.stop()
+            self.app.set_sound_pos(self.sound.get_pos())
+            self.sound.stop()
 
     def on_text_table_label_left(self, instance, value):
         self.clock_left = Clock.schedule_interval(self.update_table_label_left, 0)
@@ -226,7 +222,11 @@ class Table(TabbedPanelItem):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            self.app.table_label_left.line_height
         self.clock_left.cancel()
-        Clock.schedule_once(self.play_button_click, 0)
+        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
+            self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC)
+        else:
+            self.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC)
+        Clock.schedule_once(self.play_button_click, 1)
 
     def on_text_table_label_right(self, instance, value):
         self.clock_right = Clock.schedule_interval(self.update_table_label_right, 0)

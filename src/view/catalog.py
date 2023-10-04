@@ -71,11 +71,5 @@ class Catalog(TabbedPanelItem):
             self.app.set_sound_pos(0.0)
             self.app.option[POSITIONS][self.app.current_select] = {POSI: "0", AUDIO: EN}
         self.app.container.switch_to(self.app.table)
-        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
-            Proxy.load_sound(self, self.app,
-                             self.app.current_select + self.app.ENG_FLAC)
-        else:
-            Proxy.load_sound(self, self.app,
-                             self.app.current_select + self.app.RUS_FLAC)
         Proxy.load_text_book(self, self.app.table_label_left, self.app.eng_txt)
         Proxy.load_text_book(self, self.app.table_label_right, self.app.rus_txt)

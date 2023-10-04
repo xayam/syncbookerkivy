@@ -1,6 +1,6 @@
 import subprocess
 
-version = "0.79"
+version = "0.80"
 
 command = \
     "p4a apk " + \
@@ -23,7 +23,7 @@ command = \
     "--version=" + version +  " " + \
     "--arch=armeabi-v7a " + \
     "--bootstrap=sdl2 " + \
-    "--requirements=android,python3,kivy==2.0.0,cython,ffmpeg,libx264,libshine,libvpx," + \
+    "--requirements=android,python3,kivy,cython,ffmpeg,libx264,libshine,libvpx," + \
     "av_codecs,ffpyplayer,openssl,ffpyplayer_codecs"
 
 subprocess.call([command], shell=True)

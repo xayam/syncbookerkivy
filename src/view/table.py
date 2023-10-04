@@ -102,7 +102,7 @@ class Table(TabbedPanelItem):
                 self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                 self.app.set_sound_pos(sync[i][TIME_START])
                 self.app.save_options()
-                Clock.schedule_once(self.play_button_click, 2)
+                Clock.schedule_once(self.play_button_click, 0)
                 return
 
     def clock_action_time(self, event=None):
@@ -127,6 +127,8 @@ class Table(TabbedPanelItem):
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
         pos = max([self.app.get_sound_pos(), self.app.sound.get_pos()])
+        if abs(self.app.get_sound_pos() - self.app.sound.get_pos()) > 1.0:
+            self.app.sound.seek(pos)
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
                 for k in range(len(self.app.micro)):
@@ -170,7 +172,7 @@ class Table(TabbedPanelItem):
                 self.clock_action.cancel()
             if self.app.sound.state != 'play':
                 self.app.sound.play()
-            Clock.schedule_once(self.do_seek, 1)
+            self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def stop_button_click(self, event=None):
         if not (self.app.sound is None):
@@ -194,16 +196,16 @@ class Table(TabbedPanelItem):
             self.app.sound.stop()
 
     def on_text_table_label_left(self, instance, value):
-        self.clock_left = Clock.schedule_interval(self.update_table_label_left, 3)
+        self.clock_left = Clock.schedule_interval(self.update_table_label_left, 0)
 
     def update_table_label_left(self, *args):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            self.app.table_label_left.line_height
         self.clock_left.cancel()
-        Clock.schedule_once(self.play_button_click, 2)
+        Clock.schedule_once(self.play_button_click, 0)
 
     def on_text_table_label_right(self, instance, value):
-        self.clock_right = Clock.schedule_interval(self.update_table_label_right, 3)
+        self.clock_right = Clock.schedule_interval(self.update_table_label_right, 0)
 
     def update_table_label_right(self, *args):
         self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \

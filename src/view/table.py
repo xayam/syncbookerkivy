@@ -170,7 +170,7 @@ class Table(TabbedPanelItem):
                 self.clock_action.cancel()
             if self.app.sound.state != 'play':
                 self.app.sound.play()
-            Clock.schedule_once(self.do_seek, 0)
+            Clock.schedule_once(self.do_seek, 1)
 
     def stop_button_click(self, event=None):
         if not (self.app.sound is None):

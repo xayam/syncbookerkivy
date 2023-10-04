@@ -127,8 +127,6 @@ class Table(TabbedPanelItem):
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
         pos = max([self.app.get_sound_pos(), self.app.sound.get_pos()])
-        if abs(self.app.get_sound_pos() - self.app.sound.get_pos()) > 1.0:
-            self.app.sound.seek(pos)
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
                 for k in range(len(self.app.micro)):
@@ -172,7 +170,7 @@ class Table(TabbedPanelItem):
                 self.clock_action.cancel()
             if self.app.sound.state != 'play':
                 self.app.sound.play()
-            self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
+            Clock.schedule_once(self.do_seek, 0)
 
     def stop_button_click(self, event=None):
         if not (self.app.sound is None):

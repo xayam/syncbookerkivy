@@ -141,7 +141,7 @@ class Table(TabbedPanelItem):
             text_area_other = self.app.table_label_left
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
-        pos = max([self.app.get_sound_pos(), self.app.sound.get_pos()])
+        pos = self.app.sound.get_pos()
         print(f"DEBUG:self.app.sound.get_pos()={self.app.sound.get_pos()}")
         print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
         for i in range(len(sync)):

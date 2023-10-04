@@ -113,6 +113,7 @@ class Table(TabbedPanelItem):
                 return
 
     def clock_action_time(self, event=None):
+        print("DEBUG: enter to function 'clock_action_time'")
         self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
         self.table_prev.text = f"A:{self.app.sound.get_pos():0.1f}"
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
@@ -134,6 +135,7 @@ class Table(TabbedPanelItem):
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
         pos = max([self.app.get_sound_pos(), self.app.sound.get_pos()])
+        print(f"DEBUG: pos={pos}")
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
                 for k in range(len(self.app.micro)):
@@ -173,13 +175,14 @@ class Table(TabbedPanelItem):
 
     def play_button_click(self, event=None):
         if not (self.app.sound is None):
+            print("DEBUG: enter to function 'play_button_click'")
             if not (self.clock_action is None):
                 self.clock_action.cancel()
             if not (self.clock_doseek is None):
                 print("DEBUG: self.clock_doseek.cancel()")
                 self.clock_doseek.cancel()
-            print("DEBUG: enter to function 'play_button_click'")
             if self.app.sound.state != 'play':
+                print("DEBUG: self.app.sound.play()")
                 self.app.sound.play()
             print("DEBUG: create clock Clock.schedule_once(self.do_seek)")
             self.clock_doseek = Clock.schedule_once(self.do_seek, 0)

@@ -49,7 +49,7 @@ class Table(TabbedPanelItem):
                                               text="Choice book in 'Catalog'")
         self.app.table_label_left.is_focusable = False
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
-        self.app.table_label_left.bind(on_touch_down=self.touch_down_click)
+        self.app.table_label_left.bind(on_touch_up=self.touch_up_click)
 
         self.app.table_label_left.height = max(self.app.table_label_left.minimum_height,
                                                self.app.table_book_left.height)
@@ -67,7 +67,7 @@ class Table(TabbedPanelItem):
                                                text="Выберите книгу в разделе 'Catalog'")
         self.app.table_label_right.is_focusable = False
         self.app.table_label_right.bind(text=self.on_text_table_label_right)
-        self.app.table_label_right.bind(on_touch_down=self.touch_down_click)
+        self.app.table_label_right.bind(on_touch_up=self.touch_up_click)
         self.app.table_label_right.height = max(self.app.table_label_right.minimum_height,
                                                 self.app.table_book_right.height)
         self.app.table_book_right.add_widget(self.app.table_label_right)
@@ -75,7 +75,7 @@ class Table(TabbedPanelItem):
         self.table_gridlayout.add_widget(self.app.table_book_right)
         self.add_widget(self.table_gridlayout)
 
-    def touch_down_click(self, instance, event):
+    def touch_up_click(self, instance, event):
         if not (self.clock_action is None):
             self.clock_action.cancel()
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))

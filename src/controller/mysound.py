@@ -1,7 +1,3 @@
-import time
-
-from kivy.clock import Clock
-from kivy.core.audio import SoundLoader
 from kivy.core.audio.audio_ffpyplayer import SoundFFPy
 from ffpyplayer.player import MediaPlayer
 

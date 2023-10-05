@@ -25,21 +25,8 @@ class MySound(SoundFFPy):
                                      callback=self._player_callback,
                                      loglevel='debug',
                                      ff_opts=ff_opts)
-        # print("DEBUG: player = self._ffplayer")
-        # player = self._ffplayer
-        # print("DEBUG: player.set_volume(self.volume)")
-        # player.set_volume(self.volume)
-
-        # player.toggle_pause()
-        # self._state = 'playing'
-        # self.state = 'play'
-
-        # print("DEBUG: get_metadata()")
-        # s = time.perf_counter()
-        # while (player.get_metadata()['duration'] is None and
-        #        not self.quitted and time.perf_counter() - s < 10.):
-        #     time.sleep(0.005)
-
+        self._state = 'playing'
+        self.state = 'play'
         return self
 
 SoundLoader._classes = []

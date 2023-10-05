@@ -48,6 +48,9 @@ class Catalog(TabbedPanelItem):
         self.add_widget(self.item_catalog_boxlayout)
 
     def catalog_button_click(self, current, value=None):
+        if self.app.table_label_left.text == self.app.eng_txt:
+            self.app.container.switch_to(self.app.table)
+            return
         if not(self.app.table.clock_action is None):
             self.app.table.clock_action.cancel()
         # if not(self.app.sound is None):

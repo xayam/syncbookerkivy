@@ -83,9 +83,9 @@ class Table(TabbedPanelItem):
 
     def touch_up_click(self, instance, event):
         print("DEBUG: enter to function 'touch_up_click'")
-        if not (self.clock_play is None):
-            print("DEBUG: exit from function 'touch_up_click'")
-            return
+        # if not (self.clock_play is None):
+        #     print("DEBUG: exit from function 'touch_up_click'")
+        #     return
         if not (self.clock_action is None):
             self.clock_action.cancel()
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
@@ -100,7 +100,7 @@ class Table(TabbedPanelItem):
                 # self.pause_button_click()
 
                 try:
-                    self.sound._ffplayer.toggle_pause()
+                    self.sound.stop()
                     self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                     self.app.set_sound_pos(sync[i][TIME_START])
                     if instance == self.app.table_label_left:
@@ -149,13 +149,18 @@ class Table(TabbedPanelItem):
         pos = self.sound.get_pos()
         print(f"DEBUG:self.sound.get_pos()={self.sound.get_pos()}")
         print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
+        if abs(self.sound.get_pos() - self.app.get_sound_pos()) < 0.000001:
+            self.stop_button_click()
+            self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
+            self.app.save_options()
+            return
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
                 for k in range(len(self.app.micro)):
                     for j in range(len(self.app.micro[k])):
-                        if self.app.micro[k][j][curr] >= sync[i][POS_START]:
+                        if self.app.micro[k][j][curr] > sync[i][POS_START]:
                             for z in range(len(sync_other)):
-                                if self.app.micro[k][j][curr_other] >= sync_other[z][POS_START]:
+                                if self.app.micro[k][j][curr_other] > sync_other[z][POS_START]:
                                     self.app.pos_end = self.app.micro[k][j][curr]
                                     self.app.sync_i = i
                                     self.app.pos_end_other = self.app.micro[k][j][curr_other]
@@ -187,31 +192,35 @@ class Table(TabbedPanelItem):
                                     return
 
     def play_button_click(self, event=None):
-        if not (self.sound is None):
-            pass
-            # print("DEBUG: enter to function 'play_button_click'")
-            # self.clock_play = None
-            # if not (self.clock_action is None):
-            #     self.clock_action.cancel()
-            # print("DEBUG: self.sound.play()")
-            # if self.sound._state != 'playing':
-            #     self.sound._ffplayer.toggle_pause()
-            #     self.sound._state = 'playing'
-            #     self.sound.state = 'play'
-            # self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
+        print("DEBUG: enter to function 'play_button_click'")
+        if not (self.clock_action is None):
+            self.clock_action.cancel()
+        self.sound.stop()
+        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
+            self.sound = SoundLoader.load(
+                self.app.current_select + self.app.ENG_FLAC). \
+                load_seek(self.app.get_sound_pos())
+        else:
+            self.sound = SoundLoader.load(
+                self.app.current_select + self.app.RUS_FLAC). \
+                load_seek(self.app.get_sound_pos())
+        self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def stop_button_click(self, event=None):
-        pass
+        if not (self.sound is None):
+            print("DEBUG: enter to function 'stop_button_click'")
+            if not (self.clock_action is None):
+                self.clock_action.cancel()
+            self.app.set_sound_pos(0.0)
+            self.sound.stop()
 
     def pause_button_click(self, event=None):
         if not (self.sound is None):
-            pass
-            # if not (self.clock_action is None):
-            #     self.clock_action.cancel()
-            # self.app.set_sound_pos(self.sound.get_pos())
-            # if self.sound._state != 'paused':
-            #     self.sound._ffplayer.toggle_pause()
-            #     self.sound._state = 'paused'
+            print("DEBUG: enter to function 'pause_button_click'")
+            if not (self.clock_action is None):
+                self.clock_action.cancel()
+            self.app.set_sound_pos(self.sound.get_pos())
+            self.sound.stop()
 
     def on_text_table_label_left(self, instance, value):
         self.clock_left = Clock.schedule_interval(self.update_table_label_left, 0)

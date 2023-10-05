@@ -15,7 +15,8 @@ class MySound(SoundFFPy):
         # print("DEBUG: self.unload()")
         # self.unload()
         ff_opts = {'vn': True, 'sn': True,
-                   # 'ar': 48000, 'ac': 2,
+                   'ar': 48000,
+                   # 'ac': 2,
                    'ss': position}
         print(f"DEBUG: self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,

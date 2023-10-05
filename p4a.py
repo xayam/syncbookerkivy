@@ -1,6 +1,6 @@
 import subprocess
 
-version = "0.103"
+VERSION = "0.104"
 
 command = \
     "p4a apk " + \
@@ -20,11 +20,12 @@ command = \
     "--orientation=landscape " + \
     "--icon=$HOME/PycharmProjects/syncbookerkivy-main/img/icon.png " + \
     "--presplash=$HOME/PycharmProjects/syncbookerkivy-main/img/presplash.png " + \
-    "--version=" + version +  " " + \
+    "--version=" + VERSION +  " " + \
     "--arch=armeabi-v7a " + \
     "--bootstrap=sdl2 " + \
     "--requirements=android,python3,kivy,cython,ffmpeg,libx264,libshine,libvpx," + \
     "av_codecs,ffpyplayer,openssl,ffpyplayer_codecs," + \
     "sdl2_image,sdl2_ttf,sdl2_mixer,sdl2"
 
-subprocess.call([command], shell=True)
+if __name__ == "__main__":
+    subprocess.call([command], shell=True)

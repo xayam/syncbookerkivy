@@ -9,6 +9,8 @@ from kivy.uix.textinput import TextInput
 from src.model.utils import *
 from src.controller.mysound import MySound
 
+from p4a import VERSION
+
 
 class Table(TabbedPanelItem):
     def __init__(self, app):
@@ -22,7 +24,7 @@ class Table(TabbedPanelItem):
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
 
-        self.table_prev = Button(text="v0.102")
+        self.table_prev = Button(text=f"v{VERSION}")
         self.table_navigator.add_widget(self.table_prev)
 
         self.table_play = Button(text="Play",

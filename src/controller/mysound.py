@@ -12,10 +12,11 @@ class MySound(SoundFFPy):
         # print("DEBUG: self.unload()")
         # self.unload()
         ff_opts = {'vn': True, 'sn': True, 'ss': position}
-        print("DEBUG: self._ffplayer = MediaPlayer()")
+        print(f"DEBUG: self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,
-                                     callback=self._player_callback,
-                                     loglevel='debug', ff_opts=ff_opts)
+                                     # callback=self._player_callback,
+                                     loglevel='debug',
+                                     ff_opts=ff_opts)
         # player = self._ffplayer
         # player.toggle_pause()
         # self._state = 'paused'

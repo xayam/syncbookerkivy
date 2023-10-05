@@ -1,3 +1,4 @@
+DEBUG = True
 
 EN = "English"
 RU = "Русский"

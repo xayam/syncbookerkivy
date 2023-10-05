@@ -1,6 +1,6 @@
 import subprocess
 
-VERSION = "0.111"
+VERSION = "0.112"
 
 command = \
     "p4a apk " + \

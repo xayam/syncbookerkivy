@@ -1,8 +1,8 @@
-import time
-
 from kivy.core.audio import SoundLoader
 from kivy.core.audio.audio_ffpyplayer import *
 from ffpyplayer.player import MediaPlayer
+
+from src.model.utils import DEBUG
 
 
 class MySound(SoundFFPy):
@@ -20,7 +20,8 @@ class MySound(SoundFFPy):
                    # 'ac': 2,
                    'ss': position
                    }
-        print(f"DEBUG: self._ffplayer = MediaPlayer({self.source})")
+        if DEBUG:
+            print(f"DEBUG: self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,
                                      callback=self._player_callback,
                                      loglevel='debug',

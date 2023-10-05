@@ -23,8 +23,11 @@ class Table(TabbedPanelItem):
         self.table_gridlayout = GridLayout(cols=3)
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
-
-        self.table_prev = Button(text=f"v{VERSION}")
+        if DEBUG:
+            textprev = f"v{VERSION}"
+        else:
+            textprev = "Prev"
+        self.table_prev = Button(text=textprev)
         self.table_navigator.add_widget(self.table_prev)
 
         self.table_play = Button(text="Play",
@@ -89,7 +92,7 @@ class Table(TabbedPanelItem):
         self.touch_pos = pos
         if not (self.clock_action is None):
             self.clock_action.cancel()
-        print(f"DEBUG: touch pos={pos}")
+        self.app.log(f"touch pos={pos}")
         if instance == self.app.table_label_left:
             sync = self.app.eng_sync
         else:
@@ -112,20 +115,21 @@ class Table(TabbedPanelItem):
                             load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
-                    print("WARNING: AttributeError (ignored this)")
+                    self.app.log("WARNING, AttributeError (ignored this)")
                     self.touch_pos = 0
                     self.app.container.switch_to(self.app.catalog)
                     return
 
                 self.app.save_options()
-                print(f"DEBUG: create clock Clock.schedule_interval(self.clock_action_time)")
+                self.app.log(f"create clock Clock.schedule_interval(self.clock_action_time)")
                 self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                 return
 
     def clock_action_time(self, event=None):
         self.app.log("enter to function 'clock_action_time'")
-        self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
-        self.table_prev.text = f"A:{self.sound.get_pos():0.1f}"
+        if DEBUG:
+            self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
+            self.table_prev.text = f"A:{self.sound.get_pos():0.1f}"
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS
@@ -145,8 +149,8 @@ class Table(TabbedPanelItem):
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
         pos = self.sound.get_pos()
-        print(f"DEBUG:self.sound.get_pos()={self.sound.get_pos()}")
-        print(f"DEBUG:self.app.get_sound_pos()={self.app.get_sound_pos()}")
+        self.app.log(f"self.sound.get_pos()={self.sound.get_pos()}")
+        self.app.log(f"self.app.get_sound_pos()={self.app.get_sound_pos()}")
         if abs(self.sound.get_pos() - self.app.get_sound_pos()) < 0.000001:
             self.stop_button_click()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
@@ -193,6 +197,8 @@ class Table(TabbedPanelItem):
         self.app.log("enter to function 'play_button_click'")
         if not (self.clock_action is None):
             self.clock_action.cancel()
+        if self.sound is None:
+            return
         self.sound.stop()
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.sound = SoundLoader.load(

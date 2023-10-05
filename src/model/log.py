@@ -1,9 +1,11 @@
+from src.model.utils import DEBUG
+
 
 class Log:
 
-    def __init__(self, debug=False):
-        self.debug = debug
+    def __init__(self):
+        pass
 
     def log(self, message):
-        if self.debug:
+        if DEBUG:
             print("DEBUG: " + message)

@@ -53,19 +53,17 @@ class Catalog(TabbedPanelItem):
             return
         if not(self.app.table.clock_action is None):
             self.app.table.clock_action.cancel()
-        # if not(self.app.sound is None):
-        #     self.app.sound.stop()
-        if platform == 'android':
-            from android.permissions import request_permissions, Permission
-            request_permissions([Permission.INTERNET,
-                                 Permission.READ_EXTERNAL_STORAGE,
-                                 Permission.WRITE_EXTERNAL_STORAGE,
-                                 Permission.MEDIA_CONTENT_CONTROL,
-                                 # Permission.READ_HOME_APP_SEARCH_DATA,
-                                 Permission.GLOBAL_SEARCH,
-                                 # Permission.READ_ASSISTANT_APP_SEARCH_DATA
-                                 Permission.READ_MEDIA_AUDIO
-                                 ])
+        # if platform == 'android':
+        #     from android.permissions import request_permissions, Permission
+        #     request_permissions([Permission.INTERNET,
+        #                          Permission.READ_EXTERNAL_STORAGE,
+        #                          Permission.WRITE_EXTERNAL_STORAGE,
+        #                          Permission.MEDIA_CONTENT_CONTROL,
+        #                          # Permission.READ_HOME_APP_SEARCH_DATA,
+        #                          Permission.GLOBAL_SEARCH,
+        #                          # Permission.READ_ASSISTANT_APP_SEARCH_DATA
+        #                          Permission.READ_MEDIA_AUDIO
+        #                          ])
         self.app.current_select = current
         try:
             self.app.set_sound_pos(float(self.app.option[POSITIONS][self.app.current_select][POSI]))

@@ -4,10 +4,10 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.tabbedpanel import TabbedPanelItem
 from kivy.uix.textinput import TextInput
-# from kivy.core.audio import SoundLoader
 
 from src.model.utils import *
 from src.controller.mysound import MySound
+
 
 class Table(TabbedPanelItem):
     def __init__(self, app):
@@ -21,7 +21,7 @@ class Table(TabbedPanelItem):
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
 
-        self.table_prev = Button(text="v0.99")
+        self.table_prev = Button(text="v0.100")
         self.table_navigator.add_widget(self.table_prev)
 
         self.table_play = Button(text="Play",
@@ -80,7 +80,7 @@ class Table(TabbedPanelItem):
 
     def touch_up_click(self, instance, event):
         print("DEBUG: enter to function 'touch_up_click'")
-        if not(self.clock_play is None):
+        if not (self.clock_play is None):
             print("DEBUG: exit from function 'touch_up_click'")
             return
         if not (self.clock_action is None):
@@ -167,7 +167,7 @@ class Table(TabbedPanelItem):
                                         text_area.select_text(0, sync[i][POS_START])
                                         text_area.cursor = (0, text_area.
                                                             get_cursor_from_index(
-                                                            text_area.selection_to)[1])
+                                            text_area.selection_to)[1])
                                         y = text_area.cursor_pos[1] - book_area.height // 2
                                         book_area.scroll_y = book_area. \
                                             convert_distance_to_scroll(0, y)[1]

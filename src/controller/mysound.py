@@ -1,4 +1,3 @@
-import os
 import time
 
 from kivy.core.audio.audio_ffpyplayer import SoundFFPy
@@ -12,8 +11,10 @@ class MySound(SoundFFPy):
 
     def load_seek(self, source, position):
         self.source = source
-        # print("DEBUG: self.unload()")
-        # self.unload()
+        self._state = ''
+        self.state = 'stop'
+        self.quitted = False
+
         ff_opts = {'vn': True, 'sn': True,
                    'ar': 48000,
                    # 'ac': 2,

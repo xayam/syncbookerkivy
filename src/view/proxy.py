@@ -1,5 +1,3 @@
-from kivy.core.audio import SoundLoader
-
 
 class Proxy:
 

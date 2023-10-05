@@ -19,6 +19,7 @@ class Table(TabbedPanelItem):
         self.clock_doseek = None
         self.clock_play = None
         self.sound = None
+        self.touch_pos = 0
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
 
@@ -83,12 +84,12 @@ class Table(TabbedPanelItem):
 
     def touch_up_click(self, instance, event):
         print("DEBUG: enter to function 'touch_up_click'")
-        # if not (self.clock_play is None):
-        #     print("DEBUG: exit from function 'touch_up_click'")
-        #     return
+        pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
+        if self.touch_pos == pos:
+            return
+        self.touch_pos = pos
         if not (self.clock_action is None):
             self.clock_action.cancel()
-        pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
         print(f"DEBUG: touch pos={pos}")
         if instance == self.app.table_label_left:
             sync = self.app.eng_sync
@@ -115,6 +116,7 @@ class Table(TabbedPanelItem):
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
                     print("WARNING: AttributeError (ignored this)")
+                    self.touch_pos = 0
                     self.app.container.switch_to(self.app.catalog)
                     return
 

@@ -106,12 +106,12 @@ class Table(TabbedPanelItem):
                     self.app.set_sound_pos(sync[i][TIME_START])
                     if instance == self.app.table_label_left:
                         self.sound = SoundLoader.load(
-                            self.app.current_select + self.app.ENG_FLAC). \
+                            self.app.current_select + self.app.ENG_AUDIO). \
                             load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
                         self.sound = SoundLoader.load(
-                            self.app.current_select + self.app.RUS_FLAC). \
+                            self.app.current_select + self.app.RUS_AUDIO). \
                             load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
@@ -202,11 +202,11 @@ class Table(TabbedPanelItem):
         self.sound.stop()
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.sound = SoundLoader.load(
-                self.app.current_select + self.app.ENG_FLAC). \
+                self.app.current_select + self.app.ENG_AUDIO). \
                 load_seek(self.app.get_sound_pos())
         else:
             self.sound = SoundLoader.load(
-                self.app.current_select + self.app.RUS_FLAC). \
+                self.app.current_select + self.app.RUS_AUDIO). \
                 load_seek(self.app.get_sound_pos())
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
@@ -234,10 +234,10 @@ class Table(TabbedPanelItem):
                                            self.app.table_label_left.line_height
         self.app.log("MySound().load_seek")
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
-            self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC). \
+            self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_AUDIO). \
                          load_seek(self.app.get_sound_pos())
         else:
-            self.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC). \
+            self.sound = SoundLoader.load(self.app.current_select + self.app.RUS_AUDIO). \
                          load_seek(self.app.get_sound_pos())
         self.app.log("Clock.schedule_interval(self.clock_action_time")
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)

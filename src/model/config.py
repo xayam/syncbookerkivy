@@ -24,8 +24,8 @@ class Config(Log):
     RUS_FB2 = "rus.fb2"
     ENG_TXT = "eng.txt"
     RUS_TXT = "rus.txt"
-    ENG_FLAC = "eng.mp3"
-    RUS_FLAC = "rus.mp3"
+    ENG_AUDIO = "eng.mp3"
+    RUS_AUDIO = "rus.mp3"
     COVER = "cover.jpg"
     VALID = "valid"
 
@@ -40,7 +40,7 @@ class Config(Log):
         RUS_ANNOT, ENG_ANNOT, RUS_SYNC,
         ENG_SYNC, MICRO_JSON, ENG_FB2,
         RUS_FB2, ENG_TXT, RUS_TXT,
-        ENG_FLAC, RUS_FLAC, COVER, VALID
+        ENG_AUDIO, RUS_AUDIO, COVER, VALID
     ]
 
     def __init__(self, app=None):

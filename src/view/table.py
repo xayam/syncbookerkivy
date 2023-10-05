@@ -155,6 +155,7 @@ class Table(TabbedPanelItem):
             self.stop_button_click()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
             self.app.save_options()
+            # self.play_button_click()
             return
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:

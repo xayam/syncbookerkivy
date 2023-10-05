@@ -4,8 +4,8 @@ import os
 from .utils import *
 from .log import Log
 
-class Config(Log):
 
+class Config(Log):
     OPTIONS_JSON = "options.json"
     FRAGMENT_BOOK_DIR = "data/FRAGMENT_-_The_Ego_Machine/"
 
@@ -51,7 +51,7 @@ class Config(Log):
                            BG: (1, 1, 1, 1),
                            SEL: (1, 1, 0, 0.4),
                            POSITIONS: {i: {POSI: "0.0", AUDIO: EN} for i in self.books}
-                          }
+                           }
         self.load_options()
         self.save_options()
 

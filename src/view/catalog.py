@@ -6,10 +6,9 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.tabbedpanel import TabbedPanelItem
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
-from kivy.utils import platform
 
 from src.model.utils import *
-from .proxy import Proxy
+from src.controller.proxy import Proxy
 
 
 class Catalog(TabbedPanelItem):

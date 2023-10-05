@@ -1,6 +1,6 @@
 import subprocess
 
-VERSION = "0.118"
+VERSION = "0.119"
 
 command = \
     "p4a apk " + \
@@ -20,7 +20,7 @@ command = \
     "--orientation=landscape " + \
     "--icon=$HOME/PycharmProjects/syncbookerkivy-main/img/icon.png " + \
     "--presplash=$HOME/PycharmProjects/syncbookerkivy-main/img/presplash.png " + \
-    "--version=" + VERSION +  " " + \
+    "--version=" + VERSION + " " + \
     "--arch=armeabi-v7a " + \
     "--bootstrap=sdl2 " + \
     "--requirements=android,python3,kivy,cython,ffmpeg,libx264,libshine,libvpx," + \

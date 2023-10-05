@@ -2,9 +2,11 @@ import json
 import os
 
 from .utils import *
+from .log import Log
 
+class Config(Log):
 
-class Config:
+    DEBUG = True
 
     OPTIONS_JSON = "options.json"
     FRAGMENT_BOOK_DIR = "data/FRAGMENT_-_The_Ego_Machine/"
@@ -45,6 +47,7 @@ class Config:
 
     def __init__(self, app=None):
         self.app = app
+        super(Config, self).__init__(debug=self.DEBUG)
         self.books = []
         self.app.option = {FG: (0, 0, 0, 1),
                            BG: (1, 1, 1, 1),

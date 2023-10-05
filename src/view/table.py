@@ -82,7 +82,7 @@ class Table(TabbedPanelItem):
         self.add_widget(self.table_gridlayout)
 
     def touch_up_click(self, instance, event):
-        print("DEBUG: enter to function 'touch_up_click'")
+        self.app.log("enter to function 'touch_up_click'")
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
         if self.touch_pos == pos:
             return
@@ -96,7 +96,7 @@ class Table(TabbedPanelItem):
             sync = self.app.rus_sync
         for i in range(len(sync)):
             if sync[i][POS_START] > pos:
-                print("DEBUG: self.sound stop and reload")
+                self.app.log("self.sound stop and reload")
                 try:
                     self.sound.stop()
                     self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
@@ -123,7 +123,7 @@ class Table(TabbedPanelItem):
                 return
 
     def clock_action_time(self, event=None):
-        print("DEBUG: enter to function 'clock_action_time'")
+        self.app.log("enter to function 'clock_action_time'")
         self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
         self.table_prev.text = f"A:{self.sound.get_pos():0.1f}"
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
@@ -190,7 +190,7 @@ class Table(TabbedPanelItem):
                                     return
 
     def play_button_click(self, event=None):
-        print("DEBUG: enter to function 'play_button_click'")
+        self.app.log("enter to function 'play_button_click'")
         if not (self.clock_action is None):
             self.clock_action.cancel()
         self.sound.stop()
@@ -206,7 +206,7 @@ class Table(TabbedPanelItem):
 
     def stop_button_click(self, event=None):
         if not (self.sound is None):
-            print("DEBUG: enter to function 'stop_button_click'")
+            self.app.log("enter to function 'stop_button_click'")
             if not (self.clock_action is None):
                 self.clock_action.cancel()
             self.app.set_sound_pos(0.0)
@@ -214,7 +214,7 @@ class Table(TabbedPanelItem):
 
     def pause_button_click(self, event=None):
         if not (self.sound is None):
-            print("DEBUG: enter to function 'pause_button_click'")
+            self.app.log("enter to function 'pause_button_click'")
             if not (self.clock_action is None):
                 self.clock_action.cancel()
             self.app.set_sound_pos(self.sound.get_pos())
@@ -226,14 +226,14 @@ class Table(TabbedPanelItem):
     def update_table_label_left(self, *args):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            self.app.table_label_left.line_height
-        print("DEBUG: MySound().load_seek")
+        self.app.log("MySound().load_seek")
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC). \
                          load_seek(self.app.get_sound_pos())
         else:
             self.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC). \
                          load_seek(self.app.get_sound_pos())
-        print("DEBUG: Clock.schedule_interval(self.clock_action_time")
+        self.app.log("Clock.schedule_interval(self.clock_action_time")
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def on_text_table_label_right(self, instance, value):

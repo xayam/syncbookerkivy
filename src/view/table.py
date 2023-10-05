@@ -17,7 +17,6 @@ class Table(TabbedPanelItem):
         self.app = app
         self.clock_action = None
         self.clock_doseek = None
-        self.clock_play = None
         self.sound = None
         self.touch_pos = 0
         TabbedPanelItem.__init__(self, text="Table")
@@ -53,7 +52,7 @@ class Table(TabbedPanelItem):
                                               selection_color=self.app.option[SEL],
                                               background_color=self.app.option[BG],
                                               foreground_color=self.app.option[FG],
-                                              text="Choice book in 'Catalog'")
+                                              text="Select a book in the 'Catalog' section")
         self.app.table_label_left.is_focusable = False
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
         self.app.table_label_left.bind(on_touch_up=self.touch_up_click)
@@ -98,8 +97,6 @@ class Table(TabbedPanelItem):
         for i in range(len(sync)):
             if sync[i][POS_START] > pos:
                 print("DEBUG: self.sound stop and reload")
-                # self.pause_button_click()
-
                 try:
                     self.sound.stop()
                     self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
@@ -121,8 +118,7 @@ class Table(TabbedPanelItem):
                     return
 
                 self.app.save_options()
-                print(f"DEBUG: create clock Clock.schedule_once(self.play_button_click, 1)")
-                # self.clock_play = Clock.schedule_once(self.play_button_click, 1)
+                print(f"DEBUG: create clock Clock.schedule_interval(self.clock_action_time)")
                 self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                 return
 
@@ -225,12 +221,11 @@ class Table(TabbedPanelItem):
             self.sound.stop()
 
     def on_text_table_label_left(self, instance, value):
-        self.clock_left = Clock.schedule_interval(self.update_table_label_left, 0)
+        Clock.schedule_once(self.update_table_label_left, 0)
 
     def update_table_label_left(self, *args):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            self.app.table_label_left.line_height
-        self.clock_left.cancel()
         print("DEBUG: MySound().load_seek")
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC). \
@@ -242,9 +237,8 @@ class Table(TabbedPanelItem):
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def on_text_table_label_right(self, instance, value):
-        self.clock_right = Clock.schedule_interval(self.update_table_label_right, 0)
+        Clock.schedule_once(self.update_table_label_right, 0)
 
     def update_table_label_right(self, *args):
         self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \
                                             self.app.table_label_right.line_height
-        self.clock_right.cancel()

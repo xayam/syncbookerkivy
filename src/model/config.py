@@ -24,8 +24,8 @@ class Config:
     RUS_FB2 = "rus.fb2"
     ENG_TXT = "eng.txt"
     RUS_TXT = "rus.txt"
-    ENG_FLAC = "eng.flac"
-    RUS_FLAC = "rus.flac"
+    ENG_FLAC = "eng.mp3"
+    RUS_FLAC = "rus.mp3"
     COVER = "cover.jpg"
     VALID = "valid"
 

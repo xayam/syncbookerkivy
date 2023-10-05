@@ -1,6 +1,6 @@
 import subprocess
 
-VERSION = "0.116"
+VERSION = "0.118"
 
 command = \
     "p4a apk " + \
@@ -23,7 +23,7 @@ command = \
     "--version=" + VERSION +  " " + \
     "--arch=armeabi-v7a " + \
     "--bootstrap=sdl2 " + \
-    "--requirements=android,python3,kivy,plyer,cython,ffmpeg,libx264,libshine,libvpx," + \
+    "--requirements=android,python3,kivy,cython,ffmpeg,libx264,libshine,libvpx," + \
     "av_codecs,ffpyplayer,openssl,ffpyplayer_codecs," + \
     "sdl2_image,sdl2_ttf,sdl2_mixer,sdl2"
 

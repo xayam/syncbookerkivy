@@ -1,9 +1,14 @@
 import os
-os.environ["KIVY_AUDIO"] = "ffpyplayer"
-# from kivy.core.audio.audio_ffpyplayer import *
-# from src.controller.mysound import MySound
+from plyer.facades.orientation import Orientation
+from kivy.utils import platform
 
 from src.app import App
+
+os.environ["KIVY_AUDIO"] = "ffpyplayer"
+
+if platform == "android":
+    orientation = Orientation()
+    orientation.set_sensor(mode='landscape')
 
 application = App()
 application.run()

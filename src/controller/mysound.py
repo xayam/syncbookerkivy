@@ -12,7 +12,7 @@ class MySound(SoundFFPy):
         # self.source = os.path.abspath(source)
         # print("DEBUG: self.unload()")
         # self.unload()
-        ff_opts = {'vn': True, 'sn': True, 'ss': position}
+        ff_opts = {'vn': True, 'sn': True, 'ar': 48000, 'ac': 2, 'ss': position}
         print(f"DEBUG: self._ffplayer = MediaPlayer({os.path.abspath(source)})")
         self._ffplayer = MediaPlayer(os.path.abspath(source),
                                      # callback=self._player_callback,

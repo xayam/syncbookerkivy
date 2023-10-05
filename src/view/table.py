@@ -1,4 +1,5 @@
 from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
@@ -21,7 +22,7 @@ class Table(TabbedPanelItem):
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
 
-        self.table_prev = Button(text="v0.100")
+        self.table_prev = Button(text="v0.101")
         self.table_navigator.add_widget(self.table_prev)
 
         self.table_play = Button(text="Play",
@@ -101,18 +102,14 @@ class Table(TabbedPanelItem):
                     self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                     self.app.set_sound_pos(sync[i][TIME_START])
                     if instance == self.app.table_label_left:
-                        # if self.app.option[POSITIONS][self.app.current_select][AUDIO] != EN:
-                        self.sound = MySound().load_seek(
-                            self.app.current_select + self.app.ENG_FLAC,
-                            self.app.get_sound_pos()
-                        )
+                        self.sound = SoundLoader.load(
+                            self.app.current_select + self.app.ENG_FLAC). \
+                            load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
-                        # if self.app.option[POSITIONS][self.app.current_select][AUDIO] != RU:
-                        self.sound = MySound().load_seek(
-                            self.app.current_select + self.app.RUS_FLAC,
-                            self.app.get_sound_pos()
-                        )
+                        self.sound = SoundLoader.load(
+                            self.app.current_select + self.app.RUS_FLAC). \
+                            load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 except AttributeError:
                     print("WARNING: AttributeError (ignored this)")
@@ -223,15 +220,11 @@ class Table(TabbedPanelItem):
         self.clock_left.cancel()
         print("DEBUG: MySound().load_seek")
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
-            self.sound = MySound().load_seek(
-                self.app.current_select + self.app.ENG_FLAC,
-                self.app.get_sound_pos()
-            )
+            self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_FLAC). \
+                         load_seek(self.app.get_sound_pos())
         else:
-            self.sound = MySound().load_seek(
-                self.app.current_select + self.app.RUS_FLAC,
-                self.app.get_sound_pos()
-            )
+            self.sound = SoundLoader.load(self.app.current_select + self.app.RUS_FLAC). \
+                         load_seek(self.app.get_sound_pos())
         print("DEBUG: Clock.schedule_interval(self.clock_action_time")
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 

@@ -1,6 +1,7 @@
 import time
 
-from kivy.core.audio.audio_ffpyplayer import SoundFFPy
+from kivy.core.audio import SoundLoader
+from kivy.core.audio.audio_ffpyplayer import *
 from ffpyplayer.player import MediaPlayer
 
 
@@ -9,8 +10,7 @@ class MySound(SoundFFPy):
     def __init__(self, **kwargs):
         super(MySound, self).__init__(**kwargs)
 
-    def load_seek(self, source, position):
-        self.source = source
+    def load_seek(self, position):
         self._state = ''
         self.state = 'stop'
         self.quitted = False
@@ -34,3 +34,6 @@ class MySound(SoundFFPy):
             time.sleep(0.005)
 
         return self
+
+SoundLoader._classes = []
+SoundLoader.register(MySound)

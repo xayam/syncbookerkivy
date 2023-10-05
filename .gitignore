@@ -5,3 +5,5 @@ src/model/__pycache__/
 src/view/__pycache__/
 src/controller/__pycache__/
 options.json
+logcat.txt
+syncbooker.apk

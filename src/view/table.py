@@ -21,7 +21,7 @@ class Table(TabbedPanelItem):
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
 
-        self.table_prev = Button(text="v0.95")
+        self.table_prev = Button(text="v0.96")
         self.table_navigator.add_widget(self.table_prev)
 
         self.table_play = Button(text="Play",

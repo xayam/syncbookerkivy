@@ -24,8 +24,8 @@ class Config(Log):
     RUS_FB2 = "rus.fb2"
     ENG_TXT = "eng.txt"
     RUS_TXT = "rus.txt"
-    ENG_AUDIO = "eng.mp3"
-    RUS_AUDIO = "rus.mp3"
+    ENG_AUDIO = "eng.ogg"
+    RUS_AUDIO = "rus.ogg"
     COVER = "cover.jpg"
     VALID = "valid"
 

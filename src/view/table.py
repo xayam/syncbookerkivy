@@ -152,6 +152,7 @@ class Table(TabbedPanelItem):
         self.app.log(f"self.sound.get_pos()={self.sound.get_pos()}")
         self.app.log(f"self.app.get_sound_pos()={self.app.get_sound_pos()}")
         if abs(self.sound.get_pos() - self.app.get_sound_pos()) < 0.1:
+            self.app.log("End text, abs(self.sound.get_pos() - self.app.get_sound_pos()) < 0.1")
             self.stop_button_click()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
             self.app.save_options()

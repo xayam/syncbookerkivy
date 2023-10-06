@@ -1,8 +1,10 @@
 DEBUG = True
 
+# Langs
 EN = "English"
 RU = "Русский"
 
+# Scheme options.json
 FG = "fg"
 BG = "bg"
 SEL = "sel"
@@ -12,7 +14,7 @@ POSITIONS = "positions"
 POSI = "posi"
 AUDIO = "audio"
 
-# Scheme sync
+# Scheme sync.json
 TIME_START = 0
 TIME_END = 1
 TIME = 2
@@ -21,7 +23,7 @@ POS_START = 4
 POS_END = 5
 POS = 6
 
-# Scheme sync_v2
+# Scheme micro.json
 L_POS = 0
 R_POS = 1
 L_WORDS = 2

@@ -30,5 +30,6 @@ class MySound(SoundFFPy):
         self.state = 'play'
         return self
 
+
 SoundLoader._classes = []
 SoundLoader.register(MySound)

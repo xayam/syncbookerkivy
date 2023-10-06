@@ -24,10 +24,10 @@ class Table(TabbedPanelItem):
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
         if DEBUG:
-            textprev = f"v{VERSION}"
+            text_prev = f"v{VERSION}"
         else:
-            textprev = "Prev"
-        self.table_prev = Button(text=textprev)
+            text_prev = "Prev"
+        self.table_prev = Button(text=text_prev)
         self.table_navigator.add_widget(self.table_prev)
 
         self.table_play = Button(text="Play",
@@ -172,18 +172,18 @@ class Table(TabbedPanelItem):
 
                                     if sync[i][POS_START] < len(text_area.text) - 1:
                                         text_area.select_text(0, sync[i][POS_START])
-                                        text_area.cursor = (0, text_area.
-                                                            get_cursor_from_index(
-                                            text_area.selection_to)[1])
+                                        text_area.cursor = (
+                                            0, text_area.get_cursor_from_index(
+                                                text_area.selection_to)[1])
                                         y = text_area.cursor_pos[1] - book_area.height // 2
                                         book_area.scroll_y = book_area. \
                                             convert_distance_to_scroll(0, y)[1]
 
                                     if self.app.pos_end_other < len(text_area_other.text) - 1:
                                         text_area_other.select_text(0, self.app.pos_end_other)
-                                        text_area_other.cursor = (0, text_area_other.
-                                                                  get_cursor_from_index(
-                                            text_area_other.selection_to)[1])
+                                        text_area_other.cursor = (
+                                            0, text_area_other.get_cursor_from_index(
+                                                text_area_other.selection_to)[1])
                                         y = text_area_other.cursor_pos[1] - book_area_other.height // 2
                                         book_area_other.scroll_y = book_area_other. \
                                             convert_distance_to_scroll(0, y)[1]

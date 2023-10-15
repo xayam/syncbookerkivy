@@ -21,7 +21,10 @@ class Catalog(TabbedPanelItem):
                                            multiline=False,
                                            text="")
         self.app.catalog_input.size = ('32sp', '32sp')
-        self.catalog_buttons = GridLayout(rows=1, size_hint_x=None)
+        self.catalog_buttons = GridLayout(rows=1,
+                                          size_hint_x=None,
+                                          padding=[15, 35],
+                                          spacing=[15])
         self.catalog_buttons.bind(minimum_width=self.catalog_buttons.setter('width'))
         self.catalog_scrollview = ScrollView(do_scroll_x=True, do_scroll_y=False)
 
@@ -34,7 +37,7 @@ class Catalog(TabbedPanelItem):
             if not os.path.isdir("data/" + i):
                 continue
             button = Button(size_hint=(None, 1),
-                            width=Window.size[0] // 2,
+                            width=(Window.size[0] - 45) // 2,
                             background_normal="data/" + i + "/cover.jpg",
                             on_release=lambda value: self.catalog_button_click(current=f"data/{i}/",
                                                                                value=value))

@@ -24,8 +24,8 @@ class Catalog(TabbedPanelItem):
         self.app.catalog_input.size = ('32sp', '32sp')
         self.catalog_buttons = GridLayout(rows=1,
                                           size_hint_x=None,
-                                          padding=[15, 35],
-                                          spacing=[15])
+                                          padding=[70, 15],
+                                          spacing=[70])
         self.catalog_buttons.bind(minimum_width=self.catalog_buttons.setter('width'))
         self.catalog_scrollview = ScrollView(do_scroll_x=True, do_scroll_y=False)
 
@@ -40,7 +40,7 @@ class Catalog(TabbedPanelItem):
             cover = f"data/{i}/{self.app.COVER}"
             self.dir_books[cover] = f"data/{i}/"
             button = Button(size_hint=(None, 1),
-                            width=(Window.size[0] - 45) // 2,
+                            width=(Window.size[0] - 3*70) // 2,
                             background_normal=cover,
                             on_release=self.catalog_button_click)
             self.catalog_buttons.add_widget(button)

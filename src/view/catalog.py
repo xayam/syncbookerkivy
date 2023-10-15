@@ -7,6 +7,7 @@ from kivy.uix.tabbedpanel import TabbedPanelItem
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 
+from p4a import VERSION
 from src.model.utils import *
 from src.controller.proxy import Proxy
 
@@ -20,6 +21,7 @@ class Catalog(TabbedPanelItem):
         self.app.catalog_input = TextInput(size_hint_y=None,
                                            font_size='16sp',
                                            multiline=False,
+                                           hint_text=f"v{VERSION}",
                                            text="")
         self.app.catalog_input.size = ('32sp', '32sp')
         self.catalog_buttons = GridLayout(rows=1,

@@ -10,8 +10,6 @@ from src.controller.proxy import Proxy
 from src.model.utils import *
 from src.controller.mysound import MySound
 
-from p4a import VERSION
-
 
 class Table(TabbedPanelItem):
     def __init__(self, app):
@@ -24,11 +22,8 @@ class Table(TabbedPanelItem):
         self.table_gridlayout = GridLayout(cols=3)
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
-        if DEBUG:
-            text_prev = f"v{VERSION}"
-        else:
-            text_prev = "Prev"
-        self.table_prev = Button(text=text_prev,
+
+        self.table_prev = Button(text="Prev",
                                  on_press=self.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)
 

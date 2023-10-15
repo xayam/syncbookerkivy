@@ -7,8 +7,9 @@ class Model(Config):
 
     def __init__(self, app):
         self.app = app
+        self.sound = None
         self.sound_pos = 0.0
-        self.app.current_dir = self.app.FRAGMENT_BOOK_DIR
+        self.current_select = self.app.FRAGMENT_BOOK_DIR
         Config.__init__(self, self.app)
 
     def set_sound_pos(self, value: float):
@@ -18,22 +19,22 @@ class Model(Config):
         return self.sound_pos
 
     def pre_load(self):
-        with open(self.app.current_dir + self.RUS_ANNOT, mode="r", encoding="UTF-8") as f:
+        with open(self.current_select + self.RUS_ANNOT, mode="r", encoding="UTF-8") as f:
             self.app.annotation = f.read() + "\n\n"
-        with open(self.app.current_dir + self.ENG_ANNOT, mode="r", encoding="UTF-8") as f:
+        with open(self.current_select + self.ENG_ANNOT, mode="r", encoding="UTF-8") as f:
             self.app.annotation += f.read()
 
-        with open(self.app.current_dir + self.ENG_SYNC, encoding="UTF-8", mode="r") as f:
+        with open(self.current_select + self.ENG_SYNC, encoding="UTF-8", mode="r") as f:
             self.app.eng_sync = json.load(f)
-        with open(self.app.current_dir + self.RUS_SYNC, encoding="UTF-8", mode="r") as f:
+        with open(self.current_select + self.RUS_SYNC, encoding="UTF-8", mode="r") as f:
             self.app.rus_sync = json.load(f)
 
-        with open(self.app.current_dir + self.MICRO_JSON, encoding="UTF-8", mode="r") as f:
+        with open(self.current_select + self.MICRO_JSON, encoding="UTF-8", mode="r") as f:
             self.app.micro = json.load(f)
 
-        with open(self.app.current_dir + self.ENG_TXT, mode="r", encoding="UTF-8") as txt:
+        with open(self.current_select + self.ENG_TXT, mode="r", encoding="UTF-8") as txt:
             self.app.eng_book = txt.read()
             self.app.book = self.app.eng_book
-        with open(self.app.current_dir + self.RUS_TXT, mode="r", encoding="UTF-8") as txt:
+        with open(self.current_select + self.RUS_TXT, mode="r", encoding="UTF-8") as txt:
             self.app.rus_book = txt.read()
             self.app.book_other = self.app.rus_book

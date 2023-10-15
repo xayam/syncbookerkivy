@@ -17,7 +17,6 @@ class Table(TabbedPanelItem):
         self.app = app
         self.clock_action = None
         self.clock_doseek = None
-        self.sound = None
         self.touch_pos = 0
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
@@ -99,18 +98,18 @@ class Table(TabbedPanelItem):
             sync = self.app.rus_sync
         for i in range(len(sync)):
             if sync[i][POS_START] > pos:
-                self.app.log("self.sound stop and reload")
+                self.app.log("self.app.sound stop and reload")
                 try:
-                    self.sound.stop()
+                    self.app.sound.stop()
                     self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                     self.app.set_sound_pos(sync[i][TIME_START])
                     if instance == self.app.table_label_left:
-                        self.sound = SoundLoader.load(
+                        self.app.sound = SoundLoader.load(
                             self.app.current_select + self.app.ENG_AUDIO). \
                             load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
-                        self.sound = SoundLoader.load(
+                        self.app.sound = SoundLoader.load(
                             self.app.current_select + self.app.RUS_AUDIO). \
                             load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
@@ -129,7 +128,7 @@ class Table(TabbedPanelItem):
         self.app.log("enter to function 'clock_action_time'")
         if DEBUG:
             self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
-            self.table_prev.text = f"A:{self.sound.get_pos():0.1f}"
+            self.table_prev.text = f"A:{self.app.sound.get_pos():0.1f}"
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS
@@ -148,11 +147,11 @@ class Table(TabbedPanelItem):
             text_area_other = self.app.table_label_left
             book_area_other = self.app.table_book_left
             sync_other = self.app.eng_sync
-        pos = self.sound.get_pos()
-        self.app.log(f"self.sound.get_pos()={self.sound.get_pos()}")
+        pos = self.app.sound.get_pos()
+        self.app.log(f"self.app.sound.get_pos()={self.app.sound.get_pos()}")
         self.app.log(f"self.app.get_sound_pos()={self.app.get_sound_pos()}")
-        if abs(self.sound.get_pos() - self.app.get_sound_pos()) < 0.1:
-            self.app.log("End text, abs(self.sound.get_pos() - self.app.get_sound_pos()) < 0.1")
+        if abs(self.app.sound.get_pos() - self.app.get_sound_pos()) < 0.1:
+            self.app.log("End text, abs(self.app.sound.get_pos() - self.app.get_sound_pos()) < 0.1")
             self.stop_button_click()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
             self.app.save_options()
@@ -199,34 +198,34 @@ class Table(TabbedPanelItem):
         self.app.log("enter to function 'play_button_click'")
         if not (self.clock_action is None):
             self.clock_action.cancel()
-        if self.sound is None:
+        if self.app.sound is None:
             return
-        self.sound.stop()
+        self.app.sound.stop()
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
-            self.sound = SoundLoader.load(
+            self.app.sound = SoundLoader.load(
                 self.app.current_select + self.app.ENG_AUDIO). \
                 load_seek(self.app.get_sound_pos())
         else:
-            self.sound = SoundLoader.load(
+            self.app.sound = SoundLoader.load(
                 self.app.current_select + self.app.RUS_AUDIO). \
                 load_seek(self.app.get_sound_pos())
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def stop_button_click(self, event=None):
-        if not (self.sound is None):
+        if not (self.app.sound is None):
             self.app.log("enter to function 'stop_button_click'")
             if not (self.clock_action is None):
                 self.clock_action.cancel()
             self.app.set_sound_pos(0.0)
-            self.sound.stop()
+            self.app.sound.stop()
 
     def pause_button_click(self, event=None):
-        if not (self.sound is None):
+        if not (self.app.sound is None):
             self.app.log("enter to function 'pause_button_click'")
             if not (self.clock_action is None):
                 self.clock_action.cancel()
-            self.app.set_sound_pos(self.sound.get_pos())
-            self.sound.stop()
+            self.app.set_sound_pos(self.app.sound.get_pos())
+            self.app.sound.stop()
 
     def on_text_table_label_left(self, instance, value):
         Clock.schedule_once(self.update_table_label_left, 0)
@@ -236,10 +235,10 @@ class Table(TabbedPanelItem):
                                            self.app.table_label_left.line_height
         self.app.log("MySound().load_seek")
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
-            self.sound = SoundLoader.load(self.app.current_select + self.app.ENG_AUDIO). \
+            self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_AUDIO). \
                          load_seek(self.app.get_sound_pos())
         else:
-            self.sound = SoundLoader.load(self.app.current_select + self.app.RUS_AUDIO). \
+            self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_AUDIO). \
                          load_seek(self.app.get_sound_pos())
         self.app.log("Clock.schedule_interval(self.clock_action_time")
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)

@@ -310,6 +310,7 @@ class Table(TabbedPanelItem):
         self.app.log("MySound().load_seek")
         try:
             self.app.sound.stop()
+            self.clock_action.cancel()
         except AttributeError:
             pass
         if self.app.table_label_left.text == "":

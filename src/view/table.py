@@ -228,7 +228,7 @@ class Table(TabbedPanelItem):
             self.app.sound.stop()
 
     def on_text_table_label_left(self, instance, value):
-        Clock.schedule_once(self.update_table_label_left, 0)
+        Clock.schedule_once(self.update_table_label_left, 1)
 
     def update_table_label_left(self, *args):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
@@ -244,7 +244,7 @@ class Table(TabbedPanelItem):
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def on_text_table_label_right(self, instance, value):
-        Clock.schedule_once(self.update_table_label_right, 0)
+        Clock.schedule_once(self.update_table_label_right, 1)
 
     def update_table_label_right(self, *args):
         self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \

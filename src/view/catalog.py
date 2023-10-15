@@ -68,5 +68,9 @@ class Catalog(TabbedPanelItem):
             self.app.option[POSITIONS][self.app.current_select] = {POSI: "0", AUDIO: EN}
         self.app.container.switch_to(self.app.table)
         self.app.pre_load()
-        Proxy.load_text_book(self, self.app.table_label_left, self.app.eng_book)
-        Proxy.load_text_book(self, self.app.table_label_right, self.app.rus_book)
+        Proxy.load_text_book(self,
+                             self.app.table_label_left,
+                             self.app.eng_chunks[self.app.chunk_current])
+        Proxy.load_text_book(self,
+                             self.app.table_label_right,
+                             self.app.rus_chunks[self.app.chunk_current])

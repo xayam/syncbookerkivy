@@ -83,7 +83,7 @@ class Table(TabbedPanelItem):
         self.add_widget(self.table_gridlayout)
 
     def prev_next(self):
-        if not(self.clock_action is None):
+        if not (self.clock_action is None):
             self.clock_action.cancel()
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             sync = self.app.eng_sync
@@ -104,6 +104,7 @@ class Table(TabbedPanelItem):
         Proxy.load_text_book(self,
                              self.app.table_label_right,
                              self.app.rus_chunks[self.app.chunk_current])
+
     def prev_button_click(self, event=None):
         self.app.chunk_current -= 1
         if self.app.chunk_current < 0:
@@ -198,7 +199,7 @@ class Table(TabbedPanelItem):
         # self.app.log(f"self.app.sound._ffplayer.get_pts()={self.app.sound._ffplayer.get_pts()}")
         # self.app.log(f"self.app.sound._ffplayer.get_metadata()['duration']={self.app.sound._ffplayer.get_metadata()['duration']}")
         if self.app.sound._ffplayer.get_pts() + 0.5 >= \
-            self.app.sound._ffplayer.get_metadata()['duration']:
+           self.app.sound._ffplayer.get_metadata()['duration']:
             self.stop_button_click()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
             self.app.save_options()
@@ -271,7 +272,7 @@ class Table(TabbedPanelItem):
         Proxy.load_text_book(self,
                              self.app.table_label_left, "")
         Proxy.load_text_book(self,
-                             self.app.table_label_right,"")
+                             self.app.table_label_right, "")
         Proxy.load_text_book(self,
                              self.app.table_label_left,
                              self.app.eng_chunks[self.app.chunk_current])

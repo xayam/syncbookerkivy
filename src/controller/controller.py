@@ -7,8 +7,7 @@ class Controller:
         self.init()
 
     def init(self):
-        pass
-        # with open(self.app.FRAGMENT_BOOK_DIR + self.app.ENG_TXT, mode="r", encoding="UTF-8") as f:
-        #     self.app.eng_txt = f.read()
-        # with open(self.app.FRAGMENT_BOOK_DIR + self.app.RUS_TXT, mode="r", encoding="UTF-8") as f:
-        #     self.app.rus_txt = f.read()
+        with open(self.app.FRAGMENT_BOOK_DIR + self.app.ENG_TXT, mode="r", encoding="UTF-8") as f:
+            self.app.eng_txt = f.read()
+        with open(self.app.FRAGMENT_BOOK_DIR + self.app.RUS_TXT, mode="r", encoding="UTF-8") as f:
+            self.app.rus_txt = f.read()

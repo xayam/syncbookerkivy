@@ -7,7 +7,7 @@ from .log import Log
 
 class Config(Log):
     OPTIONS_JSON = "options.json"
-    FRAGMENT_BOOK_DIR = "data/FRAGMENT_-_The_Ego_Machine/"
+    FRAGMENT_BOOK_DIR = "data/Kafka_Franz_-_The_Metamorphosis/"
 
     GITHUB_SYNCBOOKER = "https://github.com/xayam/syncbooker"
     UPDATE_URL = "https://cloud.mail.ru/public/rdBB/KHvCjQdaT"

@@ -172,9 +172,9 @@ class Table(TabbedPanelItem):
 
     def clock_action_time(self, event=None):
         self.app.log("enter to function 'clock_action_time'")
-        if DEBUG:
-            self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
-            self.table_prev.text = f"A:{self.app.sound.get_pos():0.1f}"
+        # if DEBUG:
+        #     self.table_next.text = f"T:{self.app.get_sound_pos():0.1f}"
+        #     self.table_prev.text = f"A:{self.app.sound.get_pos():0.1f}"
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS
@@ -198,9 +198,11 @@ class Table(TabbedPanelItem):
             chunk = self.app.rus_chunks
             chunk_other = self.app.eng_chunks
         pos = self.app.sound.get_pos()
-        self.app.log(f"self.app.sound.get_pos()={self.app.sound.get_pos()}")
-        self.app.log(f"self.app.get_sound_pos()={self.app.get_sound_pos()}")
-        if self.app.sound._ffplayer.get_pts() >= \
+        # self.app.log(f"self.app.sound.get_pos()={self.app.sound.get_pos()}")
+        # self.app.log(f"self.app.get_sound_pos()={self.app.get_sound_pos()}")
+        # self.app.log(f"self.app.sound._ffplayer.get_pts()={self.app.sound._ffplayer.get_pts()}")
+        # self.app.log(f"self.app.sound._ffplayer.get_metadata()['duration']={self.app.sound._ffplayer.get_metadata()['duration']}")
+        if self.app.sound._ffplayer.get_pts() + 0.5 >= \
             self.app.sound._ffplayer.get_metadata()['duration']:
             self.stop_button_click()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"

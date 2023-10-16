@@ -83,9 +83,13 @@ class Catalog(TabbedPanelItem):
         self.valid = value.background_normal[:-4] + "/valid"
         path = value.background_normal[5:-4]
         self.zip = path + ".zip"
+        self.app.log("self.show_popup()")
         self.show_popup()
+        self.app.log("thread_download create")
         thread_download = threading.Thread(target=self.download_zip)
+        self.app.log("thread_download start()")
         thread_download.start()
+        self.app.log("thread_download join()")
         thread_download.join()
         self.app.container.switch_to(self.app.table)
         self.app.pre_load()

@@ -53,8 +53,8 @@ class Table(TabbedPanelItem):
                                               selection_color=self.app.option[SEL],
                                               background_color=self.app.option[BG],
                                               foreground_color=self.app.option[FG],
-                                              handle_image_left="img/marker.png",
-                                              handle_image_right="img/marker.png",
+                                              handle_image_left=self.app.DISABLE_MARKER,
+                                              handle_image_right=self.app.DISABLE_MARKER,
                                               text="Select a book in the 'Catalog' section")
         self.app.table_label_left.is_focusable = False
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
@@ -73,8 +73,8 @@ class Table(TabbedPanelItem):
                                                selection_color=self.app.option[SEL],
                                                background_color=self.app.option[BG],
                                                foreground_color=self.app.option[FG],
-                                               handle_image_left="img/marker.png",
-                                               handle_image_right="img/marker.png",
+                                               handle_image_left=self.app.DISABLE_MARKER,
+                                               handle_image_right=self.app.DISABLE_MARKER,
                                                text="Выберите книгу в разделе 'Catalog'")
         self.app.table_label_right.is_focusable = False
         self.app.table_label_right.bind(text=self.on_text_table_label_right)

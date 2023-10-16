@@ -7,6 +7,7 @@ from .log import Log
 
 class Config(Log):
     OPTIONS_JSON = "options.json"
+    DISABLE_MARKER = "img/marker.png"
     FRAGMENT_BOOK_DIR = "data/Kafka_Franz_-_The_Metamorphosis/"
 
     GITHUB_SYNCBOOKER = "https://github.com/xayam/syncbooker"

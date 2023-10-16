@@ -1,6 +1,6 @@
 import subprocess
 
-VERSION = "0.167"
+VERSION = "0.168"
 
 ARCH = "armeabi-v7a"
 # ARCH = "x86_64"
@@ -26,7 +26,7 @@ command = \
     "--version=" + VERSION + " " + \
     "--arch=" + ARCH + " " + \
     "--bootstrap=sdl2 " + \
-    "--requirements=android,python3,kivy,cython,ffmpeg,libx264,libshine,libvpx," + \
+    "--requirements=android,python3,kivy,kivymd,cython,ffmpeg,libx264,libshine,libvpx," + \
     "av_codecs,ffpyplayer,openssl,ffpyplayer_codecs,setuptools,regex," + \
     "sdl2_image,sdl2_ttf,sdl2_mixer,sdl2"
 

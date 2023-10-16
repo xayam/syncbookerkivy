@@ -6,6 +6,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.tabbedpanel import TabbedPanelItem
 from kivy.uix.textinput import TextInput
+from kivymd.uix.button.button import MDRoundFlatButton
+from kivy.uix.tabbedpanel import TabbedPanelItem
 
 from src.controller.proxy import Proxy
 from src.model.utils import *
@@ -23,41 +25,28 @@ class Table(TabbedPanelItem):
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
 
-        self.table_navigator = BoxLayout(size_hint=(None, None),
-                                         size=(148, 64),
-                                         padding=[10, 10],
-                                         spacing=10,
-                                         orientation="vertical")
-
-        self.table_prev = Button(text="Prev",
-                                 size_hint=(None, None),
-                                 size=(128, 128),
-                                 on_press=self.prev_button_click)
+        self.table_navigator = GridLayout(rows=5,
+                                          size_hint_x=0.3,
+                                          padding=[20, 20],
+                                          spacing=20)
+        self.table_prev = MDRoundFlatButton(text="Prev",
+                                            on_release=self.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)
 
-        self.table_play = Button(background_normal="img/play.png",
-                                 background_down="img/play_pressed.png",
-                                 size_hint=(None, None),
-                                 size=(128, 128),
-                                 on_press=self.play_button_click)
+        self.table_play = MDRoundFlatButton(text="Play",
+                                            on_release=self.play_button_click)
         self.table_navigator.add_widget(self.table_play)
 
-        self.table_pause = Button(text="Pause",
-                                  size_hint=(None, None),
-                                  size=(128, 128),
-                                  on_press=self.pause_button_click)
+        self.table_pause = MDRoundFlatButton(text="Pause",
+                                             on_release=self.pause_button_click)
         self.table_navigator.add_widget(self.table_pause)
 
-        self.table_stop = Button(text="Stop",
-                                 size_hint=(None, None),
-                                 size=(128, 128),
-                                 on_press=self.stop_button_click)
+        self.table_stop = MDRoundFlatButton(text="Stop",
+                                            on_release=self.stop_button_click)
         self.table_navigator.add_widget(self.table_stop)
 
-        self.table_next = Button(text="Next",
-                                 size_hint=(None, None),
-                                 size=(128, 128),
-                                 on_press=self.next_button_click)
+        self.table_next = MDRoundFlatButton(text="Next",
+                                            on_release=self.next_button_click)
         self.table_navigator.add_widget(self.table_next)
 
         self.table_gridlayout.add_widget(self.table_navigator)

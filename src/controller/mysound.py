@@ -21,6 +21,7 @@ class MySound(SoundFFPy):
                    'ss': position
                    }
         if DEBUG:
+            print(f"DEBUG: 'ss':position={position}")
             print(f"DEBUG: self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,
                                      callback=self._player_callback,

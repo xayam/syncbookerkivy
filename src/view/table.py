@@ -86,6 +86,18 @@ class Table(TabbedPanelItem):
         self.table_gridlayout.add_widget(self.app.table_book_right)
         self.add_widget(self.table_gridlayout)
 
+    def next_chunk(self):
+        if not (self.clock_action is None):
+            self.clock_action.cancel()
+        self.app.chunk_current += 1
+        if self.app.chunk_current >= len(self.app.eng_chunks):
+            self.app.chunk_current = 0
+        Proxy.load_text_book(self,
+                             self.app.table_label_left,
+                             self.app.eng_chunks[self.app.chunk_current])
+        Proxy.load_text_book(self,
+                             self.app.table_label_right,
+                             self.app.rus_chunks[self.app.chunk_current])
     def prev_next(self):
         if not (self.clock_action is None):
             self.clock_action.cancel()
@@ -197,22 +209,11 @@ class Table(TabbedPanelItem):
             chunk = self.app.rus_chunks
             chunk_other = self.app.eng_chunks
         pos = self.app.sound.get_pos()
-        # self.app.log(f"self.app.sound.get_pos()={self.app.sound.get_pos()}")
-        # self.app.log(f"self.app.get_sound_pos()={self.app.get_sound_pos()}")
-        # self.app.log(f"self.app.sound._ffplayer.get_pts()={self.app.sound._ffplayer.get_pts()}")
-        # self.app.log(f"self.app.sound._ffplayer.get_metadata()['duration']={self.app.sound._ffplayer.get_metadata()['duration']}")
         if self.app.sound._ffplayer.get_pts() + 0.5 >= \
            self.app.sound._ffplayer.get_metadata()['duration']:
             self.stop_button_click()
             self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
             self.app.save_options()
-        # if abs(self.app.sound.get_pos() - self.app.get_sound_pos()) < 0.1:
-        #     self.app.log("End text, abs(self.app.sound.get_pos() - self.app.get_sound_pos()) < 0.1")
-        #     self.stop_button_click()
-        #     self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
-        #     self.app.save_options()
-            # self.play_button_click()
-            # return
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
                 for k in range(len(self.app.micro)):
@@ -226,39 +227,46 @@ class Table(TabbedPanelItem):
                                     self.app.sync_other_i = z
                                     self.app.start = sync[i][TIME_START]
 
-                                    # if sync[i][POS_START] < len(text_area.text) - 1:
                                     position = sync[i][POS_START]
                                     for p in range(self.app.chunk_current):
                                         position -= len(chunk[p])
                                     if position > len(chunk[self.app.chunk_current]):
-                                        self.next_button_click()
+                                        self.next_chunk()
                                         return
                                     try:
                                         text_area.select_text(0, position)
-                                        text_area.cursor = (
-                                            0, text_area.get_cursor_from_index(
-                                                text_area.selection_to)[1])
-                                        y = text_area.cursor_pos[1] - book_area.height // 2
+                                        y1 = text_area.get_cursor_from_index(
+                                                text_area.selection_to)[1]
+                                        text_area.cursor = (0, y1)
+                                        y = text_area.cursor_pos[1] - book_area.height + \
+                                            y1 * (text_area.line_height + text_area.line_spacing)
+                                        if y >= text_area.cursor_pos[1] - book_area.height // 2:
+                                            y = text_area.cursor_pos[1] - book_area.height // 2
+                                        if y < 0:
+                                            y = 0
                                         book_area.scroll_y = book_area. \
                                             convert_distance_to_scroll(0, y)[1]
                                     except Exception:
                                         return
 
-                                    # if self.app.pos_end_other < len(text_area_other.text) - 1:
                                     position = self.app.pos_end_other
                                     for p in range(self.app.chunk_current):
                                         position -= len(chunk_other[p])
                                     try:
                                         text_area_other.select_text(0, position)
-                                        text_area_other.cursor = (
-                                            0, text_area_other.get_cursor_from_index(
-                                                text_area_other.selection_to)[1])
-                                        y = text_area_other.cursor_pos[1] - book_area_other.height // 2
+                                        y1 = text_area_other.get_cursor_from_index(
+                                            text_area_other.selection_to)[1]
+                                        text_area_other.cursor = (0, y1)
+                                        y = text_area_other.cursor_pos[1] - book_area_other.height + \
+                                            y1 * (text_area_other.line_height + text_area_other.line_spacing)
+                                        if y >= text_area_other.cursor_pos[1] - book_area_other.height // 2:
+                                            y = text_area_other.cursor_pos[1] - book_area_other.height // 2
+                                        if y < 0:
+                                            y = 0
                                         book_area_other.scroll_y = book_area_other. \
                                             convert_distance_to_scroll(0, y)[1]
                                     except Exception:
                                         return
-
                                     self.app.option[POSITIONS][self.app.current_select][POSI] = \
                                         str(pos)
                                     self.app.set_sound_pos(pos)
@@ -308,21 +316,21 @@ class Table(TabbedPanelItem):
     def update_table_label_left(self, *args):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            self.app.table_label_left.line_height
+        if self.app.table_label_left.text == "":
+            return
         self.app.log("MySound().load_seek")
         try:
             self.app.sound.stop()
             self.clock_action.cancel()
         except AttributeError:
             pass
-        if self.app.table_label_left.text == "":
-            return
         if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.app.sound = SoundLoader.load(self.app.current_select + self.app.ENG_AUDIO). \
                          load_seek(self.app.get_sound_pos())
         else:
             self.app.sound = SoundLoader.load(self.app.current_select + self.app.RUS_AUDIO). \
                          load_seek(self.app.get_sound_pos())
-        self.app.log("Clock.schedule_interval(self.clock_action_time")
+        self.app.log("Clock.schedule_interval(self.clock_action_time)")
         self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
 
     def on_text_table_label_right(self, instance, value):

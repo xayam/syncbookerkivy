@@ -1,9 +1,9 @@
 import subprocess
 
-VERSION = "0.165"
+VERSION = "0.166"
 
 ARCH = "armeabi-v7a"
-ARCH = "x86_64"
+# ARCH = "x86_64"
 
 command = \
     "p4a apk " + \

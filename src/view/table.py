@@ -1,5 +1,6 @@
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
@@ -22,25 +23,41 @@ class Table(TabbedPanelItem):
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
 
-        self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
+        self.table_navigator = BoxLayout(size_hint=(None, None),
+                                         size=(84, 64),
+                                         padding=[10, 10],
+                                         spacing=10,
+                                         orientation="vertical")
 
         self.table_prev = Button(text="Prev",
+                                 size_hint=(None, None),
+                                 size=(64, 64),
                                  on_press=self.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)
 
-        self.table_play = Button(text="Play",
+        self.table_play = Button(background_normal="img/play.png",
+                                 background_down="img/play_pressed.png",
+                                 size_hint=(None, None),
+                                 size=(64, 64),
+                                 pos_hint={"center_y":0.5},
                                  on_press=self.play_button_click)
         self.table_navigator.add_widget(self.table_play)
 
         self.table_pause = Button(text="Pause",
+                                  size_hint=(None, None),
+                                  size=(64, 64),
                                   on_press=self.pause_button_click)
         self.table_navigator.add_widget(self.table_pause)
 
         self.table_stop = Button(text="Stop",
+                                 size_hint=(None, None),
+                                 size=(64, 64),
                                  on_press=self.stop_button_click)
         self.table_navigator.add_widget(self.table_stop)
 
         self.table_next = Button(text="Next",
+                                 size_hint=(None, None),
+                                 size=(64, 64),
                                  on_press=self.next_button_click)
         self.table_navigator.add_widget(self.table_next)
 
@@ -102,12 +119,15 @@ class Table(TabbedPanelItem):
     def prev_next(self):
         if not (self.clock_action is None):
             self.clock_action.cancel()
-        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
-            sync = self.app.eng_sync
-            chunk = self.app.eng_chunks
-        else:
-            sync = self.app.rus_sync
-            chunk = self.app.rus_chunks
+        try:
+            if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
+                sync = self.app.eng_sync
+                chunk = self.app.eng_chunks
+            else:
+                sync = self.app.rus_sync
+                chunk = self.app.rus_chunks
+        except KeyError:
+            return
         position = 0
         for p in range(self.app.chunk_current):
             position += len(chunk[p])

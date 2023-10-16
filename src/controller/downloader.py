@@ -41,14 +41,9 @@ class Downloader:
         z.extractall(output_dir)
         z.close()
 
-    def cm_get_info(self, url):
-        resp = urllib.request.urlopen(
-            urllib.request.Request(url, headers=self.headers)).read().decode("UTF-8")
-        return resp
-
     def cm_get_direct_link(self, url, file_zip):
         self.app.log("Enter to function cm_get_direct_link()")
-        data = self.cm_get_info(url)
+        data = requests.get(url, verify=False, headers=self.headers).text
         self.app.log("Regex data")
         result1 = re.findall(r'weblink_get.+?"url":"(https:.+?)"',
                              data, flags=re.UNICODE)

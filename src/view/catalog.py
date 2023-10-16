@@ -1,4 +1,6 @@
 import os
+
+from kivy import platform
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
@@ -46,6 +48,16 @@ class Catalog(TabbedPanelItem):
                                           spacing=[140])
         self.catalog_buttons.bind(minimum_width=self.catalog_buttons.setter('width'))
         self.catalog_scrollview = ScrollView(do_scroll_x=True, do_scroll_y=False)
+
+        if platform == 'android':
+            from android.permissions import request_permissions, Permission
+            request_permissions([Permission.INTERNET
+                                 # Permission.READ_EXTERNAL_STORAGE,
+                                 # Permission.WRITE_EXTERNAL_STORAGE,
+                                 # Permission.MEDIA_CONTENT_CONTROL,
+                                 # Permission.GLOBAL_SEARCH,
+                                 # Permission.READ_MEDIA_AUDIO
+                                 ])
 
         self.app.downloader.update_list()
 

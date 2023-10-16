@@ -14,7 +14,7 @@ class Model(Config):
         self.chunk_current = 0
         self.eng_chunks = []
         self.rus_chunks = []
-        self.current_select = self.app.FRAGMENT_BOOK_DIR
+        self.current_select = None
         Config.__init__(self, self.app)
 
     def set_sound_pos(self, value: float):

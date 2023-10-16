@@ -8,10 +8,12 @@ from .log import Log
 class Config(Log):
     OPTIONS_JSON = "options.json"
     DISABLE_MARKER = "img/marker.png"
-    FRAGMENT_BOOK_DIR = "data/Kafka_Franz_-_The_Metamorphosis/"
+    # FRAGMENT_BOOK_DIR = "data/Kafka_Franz_-_The_Metamorphosis/"
 
     GITHUB_SYNCBOOKER = "https://github.com/xayam/syncbooker"
-    UPDATE_URL = "https://cloud.mail.ru/public/rdBB/KHvCjQdaT"
+    UPDATE_URL = "https://cloud.mail.ru/public/rdBB/KHvCjQdaT/Android/"
+    LIST_FILE = "list.zip"
+    LIST_URL = UPDATE_URL + LIST_FILE
     SYNCBOOKER_CHAT = "https://t.me/syncbooker_chat"
     SYNCBOOKER_TELEGRAM = "@syncbooker_chat"
     EMAIL = "xayam@yandex.ru"

@@ -132,20 +132,20 @@ class Table(TabbedPanelItem):
         if not (self.clock_action is None):
             self.clock_action.cancel()
         self.app.log(f"touch pos={pos}")
-        if instance == self.app.table_label_left:
-            sync = self.app.eng_sync
-            chunk = self.app.eng_chunks
-        else:
-            sync = self.app.rus_sync
-            chunk = self.app.rus_chunks
+        try:
+            if instance == self.app.table_label_left:
+                sync = self.app.eng_sync
+                chunk = self.app.eng_chunks
+            else:
+                sync = self.app.rus_sync
+                chunk = self.app.rus_chunks
 
-        for p in range(self.app.chunk_current):
-            pos += len(chunk[p])
+            for p in range(self.app.chunk_current):
+                pos += len(chunk[p])
 
-        for i in range(len(sync)):
-            if sync[i][POS_START] > pos:
-                self.app.log("self.app.sound stop and reload")
-                try:
+            for i in range(len(sync)):
+                if sync[i][POS_START] > pos:
+                    self.app.log("self.app.sound stop and reload")
                     self.app.sound.stop()
                     self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                     self.app.set_sound_pos(sync[i][TIME_START])
@@ -159,16 +159,15 @@ class Table(TabbedPanelItem):
                             self.app.current_select + self.app.RUS_AUDIO). \
                             load_seek(self.app.get_sound_pos())
                         self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
-                except AttributeError:
-                    self.app.log("WARNING, AttributeError (ignored this)")
-                    self.touch_pos = 0
-                    self.app.container.switch_to(self.app.catalog)
+                    self.app.save_options()
+                    self.app.log(f"create clock Clock.schedule_interval(self.clock_action_time)")
+                    self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                     return
-
-                self.app.save_options()
-                self.app.log(f"create clock Clock.schedule_interval(self.clock_action_time)")
-                self.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
-                return
+        except AttributeError:
+            self.app.log("WARNING, AttributeError (ignored this)")
+            self.touch_pos = 0
+            self.app.container.switch_to(self.app.catalog)
+            return
 
     def clock_action_time(self, event=None):
         self.app.log("enter to function 'clock_action_time'")

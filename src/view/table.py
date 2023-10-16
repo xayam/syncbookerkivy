@@ -1,12 +1,9 @@
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.tabbedpanel import TabbedPanelItem
 from kivy.uix.textinput import TextInput
-from kivymd.uix.button.button import MDRoundFlatButton
+from kivy.uix.button import Button as MDRoundFlatButton
 from kivy.uix.tabbedpanel import TabbedPanelItem
 
 from src.controller.proxy import Proxy
@@ -25,10 +22,7 @@ class Table(TabbedPanelItem):
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
 
-        self.table_navigator = GridLayout(rows=5,
-                                          size_hint_x=0.3,
-                                          padding=[20, 20],
-                                          spacing=20)
+        self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
         self.table_prev = MDRoundFlatButton(text="Prev",
                                             on_release=self.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)

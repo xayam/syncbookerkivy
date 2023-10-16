@@ -1,5 +1,6 @@
-from kivymd.app import MDApp as KivyApp
+from kivy.app import App as KivyApp
 from kivy.uix.tabbedpanel import TabbedPanel
+
 from .catalog import Catalog
 from .table import Table
 # from .options import Options

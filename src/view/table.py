@@ -24,40 +24,39 @@ class Table(TabbedPanelItem):
         self.table_gridlayout = GridLayout(cols=3)
 
         self.table_navigator = BoxLayout(size_hint=(None, None),
-                                         size=(84, 64),
+                                         size=(148, 64),
                                          padding=[10, 10],
                                          spacing=10,
                                          orientation="vertical")
 
         self.table_prev = Button(text="Prev",
                                  size_hint=(None, None),
-                                 size=(64, 64),
+                                 size=(128, 128),
                                  on_press=self.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)
 
         self.table_play = Button(background_normal="img/play.png",
                                  background_down="img/play_pressed.png",
                                  size_hint=(None, None),
-                                 size=(64, 64),
-                                 pos_hint={"center_y":0.5},
+                                 size=(128, 128),
                                  on_press=self.play_button_click)
         self.table_navigator.add_widget(self.table_play)
 
         self.table_pause = Button(text="Pause",
                                   size_hint=(None, None),
-                                  size=(64, 64),
+                                  size=(128, 128),
                                   on_press=self.pause_button_click)
         self.table_navigator.add_widget(self.table_pause)
 
         self.table_stop = Button(text="Stop",
                                  size_hint=(None, None),
-                                 size=(64, 64),
+                                 size=(128, 128),
                                  on_press=self.stop_button_click)
         self.table_navigator.add_widget(self.table_stop)
 
         self.table_next = Button(text="Next",
                                  size_hint=(None, None),
-                                 size=(64, 64),
+                                 size=(128, 128),
                                  on_press=self.next_button_click)
         self.table_navigator.add_widget(self.table_next)
 

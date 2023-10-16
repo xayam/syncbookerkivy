@@ -12,6 +12,21 @@ from src.controller.downloader import Downloader
 from src.model.utils import *
 from src.controller.proxy import Proxy
 
+from kivy.uix.popup import Popup
+# from kivy.factory import Factory
+from kivy.properties import StringProperty
+# from kivy.clock import Clock
+import threading
+
+
+class PopupBox(Popup):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.pop_up_text = StringProperty()
+
+    def update_pop_up_text(self, p_message):
+        self.pop_up_text = p_message
+
 
 class Catalog(TabbedPanelItem):
     def __init__(self, app):
@@ -51,11 +66,6 @@ class Catalog(TabbedPanelItem):
         self.add_widget(self.item_catalog_boxlayout)
 
     def catalog_button_click(self, value=None):
-        valid = value.background_normal[:-4] + "/valid"
-        if not os.path.exists(valid):
-            path = value.background_normal[5:-4]
-            zip = path + ".zip"
-            self.app.downloader.download_book(zip)
         current = self.dir_books[value.background_normal]
         self.app.log(f"Selected book - '{current}'")
         if not(self.app.table.clock_action is None):
@@ -70,7 +80,13 @@ class Catalog(TabbedPanelItem):
         except KeyError:
             self.app.set_sound_pos(0.0)
             self.app.option[POSITIONS][self.app.current_select] = {POSI: "0", AUDIO: EN}
-        # TODO
+        self.valid = value.background_normal[:-4] + "/valid"
+        path = value.background_normal[5:-4]
+        self.zip = path + ".zip"
+        self.show_popup()
+        thread_download = threading.Thread(target=self.download_zip)
+        thread_download.start()
+        thread_download.join()
         self.app.container.switch_to(self.app.table)
         self.app.pre_load()
         Proxy.load_text_book(self,
@@ -79,3 +95,13 @@ class Catalog(TabbedPanelItem):
         Proxy.load_text_book(self,
                              self.app.table_label_right,
                              self.app.rus_chunks[self.app.chunk_current])
+
+    def show_popup(self):
+        self.pop_up = PopupBox()
+        self.pop_up.update_pop_up_text('Downloading...')
+        self.pop_up.open()
+
+    def download_zip(self):
+        if not os.path.exists(self.valid):
+            self.app.downloader.download_book(self.zip)
+        self.pop_up.dismiss()

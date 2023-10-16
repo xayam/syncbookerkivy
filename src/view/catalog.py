@@ -107,7 +107,7 @@ class Catalog(TabbedPanelItem):
 
     def show_popup(self):
         self.app.content = GridLayout(cols=1)
-        self.app.content_label = Label(text=f"Load book '{self.zip}'")
+        self.app.content_label = Label(text=f"Load file '{self.zip}'")
         self.app.content.add_widget(self.app.content_label)
         self.app.popup = Popup(title="Loading...",
                                size_hint=(None, None), size=(512, 256),

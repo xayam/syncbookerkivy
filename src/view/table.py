@@ -18,6 +18,7 @@ class Table(TabbedPanelItem):
         self.clock_doseek = None
         self.sound_state = 0
         self.touch_pos = 0
+        self.nonstop = False
         TabbedPanelItem.__init__(self, text="Table")
         self.table_gridlayout = GridLayout(cols=3)
 
@@ -87,8 +88,8 @@ class Table(TabbedPanelItem):
         self.add_widget(self.table_gridlayout)
 
     def next_chunk(self):
-        if not (self.clock_action is None):
-            self.clock_action.cancel()
+        # if not (self.clock_action is None):
+        #     self.clock_action.cancel()
         self.app.chunk_current += 1
         if self.app.chunk_current >= len(self.app.eng_chunks):
             self.app.chunk_current = 0
@@ -231,6 +232,7 @@ class Table(TabbedPanelItem):
                                     for p in range(self.app.chunk_current):
                                         position -= len(chunk[p])
                                     if position > len(chunk[self.app.chunk_current]):
+                                        self.nonstop = True
                                         self.next_chunk()
                                         return
                                     try:
@@ -320,6 +322,10 @@ class Table(TabbedPanelItem):
             return
         self.app.log("MySound().load_seek")
         try:
+            if self.nonstop:
+                self.app.log("self.nonstop is True")
+                self.nonstop = False
+                return
             self.app.sound.stop()
             self.clock_action.cancel()
         except AttributeError:

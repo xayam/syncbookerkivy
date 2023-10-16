@@ -45,7 +45,9 @@ class Downloader:
         return resp
 
     def cm_get_direct_link(self, url, file_zip):
+        self.app.log("Enter to function cm_get_direct_link()")
         data = self.cm_get_info(url)
+        self.app.log("Regex data")
         result1 = re.findall(r'weblink_get.+?"url":"(https:.+?)"',
                              data, flags=re.UNICODE)
         print(result1)

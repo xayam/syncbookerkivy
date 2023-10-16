@@ -1,6 +1,5 @@
 import os
 import threading
-import time
 
 from kivy import platform
 from kivy.clock import Clock
@@ -22,6 +21,7 @@ from src.controller.proxy import Proxy
 
 class Catalog(TabbedPanelItem):
     def __init__(self, app):
+        self.popup = None
         self.app = app
         self.dir_books = {}
         self.app.downloader = Downloader(self.app)
@@ -104,15 +104,18 @@ class Catalog(TabbedPanelItem):
         Proxy.load_text_book(self,
                              self.app.table_label_right,
                              self.app.rus_chunks[self.app.chunk_current])
+
     def show_popup(self):
-        self.content = GridLayout(cols=1)
-        self.content.add_widget(Label(text=f"Download book '{self.zip}'"))
-        self.popup = Popup(title="Downloading...",
-                           size_hint=(None, None), size=(512, 256),
-                           content=self.content, disabled=True)
-        self.popup.open()
+        self.app.content = GridLayout(cols=1)
+        self.app.content_label = Label(text=f"Load book '{self.zip}'")
+        self.app.content.add_widget(self.app.content_label)
+        self.app.popup = Popup(title="Loading...",
+                               size_hint=(None, None), size=(512, 256),
+                               content=self.app.content, disabled=True)
+        self.app.popup.open()
 
     def download_zip(self):
         if not os.path.exists(self.valid):
             self.app.downloader.download_book(self.zip)
-        self.popup.dismiss()
+        self.app.popup.dismiss()
+

@@ -97,7 +97,9 @@ class Catalog(TabbedPanelItem):
         thread_download.start()
         self.app.log("thread_download join()")
         thread_download.join()
+        self.app.log("self.app.pre_load()")
         self.app.pre_load()
+        self.app.log("load_text_book()")
         Proxy.load_text_book(self,
                              self.app.table_label_left,
                              self.app.eng_chunks[self.app.chunk_current])
@@ -106,12 +108,12 @@ class Catalog(TabbedPanelItem):
                              self.app.rus_chunks[self.app.chunk_current])
 
     def show_popup(self):
-        self.app.content = GridLayout(cols=1)
-        self.app.content_label = Label(text=f"Load file '{self.zip}'")
-        self.app.content.add_widget(self.app.content_label)
+        self.app.popup_content = GridLayout(cols=1)
+        self.app.popup_label = Label(text=f"Load file '{self.zip}'")
+        self.app.popup_content.add_widget(self.app.popup_label)
         self.app.popup = Popup(title="Loading...",
-                               size_hint=(None, None), size=(512, 256),
-                               content=self.app.content, disabled=True)
+                               size_hint=(0.8, 0.5),
+                               content=self.app.popup_content, disabled=True)
         self.app.popup.open()
 
     def download_zip(self):

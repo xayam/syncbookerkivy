@@ -21,7 +21,7 @@ class Downloader:
         direct_link = self.cm_get_direct_link(self.app.LIST_URL, self.app.LIST_FILE)
         self.app.log(f"{direct_link}")
         resp = requests.get(direct_link,
-                            timeout=30,
+                            timeout=3,
                             verify=False,
                             headers=self.headers)
         self.app.log(f"Unzip list.zip")
@@ -33,7 +33,7 @@ class Downloader:
         self.app.log("Enter to function download_book()")
         direct_link = self.cm_get_direct_link(self.app.UPDATE_URL + book, book)
         resp = requests.get(direct_link,
-                            timeout=30,
+                            timeout=3,
                             verify=False,
                             headers=self.headers)
         z = zipfile.ZipFile(io.BytesIO(resp.content))
@@ -46,7 +46,7 @@ class Downloader:
     def cm_get_direct_link(self, url, file_zip):
         self.app.log("Enter to function cm_get_direct_link()")
         data = requests.get(url,
-                            timeout=30,
+                            timeout=3,
                             verify=False,
                             headers=self.headers).text
         self.app.log("Regex data")

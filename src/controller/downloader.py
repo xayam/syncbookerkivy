@@ -1,6 +1,5 @@
 import io
 import os
-import urllib.request
 import requests
 import re
 import zipfile
@@ -21,8 +20,6 @@ class Downloader:
         self.app.log("Enter to function update_list()")
         direct_link = self.cm_get_direct_link(self.app.LIST_URL, self.app.LIST_FILE)
         self.app.log(f"{direct_link}")
-        # resp = urllib.request.urlopen(
-        #     urllib.request.Request(direct_link, headers=self.headers)).read()
         resp = requests.get(direct_link, verify=False, headers=self.headers)
         self.app.log(f"Unzip list.zip")
         z = zipfile.ZipFile(io.BytesIO(resp.content))
@@ -32,9 +29,8 @@ class Downloader:
     def download_book(self, book):
         self.app.log("Enter to function download_book()")
         direct_link = self.cm_get_direct_link(self.app.UPDATE_URL + book, book)
-        resp = urllib.request.urlopen(
-            urllib.request.Request(direct_link, headers=self.headers)).read()
-        z = zipfile.ZipFile(io.BytesIO(resp))
+        resp = requests.get(direct_link, verify=False, headers=self.headers)
+        z = zipfile.ZipFile(io.BytesIO(resp.content))
         output_dir = "data/" + book[:-4]
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)

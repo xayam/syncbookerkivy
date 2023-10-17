@@ -27,6 +27,6 @@ class View(KivyApp):
         self.app.container.default_tab = self.app.table
         with self.app.table.table_gridlayout.canvas.before:
             Color(0, 0, 0, mode="rgb")
-            Rectangle(size=(10**6, Window.height - self.app.container.tab_height - 2),
+            Rectangle(size=(10**6, Window.height - self.app.container.tab_height - 6),
                       pos=(0, 0))
         return self.app.container

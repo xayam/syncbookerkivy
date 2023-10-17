@@ -95,7 +95,7 @@ class Table(TabbedPanelItem):
         self.add_widget(self.table_gridlayout)
         with self.table_gridlayout.canvas.before:
             Color(0, 0, 0, mode="rgb")
-            Rectangle(size=(10**6, Window.height - self.height // 2), pos=(0, 0))
+            Rectangle(size=(10**6, Window.height - self.height), pos=(0, 0))
 
     def next_chunk(self):
         # if not (self.clock_action is None):

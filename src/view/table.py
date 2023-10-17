@@ -1,5 +1,6 @@
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
+from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
@@ -23,10 +24,8 @@ class Table(TabbedPanelItem):
                                  background_normal="img/table.png",
                                  background_down="img/table_pressed.png")
         self.table_gridlayout = GridLayout(cols=3)
-
         self.table_navigator = GridLayout(rows=5,
-                                          size_hint_x=0.3,
-                                          padding=[10, 0], spacing=5)
+                                          size_hint_x=0.3)
         self.table_prev = MDRoundFlatButton(background_normal="img/prev.png",
                                             background_down="img/prev_pressed.png",
                                             on_release=self.prev_button_click)
@@ -57,6 +56,7 @@ class Table(TabbedPanelItem):
         self.app.table_book_left = ScrollView(do_scroll_x=False,
                                               do_scroll_y=True,
                                               bar_width=15)
+
         self.app.table_label_left = TextInput(size_hint=(1, None),
                                               focus=False,
                                               selection_color=self.app.option[SEL],
@@ -91,9 +91,11 @@ class Table(TabbedPanelItem):
         self.app.table_label_right.height = max(self.app.table_label_right.minimum_height,
                                                 self.app.table_book_right.height)
         self.app.table_book_right.add_widget(self.app.table_label_right)
-
         self.table_gridlayout.add_widget(self.app.table_book_right)
         self.add_widget(self.table_gridlayout)
+        # with self.app.table_book_right.canvas.before:
+        #     Color(0, 0, 0, mode='rgb')
+        #     Rectangle(pos=self.app.table_book_right.pos, size=self.app.table_book_right.size)
 
     def next_chunk(self):
         # if not (self.clock_action is None):

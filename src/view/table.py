@@ -19,28 +19,36 @@ class Table(TabbedPanelItem):
         self.sound_state = 0
         self.touch_pos = 0
         self.nonstop = False
-        TabbedPanelItem.__init__(self, text="Table")
+        TabbedPanelItem.__init__(self,
+                                 background_normal="img/table.png",
+                                 background_down="img/table_pressed.png")
         self.table_gridlayout = GridLayout(cols=3)
 
-        self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
+        self.table_navigator = GridLayout(rows=5,
+                                          size_hint_x=0.3,
+                                          padding=[10, 0], spacing=5)
         self.table_prev = MDRoundFlatButton(background_normal="img/prev.png",
                                             background_down="img/prev_pressed.png",
                                             on_release=self.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)
 
-        self.table_play = MDRoundFlatButton(text="Play",
+        self.table_play = MDRoundFlatButton(background_normal="img/play.png",
+                                            background_down="img/play_pressed.png",
                                             on_release=self.play_button_click)
         self.table_navigator.add_widget(self.table_play)
 
-        self.table_pause = MDRoundFlatButton(text="Pause",
+        self.table_pause = MDRoundFlatButton(background_normal="img/pause.png",
+                                             background_down="img/pause_pressed.png",
                                              on_release=self.pause_button_click)
         self.table_navigator.add_widget(self.table_pause)
 
-        self.table_stop = MDRoundFlatButton(text="Stop",
+        self.table_stop = MDRoundFlatButton(background_normal="img/stop.png",
+                                            background_down="img/stop_pressed.png",
                                             on_release=self.stop_button_click)
         self.table_navigator.add_widget(self.table_stop)
 
-        self.table_next = MDRoundFlatButton(text="Next",
+        self.table_next = MDRoundFlatButton(background_normal="img/next.png",
+                                            background_down="img/next_pressed.png",
                                             on_release=self.next_button_click)
         self.table_navigator.add_widget(self.table_next)
 

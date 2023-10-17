@@ -25,7 +25,9 @@ class Catalog(TabbedPanelItem):
         self.app = app
         self.dir_books = {}
         self.app.downloader = Downloader(self.app)
-        TabbedPanelItem.__init__(self, text="Catalog")
+        TabbedPanelItem.__init__(self,
+                                 background_normal="img/catalog.png",
+                                 background_down="img/catalog_pressed.png")
         self.app.catalog_input = TextInput(size_hint_y=None,
                                            font_size='16sp',
                                            multiline=False,

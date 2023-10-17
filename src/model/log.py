@@ -6,6 +6,7 @@ class Log:
     def __init__(self):
         pass
 
-    def log(self, message):
+    @staticmethod
+    def debug(message):
         if DEBUG:
-            print("DEBUG: " + message)
+            print(f"DEBUG: {message}")

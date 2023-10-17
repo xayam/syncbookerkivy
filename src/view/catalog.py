@@ -15,7 +15,7 @@ from kivy.core.window import Window
 from kivy.uix.popup import Popup
 
 from p4a import VERSION
-from src.controller.downloader import Downloader
+
 from src.model.utils import *
 from src.controller.proxy import Proxy
 
@@ -24,8 +24,6 @@ class Catalog(TabbedPanelItem):
     def __init__(self, app):
         self.popup = None
         self.app = app
-        self.dir_books = {}
-        self.app.downloader = Downloader(self.app)
         TabbedPanelItem.__init__(self,
                                  background_normal="img/catalog.png",
                                  background_down="img/catalog_pressed.png")
@@ -52,17 +50,12 @@ class Catalog(TabbedPanelItem):
                                  # Permission.READ_MEDIA_AUDIO
                                  ])
 
-        self.app.downloader.update_list()
-
-        for i in os.listdir("data"):
-            if os.path.isfile("data/" + i) and (i[-4:] == ".jpg"):
-                cover = f"data/{i}"
-                self.dir_books[cover] = f"data/{i[:-4]}/"
-                button = Button(size_hint=(None, 1),
-                                width=(Window.size[0] - 3 * 140) // 2,
-                                background_normal=cover,
-                                on_release=self.catalog_button_click)
-                self.catalog_buttons.add_widget(button)
+        for cover in self.app.stor.storage_books:
+            button = Button(size_hint=(None, 1),
+                            width=(Window.size[0] - 3 * 140) // 2,
+                            background_normal=cover,
+                            on_release=self.catalog_button_click)
+            self.catalog_buttons.add_widget(button)
         self.catalog_scrollview.add_widget(self.catalog_buttons)
 
         self.item_catalog_boxlayout = BoxLayout(orientation="vertical")
@@ -76,44 +69,46 @@ class Catalog(TabbedPanelItem):
 
 
     def catalog_button_click(self, value=None):
-        current = self.dir_books[value.background_normal]
-        self.app.log(f"Selected book - '{current}'")
+        current = self.app.stor.storage_books[value.background_normal]
+        self.app.log.debug(f"Selected book - '{current}'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
         self.app.current_select = current
         try:
             self.app.sound.stop()
         except AttributeError:
-            self.app.log("Warning: AttributeError (ignored this)")
+            self.app.log.debug("Warning: AttributeError (ignored this)")
         try:
-            self.app.set_sound_pos(float(self.app.option[POSITIONS][self.app.current_select][POSI]))
+            self.app.set_sound_pos(float(self.app.opt[POSITIONS][self.app.current_select][POSI]))
         except KeyError:
             self.app.set_sound_pos(0.0)
-            self.app.option[POSITIONS][self.app.current_select] = {POSI: "0", AUDIO: EN}
+            self.app.opt[POSITIONS][self.app.current_select] = {POSI: "0", AUDIO: EN}
         self.valid = value.background_normal[:-4] + "/valid"
-        path = value.background_normal[5:-4]
-        self.zip = path + ".zip"
+        self.zip = self.app.current_select[5:-1] + ".zip"
         self.app.container.switch_to(self.app.table)
-        self.app.log("self.show_popup()")
+        self.app.log.debug("self.show_popup()")
         self.show_popup()
         Clock.schedule_once(self.delay_start, timeout=1)
 
     def delay_start(self, event=None):
-        self.app.log("thread_download create")
+        self.app.log.debug("thread_download create")
         thread_download = threading.Thread(target=self.download_zip)
-        self.app.log("thread_download start()")
+        self.app.log.debug("thread_download start()")
         thread_download.start()
-        self.app.log("thread_download join()")
+        self.app.log.debug("thread_download join()")
         thread_download.join()
-        self.app.log("self.app.pre_load()")
-        self.app.pre_load()
-        self.app.log("load_text_book()")
+        self.app.syncs[self.app.current_select].loads()
+        self.app.log.debug("load_text_book()")
         Proxy.load_text_book(self,
                              self.app.table_label_left,
-                             self.app.eng_chunks[self.app.chunk_current])
+                             self.app.syncs[self.app.current_select].chunks1[
+                                 self.app.chunk_current
+                             ])
         Proxy.load_text_book(self,
                              self.app.table_label_right,
-                             self.app.rus_chunks[self.app.chunk_current])
+                             self.app.syncs[self.app.current_select].chunks2[
+                                 self.app.chunk_current
+                             ])
 
     def show_popup(self):
         self.app.popup_content = GridLayout(cols=1)
@@ -126,6 +121,6 @@ class Catalog(TabbedPanelItem):
 
     def download_zip(self):
         if not os.path.exists(self.valid):
-            self.app.downloader.download_book(self.zip)
+            self.app.stor.storage_book(self.zip)
         self.app.popup.dismiss()
 

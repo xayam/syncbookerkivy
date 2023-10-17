@@ -10,91 +10,91 @@ class Action:
         self.app = app
 
     def touch_up_click(self, instance, event):
-        self.app.log("enter to function 'touch_up_click'")
+        self.app.log.debug("Enter to function 'touch_up_click'")
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
         if self.app.touch_pos == pos:
             return
         self.app.touch_pos = pos
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
-        self.app.log(f"touch pos={pos}")
+        self.app.log.debug(f"touch pos={pos}")
         try:
             if instance == self.app.table_label_left:
-                sync = self.app.eng_sync
-                chunk = self.app.eng_chunks
+                sync = self.app.syncs[self.app.current_select].book1.sync
+                chunk = self.app.syncs[self.app.current_select].chunks1
             else:
-                sync = self.app.rus_sync
-                chunk = self.app.rus_chunks
+                sync = self.app.syncs[self.app.current_select].book2.sync
+                chunk = self.app.syncs[self.app.current_select].chunks2
 
             for p in range(self.app.chunk_current):
                 pos += len(chunk[p])
 
             for i in range(len(sync)):
                 if sync[i][POS_START] > pos:
-                    self.app.log("self.app.sound stop and reload")
+                    self.app.log.debug("self.app.sound stop and reload")
                     self.app.sound.stop()
-                    self.app.option[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
+                    self.app.opt[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                     self.app.set_sound_pos(sync[i][TIME_START])
                     if instance == self.app.table_label_left:
                         self.app.sound = SoundLoader.load(
-                            self.app.current_select + self.app.ENG_AUDIO). \
+                            self.app.current_select + self.app.conf.ENG_AUDIO). \
                             load_seek(self.app.get_sound_pos())
-                        self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
+                        self.app.opt[POSITIONS][self.app.current_select][AUDIO] = EN
                     else:
                         self.app.sound = SoundLoader.load(
-                            self.app.current_select + self.app.RUS_AUDIO). \
+                            self.app.current_select + self.app.conf.RUS_AUDIO). \
                             load_seek(self.app.get_sound_pos())
-                        self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
-                    self.app.save_options()
-                    self.app.log(f"create clock Clock.schedule_interval(self.clock_action_time)")
+                        self.app.opt[POSITIONS][self.app.current_select][AUDIO] = RU
+                    self.app.conf.save_options()
+                    self.app.log.debug(f"create clock Clock.schedule_interval(self.clock_action_time)")
                     self.app.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                     return
-        except AttributeError:
-            self.app.log("WARNING, AttributeError (ignored this)")
+        except KeyError:
+            self.app.log.debug("WARNING, KeyError (ignored this)")
             self.app.touch_pos = 0
             self.app.container.switch_to(self.app.catalog)
             return
 
     def clock_action_time(self, event=None):
-        self.app.log("enter to function 'clock_action_time'")
-        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
+        self.app.log.debug("Enter to function 'clock_action_time()'")
+        if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS
             text_area = self.app.table_label_left
             book_area = self.app.table_book_left
-            sync = self.app.eng_sync
+            sync = self.app.syncs[self.app.current_select].book1.sync
+            sync_other = self.app.syncs[self.app.current_select].book2.sync
             text_area_other = self.app.table_label_right
             book_area_other = self.app.table_book_right
-            sync_other = self.app.rus_sync
-            chunk = self.app.eng_chunks
-            chunk_other = self.app.rus_chunks
+            chunk = self.app.syncs[self.app.current_select].chunks1
+            chunk_other = self.app.syncs[self.app.current_select].chunks2
         else:
             curr = L_POS
             curr_other = R_POS
             text_area = self.app.table_label_right
             book_area = self.app.table_book_right
-            sync = self.app.rus_sync
+            sync_other = self.app.syncs[self.app.current_select].book1.sync
+            sync = self.app.syncs[self.app.current_select].book2.sync
             text_area_other = self.app.table_label_left
             book_area_other = self.app.table_book_left
-            sync_other = self.app.eng_sync
-            chunk = self.app.rus_chunks
-            chunk_other = self.app.eng_chunks
+            chunk_other = self.app.syncs[self.app.current_select].chunks1
+            chunk = self.app.syncs[self.app.current_select].chunks2
         pos = self.app.sound.get_pos()
         if self.app.sound._ffplayer.get_pts() + 0.5 >= \
                 self.app.sound._ffplayer.get_metadata()['duration']:
             self.app.player.stop_button_click()
-            self.app.option[POSITIONS][self.app.current_select][POSI] = "0.0"
-            self.app.save_options()
+            self.app.opt[POSITIONS][self.app.current_select][POSI] = "0.0"
+            self.app.conf.save_options()
         for i in range(len(sync)):
             if sync[i][TIME_START] > pos:
-                for k in range(len(self.app.micro)):
-                    for j in range(len(self.app.micro[k])):
-                        if self.app.micro[k][j][curr] > sync[i][POS_START]:
+                for k in range(len(self.app.syncs[self.app.current_select].micro)):
+                    for j in range(len(self.app.syncs[self.app.current_select].micro[k])):
+                        if self.app.syncs[self.app.current_select].micro[k][j][curr] > sync[i][POS_START]:
                             for z in range(len(sync_other)):
-                                if self.app.micro[k][j][curr_other] > sync_other[z][POS_START]:
-                                    self.app.pos_end = self.app.micro[k][j][curr]
+                                if self.app.syncs[self.app.current_select].micro[k][j][curr_other] > sync_other[z][POS_START]:
+                                    self.app.pos_end = self.app.syncs[self.app.current_select].micro[k][j][curr]
                                     self.app.sync_i = i
-                                    self.app.pos_end_other = self.app.micro[k][j][curr_other]
+                                    self.app.pos_end_other = self.app.syncs[self.app.current_select].micro[k][j][curr_other]
                                     self.app.sync_other_i = z
                                     self.app.start = sync[i][TIME_START]
 
@@ -102,7 +102,7 @@ class Action:
                                     for p in range(self.app.chunk_current):
                                         position -= len(chunk[p])
                                     if position > len(chunk[self.app.chunk_current]):
-                                        self.nonstop = True
+                                        self.app.nonstop = True
                                         self.app.player.next_chunk()
                                         return
                                     try:
@@ -139,8 +139,8 @@ class Action:
                                             convert_distance_to_scroll(0, y)[1]
                                     except Exception:
                                         return
-                                    self.app.option[POSITIONS][self.app.current_select][POSI] = \
+                                    self.app.opt[POSITIONS][self.app.current_select][POSI] = \
                                         str(pos)
                                     self.app.set_sound_pos(pos)
-                                    self.app.save_options()
+                                    self.app.conf.save_options()
                                     return

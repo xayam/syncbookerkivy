@@ -30,3 +30,15 @@ L_WORDS = 2
 R_WORDS = 3
 L_a = 4
 L_b = 5
+
+# Scheme BOOK_ENG_SCHEME / BOOK_RUS_SCHEME
+ANNOT = 0
+TXT = 1
+FB2 = 2
+MP3 = 3
+SYNC = 4
+
+# Scheme BOOK_SCHEME
+COVER = 0
+MICRO_JSON = 1
+VALID = 2

@@ -1,12 +1,10 @@
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
-from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button as MDRoundFlatButton
 from kivy.uix.tabbedpanel import TabbedPanelItem
-from kivy.core.window import Window
 
 from src.controller.proxy import Proxy
 from src.model.utils import *
@@ -93,13 +91,8 @@ class Table(TabbedPanelItem):
         self.app.table_book_right.add_widget(self.app.table_label_right)
         self.table_gridlayout.add_widget(self.app.table_book_right)
         self.add_widget(self.table_gridlayout)
-        with self.table_gridlayout.canvas.before:
-            Color(0, 0, 0, mode="rgb")
-            Rectangle(size=(10**6, Window.height - self.height), pos=(0, 0))
 
     def next_chunk(self):
-        # if not (self.clock_action is None):
-        #     self.clock_action.cancel()
         self.app.chunk_current += 1
         if self.app.chunk_current >= len(self.app.eng_chunks):
             self.app.chunk_current = 0

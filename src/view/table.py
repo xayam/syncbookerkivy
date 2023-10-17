@@ -23,7 +23,8 @@ class Table(TabbedPanelItem):
         self.table_gridlayout = GridLayout(cols=3)
 
         self.table_navigator = GridLayout(rows=5, size_hint_x=0.3)
-        self.table_prev = MDRoundFlatButton(text="Prev",
+        self.table_prev = MDRoundFlatButton(background_normal="img/prev.png",
+                                            background_down="img/prev_pressed.png",
                                             on_release=self.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)
 

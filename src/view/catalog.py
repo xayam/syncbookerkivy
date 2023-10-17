@@ -3,6 +3,7 @@ import threading
 
 from kivy import platform
 from kivy.clock import Clock
+from kivy.graphics import Color, Rectangle
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -68,6 +69,11 @@ class Catalog(TabbedPanelItem):
         self.item_catalog_boxlayout.add_widget(self.app.catalog_input)
         self.item_catalog_boxlayout.add_widget(self.catalog_scrollview)
         self.add_widget(self.item_catalog_boxlayout)
+        with self.catalog_buttons.canvas.before:
+            Color(0, 0, 0, mode="rgb")
+            Rectangle(size=(10**6, 10**6), pos=(-10**3, 0))
+
+
 
     def catalog_button_click(self, value=None):
         current = self.dir_books[value.background_normal]

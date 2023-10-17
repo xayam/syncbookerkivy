@@ -1,10 +1,12 @@
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
+from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button as MDRoundFlatButton
 from kivy.uix.tabbedpanel import TabbedPanelItem
+from kivy.core.window import Window
 
 from src.controller.proxy import Proxy
 from src.model.utils import *
@@ -63,8 +65,7 @@ class Table(TabbedPanelItem):
                                               foreground_color=self.app.option[FG],
                                               handle_image_left=self.app.DISABLE_MARKER,
                                               handle_image_right=self.app.DISABLE_MARKER,
-                                              text="Select a book in the 'Catalog' section" +
-                                              "\n" * 50)
+                                              text="Select a book in the 'Catalog' section")
         self.app.table_label_left.is_focusable = False
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
         self.app.table_label_left.bind(on_touch_up=self.touch_up_click)
@@ -73,7 +74,6 @@ class Table(TabbedPanelItem):
                                                self.app.table_book_left.height)
         self.app.table_book_left.add_widget(self.app.table_label_left)
         self.table_gridlayout.add_widget(self.app.table_book_left)
-
         self.app.table_book_right = ScrollView(do_scroll_x=False,
                                                do_scroll_y=True,
                                                bar_width=15)
@@ -84,8 +84,7 @@ class Table(TabbedPanelItem):
                                                foreground_color=self.app.option[FG],
                                                handle_image_left=self.app.DISABLE_MARKER,
                                                handle_image_right=self.app.DISABLE_MARKER,
-                                               text="Выберите книгу в разделе 'Catalog'" +
-                                               "\n" * 50)
+                                               text="Выберите книгу в разделе 'Catalog'")
         self.app.table_label_right.is_focusable = False
         self.app.table_label_right.bind(text=self.on_text_table_label_right)
         self.app.table_label_right.bind(on_touch_up=self.touch_up_click)
@@ -94,6 +93,9 @@ class Table(TabbedPanelItem):
         self.app.table_book_right.add_widget(self.app.table_label_right)
         self.table_gridlayout.add_widget(self.app.table_book_right)
         self.add_widget(self.table_gridlayout)
+        with self.table_gridlayout.canvas.before:
+            Color(0, 0, 0, mode="rgb")
+            Rectangle(size=(10**6, Window.height - self.height // 2), pos=(0, 0))
 
     def next_chunk(self):
         # if not (self.clock_action is None):

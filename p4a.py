@@ -1,6 +1,6 @@
 import subprocess
 
-VERSION = "0.176"
+VERSION = "0.177"
 
 ARCH = "armeabi-v7a"
 # ARCH = "x86_64"
@@ -13,7 +13,6 @@ command = \
     "--dist_name=syncbooker " + \
     '--name="SyncBooker" ' + \
     "--wakelock " + \
-    "--window " + \
     "--permission android.permission.INTERNET " + \
     "android.permission.READ_EXTERNAL_STORAGE " + \
     "android.permission.WRITE_EXTERNAL_STORAGE " + \

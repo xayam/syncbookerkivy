@@ -78,8 +78,8 @@ class Catalog(TabbedPanelItem):
     def catalog_button_click(self, value=None):
         current = self.dir_books[value.background_normal]
         self.app.log(f"Selected book - '{current}'")
-        if not (self.app.table.clock_action is None):
-            self.app.table.clock_action.cancel()
+        if not (self.app.clock_action is None):
+            self.app.clock_action.cancel()
         self.app.current_select = current
         try:
             self.app.sound.stop()

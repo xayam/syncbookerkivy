@@ -1,6 +1,5 @@
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
-from kivy.graphics import Color, Rectangle
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
@@ -64,7 +63,8 @@ class Table(TabbedPanelItem):
                                               foreground_color=self.app.option[FG],
                                               handle_image_left=self.app.DISABLE_MARKER,
                                               handle_image_right=self.app.DISABLE_MARKER,
-                                              text="Select a book in the 'Catalog' section")
+                                              text="Select a book in the 'Catalog' section" +
+                                              "\n" * 50)
         self.app.table_label_left.is_focusable = False
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
         self.app.table_label_left.bind(on_touch_up=self.touch_up_click)
@@ -84,7 +84,8 @@ class Table(TabbedPanelItem):
                                                foreground_color=self.app.option[FG],
                                                handle_image_left=self.app.DISABLE_MARKER,
                                                handle_image_right=self.app.DISABLE_MARKER,
-                                               text="Выберите книгу в разделе 'Catalog'")
+                                               text="Выберите книгу в разделе 'Catalog'" +
+                                               "\n" * 50)
         self.app.table_label_right.is_focusable = False
         self.app.table_label_right.bind(text=self.on_text_table_label_right)
         self.app.table_label_right.bind(on_touch_up=self.touch_up_click)
@@ -93,9 +94,6 @@ class Table(TabbedPanelItem):
         self.app.table_book_right.add_widget(self.app.table_label_right)
         self.table_gridlayout.add_widget(self.app.table_book_right)
         self.add_widget(self.table_gridlayout)
-        # with self.app.table_book_right.canvas.before:
-        #     Color(0, 0, 0, mode='rgb')
-        #     Rectangle(pos=self.app.table_book_right.pos, size=self.app.table_book_right.size)
 
     def next_chunk(self):
         # if not (self.clock_action is None):
@@ -330,7 +328,8 @@ class Table(TabbedPanelItem):
 
     def update_table_label_left(self, *args):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
-                                           self.app.table_label_left.line_height
+                                           (self.app.table_label_left.line_height +
+                                            self.app.table_label_left.line_spacing)
         if self.app.table_label_left.text == "":
             return
         self.app.log("MySound().load_seek")
@@ -357,4 +356,5 @@ class Table(TabbedPanelItem):
 
     def update_table_label_right(self, *args):
         self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \
-                                            self.app.table_label_right.line_height
+                                            (self.app.table_label_right.line_height +
+                                             self.app.table_label_right.line_spacing)

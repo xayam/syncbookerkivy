@@ -88,9 +88,9 @@ class Table(TabbedPanelItem):
                                            (self.app.table_label_left.line_height +
                                             self.app.table_label_left.line_spacing)
         # print("table_label_left.text[:10] = '" + self.app.table_label_left.text[:10] + "'")
-        # if self.app.table_label_left.text == " ":
-        #     self.app.log.debug("True is self.app.table_label_left.text == ' '")
-        #     return
+        if self.app.table_label_left.text == "\n" * 50:
+            self.app.log.debug("True is self.app.table_label_left.text == '\n'*50")
+            return
         self.app.log.debug("MySound().load_seek")
 
         if self.app.nonstop:

@@ -13,42 +13,35 @@ class Table(TabbedPanelItem):
     def __init__(self, app):
         self.app = app
         TabbedPanelItem.__init__(self,
-                                 background_normal="img/table.png",
-                                 background_down="img/table_pressed.png")
+                                 background_normal=self.app.conf.ICON_TABLE,
+                                 background_down=self.app.conf.ICON_TABLE_PRESSED)
         self.table_gridlayout = GridLayout(cols=3)
         self.table_navigator = GridLayout(rows=5,
                                           size_hint_x=0.3)
-        self.table_prev = Button(background_normal="img/prev.png",
-                                 background_down="img/prev_pressed.png",
+        self.table_prev = Button(background_normal=self.app.conf.ICON_PREV,
+                                 background_down=self.app.conf.ICON_PREV_PRESSED,
                                  on_release=self.app.player.prev_button_click)
         self.table_navigator.add_widget(self.table_prev)
-
-        self.table_play = Button(background_normal="img/play.png",
-                                 background_down="img/play_pressed.png",
+        self.table_play = Button(background_normal=self.app.conf.ICON_PLAY,
+                                 background_down=self.app.conf.ICON_PLAY_PRESSED,
                                  on_release=self.app.player.play_button_click)
         self.table_navigator.add_widget(self.table_play)
-
-        self.table_pause = Button(background_normal="img/pause.png",
-                                  background_down="img/pause_pressed.png",
+        self.table_pause = Button(background_normal=self.app.conf.ICON_PAUSE,
+                                  background_down=self.app.conf.ICON_PAUSE_PRESSED,
                                   on_release=self.app.player.pause_button_click)
         self.table_navigator.add_widget(self.table_pause)
-
-        self.table_stop = Button(background_normal="img/stop.png",
-                                 background_down="img/stop_pressed.png",
+        self.table_stop = Button(background_normal=self.app.conf.ICON_STOP,
+                                 background_down=self.app.conf.ICON_STOP_PRESSED,
                                  on_release=self.app.player.stop_button_click)
         self.table_navigator.add_widget(self.table_stop)
-
-        self.table_next = Button(background_normal="img/next.png",
-                                 background_down="img/next_pressed.png",
+        self.table_next = Button(background_normal=self.app.conf.ICON_NEXT,
+                                 background_down=self.app.conf.ICON_NEXT_PRESSED,
                                  on_release=self.app.player.next_button_click)
         self.table_navigator.add_widget(self.table_next)
-
         self.table_gridlayout.add_widget(self.table_navigator)
-
         self.app.table_book_left = ScrollView(do_scroll_x=False,
                                               do_scroll_y=True,
                                               bar_width=15)
-
         self.app.table_label_left = TextInput(size_hint=(1, None),
                                               focus=False,
                                               selection_color=self.app.opt[SEL],
@@ -61,7 +54,6 @@ class Table(TabbedPanelItem):
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
         self.app.table_label_left.bind(on_touch_up=self.app.action.touch_up_click)
         self.app.table_label_left.bind(on_double_tap=self.app.action.double_tap)
-
         self.app.table_label_left.height = max(self.app.table_label_left.minimum_height,
                                                self.app.table_book_left.height)
         self.app.table_book_left.add_widget(self.app.table_label_left)
@@ -98,22 +90,23 @@ class Table(TabbedPanelItem):
         if self.app.table_label_left.text == "":
             return
         self.app.log.debug("MySound().load_seek")
+
+        if self.app.nonstop:
+            self.app.log.debug("True == self.app.nonstop")
+            self.app.nonstop = False
+            return
         try:
-            if self.app.nonstop:
-                self.app.log.debug("self.app.nonstop is True")
-                self.app.nonstop = False
-                return
             self.app.sound.stop()
             self.app.clock_action.cancel()
         except AttributeError:
-            self.app.log.debug("WARNING: AttributeError2 (ignored this)")
+            self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
         if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.app.sound = SoundLoader.load(self.app.current_select + self.app.conf.ENG_AUDIO). \
                 load_seek(self.app.get_sound_pos())
         else:
             self.app.sound = SoundLoader.load(self.app.current_select + self.app.conf.RUS_AUDIO). \
                 load_seek(self.app.get_sound_pos())
-        self.app.log.debug("Clock.schedule_interval(self.clock_action_time)")
+        self.app.log.debug("Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
         self.app.clock_action = Clock.schedule_interval(self.app.action.clock_action_time, 0.5)
 
     def on_text_table_label_right(self, instance, value):

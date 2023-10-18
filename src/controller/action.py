@@ -10,14 +10,14 @@ class Action:
         self.app = app
 
     def touch_up_click(self, instance, event):
-        self.app.log.debug("Enter to function 'touch_up_click'")
+        self.app.log.debug("Enter to function 'touch_up_click()'")
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
         if self.app.touch_pos == pos:
             return
         self.app.touch_pos = pos
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
-        self.app.log.debug(f"touch pos={pos}")
+        self.app.log.debug(f"Touch pos={pos}")
         try:
             if instance == self.app.table_label_left:
                 sync = self.app.syncs[self.app.current_select].book1.sync
@@ -31,7 +31,7 @@ class Action:
 
             for i in range(len(sync)):
                 if sync[i][POS_START] > pos:
-                    self.app.log.debug("self.app.sound stop and reload")
+                    self.app.log.debug("Stop and reload self.app.sound")
                     self.app.sound.stop()
                     self.app.opt[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
                     self.app.set_sound_pos(sync[i][TIME_START])
@@ -46,11 +46,11 @@ class Action:
                             load_seek(self.app.get_sound_pos())
                         self.app.opt[POSITIONS][self.app.current_select][AUDIO] = RU
                     self.app.conf.save_options()
-                    self.app.log.debug(f"create clock Clock.schedule_interval(self.clock_action_time)")
+                    self.app.log.debug(f"Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
                     self.app.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                     return
         except Exception as e:
-            self.app.log.debug("ERROR: " + e.__str__())
+            self.app.log.debug(type(e).__name__ + ": " + e.__str__())
             self.app.touch_pos = 0
             self.app.container.switch_to(self.app.catalog)
             return
@@ -77,7 +77,7 @@ class Action:
             chunk = self.app.syncs[self.app.current_select].chunks2
             sync = self.app.syncs[self.app.current_select].rus2eng
         pos = self.app.sound.get_pos()
-        if self.app.sound._ffplayer.get_pts() + 0.5 >= \
+        if self.app.sound._ffplayer.get_pts() + 1.0 >= \
                 self.app.sound._ffplayer.get_metadata()['duration']:
             self.app.player.stop_button_click()
             self.app.opt[POSITIONS][self.app.current_select][POSI] = "0.0"
@@ -106,7 +106,7 @@ class Action:
             position = sync[str(int(pos))][0]
             for p in range(self.app.chunk_current):
                 position -= len(chunk[p])
-            self.app.log.debug(f"position={position}")
+            self.app.log.debug(f"Position={position}")
 
             text_area.select_text(0, position)
             y1 = text_area.get_cursor_from_index(
@@ -124,7 +124,7 @@ class Action:
             position = sync[str(int(pos))][1]
             for p in range(self.app.chunk_current):
                 position -= len(chunk_other[p])
-            self.app.log.debug(f"position_other={position}")
+            self.app.log.debug(f"Position_other={position}")
 
             text_area_other.select_text(0, position)
             y1 = text_area_other.get_cursor_from_index(
@@ -138,8 +138,8 @@ class Action:
                 y = 0
             book_area_other.scroll_y = book_area_other. \
                 convert_distance_to_scroll(0, y)[1]
-        except KeyError as e:
-            self.app.log.debug(f"KeyError: {e.__str__()} (ignore this)")
+        except Exception as e:
+            self.app.log.debug(type(e).__name__ + ": " + e.__str__())
             return
 
         self.app.opt[POSITIONS][self.app.current_select][POSI] = str(pos)

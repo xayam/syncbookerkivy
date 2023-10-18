@@ -15,14 +15,16 @@ class MySound(SoundFFPy):
         self.state = 'stop'
         self.quitted = False
 
-        ff_opts = {'vn': True, 'sn': True,
-                   # 'ar': 48000, # audio rate
-                   # 'ac': 2, # count audio channel
-                   'ss': position  # seek position
-                   }
+        ff_opts = {
+            'vn': True,  # video mute
+            'sn': True,  # subtitle mute
+            'ss': position  # seek position
+            # 'ar': 48000, # audio rate
+            # 'ac': 2, # count audio channel
+        }
         if DEBUG:
-            print(f"DEBUG: 'ss':position={position}")
-            print(f"DEBUG: self._ffplayer = MediaPlayer({self.source})")
+            print(f"[MYDEBUG] Seek position ff_opts['ss'] is {position}")
+            print(f"[MYDEBUG] Set self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,
                                      callback=self._player_callback,
                                      loglevel='debug',

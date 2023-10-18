@@ -25,8 +25,8 @@ class Catalog(TabbedPanelItem):
         self.zip = None
         self.valid = None
         TabbedPanelItem.__init__(self,
-                                 background_normal="img/catalog.png",
-                                 background_down="img/catalog_pressed.png")
+                                 background_normal=self.app.conf.ICON_CATALOG,
+                                 background_down=self.app.conf.ICON_CATALOG_PRESSED)
         self.app.catalog_input = TextInput(size_hint_y=None,
                                            font_size='16sp',
                                            multiline=False,
@@ -58,6 +58,7 @@ class Catalog(TabbedPanelItem):
             Rectangle(size=(10 ** 6, 10 ** 6), pos=(-10 ** 3, 0))
 
     def catalog_button_click(self, value=None):
+        self.app.log.debug("Enter to function 'catalog_button_click()'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
 
@@ -68,7 +69,7 @@ class Catalog(TabbedPanelItem):
         try:
             self.app.sound.stop()
         except AttributeError:
-            self.app.log.debug("Warning: AttributeError1 (ignored this)")
+            self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
         try:
             self.app.current_select = current
             self.app.set_sound_pos(float(self.app.opt[POSITIONS][self.app.current_select][POSI]))
@@ -83,22 +84,19 @@ class Catalog(TabbedPanelItem):
         self.valid = value.background_normal[:-4] + "/" + self.app.conf.VALID
         self.zip = self.app.current_select[5:-1] + ".zip"
         self.app.container.switch_to(self.app.table)
-        self.app.log.debug("self.show_popup()")
         self.show_popup()
-        Clock.schedule_once(self.delay_start, timeout=1)
+        Clock.schedule_once(self.start_thread, timeout=1)
 
-    def delay_start(self, _):
-        self.app.log.debug("thread_download create")
+    def start_thread(self, _):
+        self.app.log.debug("Enter to function 'start_thread()'")
         thread_download = threading.Thread(target=self.download_zip)
-        self.app.log.debug("thread_download start()")
         thread_download.start()
-        self.app.log.debug("thread_download join()")
         thread_download.join()
         self.app.syncs[self.app.current_select].loads()
         Clock.schedule_once(self.delay_run, timeout=0)
 
     def delay_run(self, _):
-        self.app.log.debug("Enter to function delay_run()")
+        self.app.log.debug("Enter to function 'delay_run()'")
         self.app.table_label_left.text = \
             self.app.syncs[self.app.current_select].chunks1[
                 self.app.chunk_current
@@ -112,6 +110,7 @@ class Catalog(TabbedPanelItem):
         self.app.log.debug("Fired function catalog_double_tap() for Button widget")
 
     def show_popup(self):
+        self.app.log.debug("Enter to function 'show_popup()'")
         self.app.popup_content = GridLayout(cols=1)
         self.app.popup_label = Label(text=f"Load file '{self.zip}'")
         self.app.popup_content.add_widget(self.app.popup_label)
@@ -121,6 +120,7 @@ class Catalog(TabbedPanelItem):
         self.app.popup.open()
 
     def download_zip(self):
+        self.app.log.debug("Enter to function 'download_zip()'")
         if not os.path.exists(self.valid):
             self.app.stor.storage_book(self.zip)
         self.app.popup.dismiss()

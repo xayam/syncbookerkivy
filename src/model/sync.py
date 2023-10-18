@@ -24,13 +24,13 @@ class Sync:
         self.loaded = False
 
     def loads(self):
-        self.app.log.debug("Enter to function sync.loads()")
+        self.app.log.debug("Enter to function 'sync.loads()'")
         if not os.path.exists(self.valid):
             path = self.app.conf.UPDATE_URL + "/" + self.current_path[5:-1] + ".zip"
             self.app.log.debug(f"Try download '{path}'")
             self.app.stor.storage_book(path)
         if not self.loaded:
-            self.app.log.debug(f"self.loaded is False")
+            self.app.log.debug(f"False == self.loaded")
             self.book1 = Book(app=self.app, path=self.current_path, language=EN)
             self.book2 = Book(app=self.app, path=self.current_path, language=RU)
             with open(self.current_path + self.app.conf.BOOK_SCHEME[MICRO],
@@ -43,12 +43,12 @@ class Sync:
                       mode="r", encoding="UTF-8") as f:
                 self.rus2eng = json.load(f)
             self.split_book()
-            self.app.log.debug(f"len(self.chunks1)={len(self.chunks1)}")
-            self.app.log.debug(f"len(self.chunks2)={len(self.chunks2)}")
+            self.app.log.debug(f"Length of self.chunks1={len(self.chunks1)}")
+            self.app.log.debug(f"Length of self.chunks2={len(self.chunks2)}")
             self.loaded = True
 
     def split_book(self):
-        self.app.log.debug("Enter function split_book()")
+        self.app.log.debug("Enter function 'split_book()'")
         begin2 = 0
         begin1 = 0
         page = 1

@@ -29,7 +29,7 @@ class Player:
                 sync = self.app.syncs[self.app.current_select].book2.sync
                 chunk = self.app.syncs[self.app.current_select].chunks2
         except KeyError:
-            self.app.log.debug("KeyError1 (ignore this)")
+            self.app.log.debug("KeyError: self.app.opt[POSITIONS][self.app.current_select]")
             return
         position = 0
         for p in range(self.app.chunk_current):
@@ -41,6 +41,7 @@ class Player:
         Clock.schedule_once(self.delay_run, timeout=0)
 
     def delay_run(self, _):
+        self.app.log.debug("Enter to function 'delay_run()'")
         self.app.table_label_left.text = \
             self.app.syncs[self.app.current_select].chunks1[self.app.chunk_current]
         self.app.table_label_right.text = \
@@ -55,7 +56,7 @@ class Player:
             except KeyError:
                 self.app.chunk_current = 0
                 return
-        self.app.log.debug(f"chunk_current={self.app.chunk_current}")
+        self.app.log.debug(f"Current page chunk_current={self.app.chunk_current}")
         self.prev_next()
 
     def next_button_click(self, _):
@@ -67,12 +68,12 @@ class Player:
         except KeyError:
             self.app.chunk_current = 0
             return
-        self.app.log.debug(f"chunk_current={self.app.chunk_current}")
-        self.app.log.debug(f"len(eng_chunks)={len(self.app.syncs[self.app.current_select].chunks1)}")
+        self.app.log.debug(f"Current page chunk_current={self.app.chunk_current}")
+        self.app.log.debug(f"Length of chunks1={len(self.app.syncs[self.app.current_select].chunks1)}")
         self.prev_next()
 
     def play_button_click(self, _):
-        self.app.log.debug("Enter to function 'play_button_click'")
+        self.app.log.debug("Enter to function 'play_button_click()'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
         if self.app.sound is None:
@@ -83,7 +84,7 @@ class Player:
         Clock.schedule_once(self.delay_run, timeout=0)
 
     def stop_button_click(self, _=None):
-        self.app.log.debug("Enter to function 'stop_button_click'")
+        self.app.log.debug("Enter to function 'stop_button_click()'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
         if not (self.app.sound is None):
@@ -95,7 +96,7 @@ class Player:
             self.app.conf.save_options()
 
     def pause_button_click(self, _):
-        self.app.log.debug("Enter to function 'pause_button_click'")
+        self.app.log.debug("Enter to function 'pause_button_click()'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
         if not (self.app.sound is None):

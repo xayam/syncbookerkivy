@@ -38,10 +38,13 @@ class Storage:
                                 timeout=self.timeout,
                                 verify=self.verify,
                                 headers=self.headers)
-            self.app.log.debug(f"Unzip list.zip")
-            z = zipfile.ZipFile(io.BytesIO(resp.content))
-            z.extractall("data")
-            z.close()
+            if resp.status_code == 200:
+                self.app.log.debug(f"Unzip list.zip")
+                z = zipfile.ZipFile(io.BytesIO(resp.content))
+                z.extractall("data")
+                z.close()
+            else:
+                raise Exception(f"resp.StatusCode={resp.status_code}")
         except Exception as e:
             self.app.log.debug("ERROR: " + e.__str__())
 
@@ -53,11 +56,14 @@ class Storage:
                                 timeout=self.timeout,
                                 verify=self.verify,
                                 headers=self.headers)
-            z = zipfile.ZipFile(io.BytesIO(resp.content))
-            output_dir = "data/" + book[:-4]
-            if not os.path.exists(output_dir):
-                os.mkdir(output_dir)
-            z.extractall(output_dir)
-            z.close()
+            if resp.status_code == 200:
+                z = zipfile.ZipFile(io.BytesIO(resp.content))
+                output_dir = "data/" + book[:-4]
+                if not os.path.exists(output_dir):
+                    os.mkdir(output_dir)
+                z.extractall(output_dir)
+                z.close()
+            else:
+                raise Exception(f"resp.StatusCode={resp.status_code}")
         except Exception as e:
             self.app.log.debug("ERROR: " + e.__str__())

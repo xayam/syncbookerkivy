@@ -89,6 +89,7 @@ class Table(TabbedPanelItem):
         Clock.schedule_once(self.update_table_label_left, 1)
 
     def update_table_label_left(self, *args):
+        self.app.log.debug("Enter to function 'update_table_label_left()'")
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            (self.app.table_label_left.line_height +
                                             self.app.table_label_left.line_spacing)
@@ -103,7 +104,7 @@ class Table(TabbedPanelItem):
             self.app.sound.stop()
             self.app.clock_action.cancel()
         except AttributeError:
-            self.app.log.debug("WARNING: AttributeError (ignored this)")
+            self.app.log.debug("WARNING: AttributeError2 (ignored this)")
         if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
             self.app.sound = SoundLoader.load(self.app.current_select + self.app.conf.ENG_AUDIO). \
                 load_seek(self.app.get_sound_pos())
@@ -117,6 +118,7 @@ class Table(TabbedPanelItem):
         Clock.schedule_once(self.update_table_label_right, 1)
 
     def update_table_label_right(self, *args):
+        self.app.log.debug("Enter to function 'update_table_label_right()'")
         self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \
                                             (self.app.table_label_right.line_height +
                                              self.app.table_label_right.line_spacing)

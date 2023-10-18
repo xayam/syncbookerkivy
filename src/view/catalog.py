@@ -17,7 +17,6 @@ from kivy.uix.popup import Popup
 from p4a import VERSION
 
 from src.model.utils import *
-from src.controller.proxy import Proxy
 
 
 class Catalog(TabbedPanelItem):
@@ -64,21 +63,22 @@ class Catalog(TabbedPanelItem):
         self.add_widget(self.item_catalog_boxlayout)
         with self.catalog_buttons.canvas.before:
             Color(0, 0, 0, mode="rgb")
-            Rectangle(size=(10**6, 10**6), pos=(-10**3, 0))
-
-
+            Rectangle(size=(10 ** 6, 10 ** 6), pos=(-10 ** 3, 0))
 
     def catalog_button_click(self, value=None):
-        current = self.app.stor.storage_books[value.background_normal]
-        self.app.log.debug(f"Selected book - '{current}'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
-        self.app.current_select = current
+
+        current = self.app.stor.storage_books[value.background_normal]
+        self.app.log.debug(f"Selected book - '{current}'")
+        self.app.conf.load_options()
+
         try:
             self.app.sound.stop()
         except AttributeError:
-            self.app.log.debug("Warning: AttributeError (ignored this)")
+            self.app.log.debug("Warning: AttributeError1 (ignored this)")
         try:
+            self.app.current_select = current
             self.app.set_sound_pos(float(self.app.opt[POSITIONS][self.app.current_select][POSI]))
             self.app.chunk_current = \
                 self.app.opt[POSITIONS][self.app.current_select][CHUNK]
@@ -86,7 +86,8 @@ class Catalog(TabbedPanelItem):
             self.app.set_sound_pos(0.0)
             self.app.opt[POSITIONS][self.app.current_select] = {
                 POSI: "0", AUDIO: EN, CHUNK: 0}
-        self.valid = value.background_normal[:-4] + "/valid"
+            self.app.conf.save_options()
+        self.valid = value.background_normal[:-4] + "/" + self.app.conf.VALID
         self.zip = self.app.current_select[5:-1] + ".zip"
         self.app.container.switch_to(self.app.table)
         self.app.log.debug("self.show_popup()")
@@ -101,17 +102,19 @@ class Catalog(TabbedPanelItem):
         self.app.log.debug("thread_download join()")
         thread_download.join()
         self.app.syncs[self.app.current_select].loads()
-        self.app.log.debug("load_text_book()")
-        Proxy.load_text_book(self,
-                             self.app.table_label_left,
-                             self.app.syncs[self.app.current_select].chunks1[
-                                 self.app.chunk_current
-                             ])
-        Proxy.load_text_book(self,
-                             self.app.table_label_right,
-                             self.app.syncs[self.app.current_select].chunks2[
-                                 self.app.chunk_current
-                             ])
+
+        Clock.schedule_once(self.delay_run, timeout=0)
+
+    def delay_run(self, _):
+        self.app.log.debug("Enter to function delay_run()")
+        self.app.table_label_left.text = \
+            self.app.syncs[self.app.current_select].chunks1[
+                self.app.chunk_current
+            ]
+        self.app.table_label_right.text = \
+            self.app.syncs[self.app.current_select].chunks2[
+                self.app.chunk_current
+            ]
 
     def show_popup(self):
         self.app.popup_content = GridLayout(cols=1)
@@ -126,4 +129,3 @@ class Catalog(TabbedPanelItem):
         if not os.path.exists(self.valid):
             self.app.stor.storage_book(self.zip)
         self.app.popup.dismiss()
-

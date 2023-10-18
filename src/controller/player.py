@@ -1,7 +1,9 @@
-from src.controller.proxy import Proxy
+from kivy.clock import Clock
+
 from src.model.utils import *
 
 from .mysound import *
+
 
 class Player:
 
@@ -9,19 +11,14 @@ class Player:
         self.app = app
 
     def next_chunk(self):
+        self.app.log.debug("Enter to function 'next_chunk()'")
         self.app.chunk_current += 1
         if self.app.chunk_current >= len(self.app.syncs[self.app.current_select].chunks1):
             self.app.chunk_current = 0
-        Proxy.load_text_book(self,
-                             self.app.table_label_left,
-                             self.app.syncs[self.app.current_select].
-                             chunks1[self.app.chunk_current])
-        Proxy.load_text_book(self,
-                             self.app.table_label_right,
-                             self.app.syncs[self.app.current_select].
-                             chunks2[self.app.chunk_current])
+        Clock.schedule_once(self.delay_run, timeout=0)
 
     def prev_next(self):
+        self.app.log.debug("Enter to function 'prev_next()'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
         try:
@@ -32,6 +29,7 @@ class Player:
                 sync = self.app.syncs[self.app.current_select].book2.sync
                 chunk = self.app.syncs[self.app.current_select].chunks2
         except KeyError:
+            self.app.log.debug("KeyError1 (ignore this)")
             return
         position = 0
         for p in range(self.app.chunk_current):
@@ -40,23 +38,24 @@ class Player:
             if sync[z][POS_START] > position:
                 self.app.set_sound_pos(sync[z][TIME_START])
                 break
-        Proxy.load_text_book(self,
-                             self.app.table_label_left,
-                             self.app.syncs[self.app.current_select].
-                             chunks1[self.app.chunk_current])
-        Proxy.load_text_book(self,
-                             self.app.table_label_right,
-                             self.app.syncs[self.app.current_select].
-                             chunks2[self.app.chunk_current])
+        Clock.schedule_once(self.delay_run, timeout=0)
 
-    def prev_button_click(self, event=None):
+    def delay_run(self, _):
+        self.app.table_label_left.text = \
+            self.app.syncs[self.app.current_select].chunks1[self.app.chunk_current]
+        self.app.table_label_right.text = \
+            self.app.syncs[self.app.current_select].chunks2[self.app.chunk_current]
+
+    def prev_button_click(self, _):
+        self.app.log.debug("Enter to function 'prev_button_click()'")
         self.app.chunk_current -= 1
         if self.app.chunk_current < 0:
             self.app.chunk_current = len(self.app.syncs[self.app.current_select].chunks1) - 1
+        self.app.log.debug(f"chunk_current={self.app.chunk_current}")
         self.prev_next()
 
-    def next_button_click(self, event=None):
-        self.app.log.debug("Enter to function 'next_button_click'")
+    def next_button_click(self, _):
+        self.app.log.debug("Enter to function 'next_button_click()'")
         self.app.chunk_current += 1
         if self.app.chunk_current >= len(self.app.syncs[self.app.current_select].chunks1):
             self.app.chunk_current = 0
@@ -64,27 +63,21 @@ class Player:
         self.app.log.debug(f"len(eng_chunks)={len(self.app.syncs[self.app.current_select].chunks1)}")
         self.prev_next()
 
-    def play_button_click(self, event=None):
+    def play_button_click(self, _):
         self.app.log.debug("Enter to function 'play_button_click'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
         if self.app.sound is None:
             return
         self.app.sound.stop()
-        Proxy.load_text_book(self,
-                             self.app.table_label_left, "")
-        Proxy.load_text_book(self,
-                             self.app.table_label_right, "")
-        Proxy.load_text_book(self,
-                             self.app.table_label_left,
-                             self.app.syncs[self.app.current_select].
-                             chunks1[self.app.chunk_current])
-        Proxy.load_text_book(self,
-                             self.app.table_label_right,
-                             self.app.syncs[self.app.current_select].
-                             chunks2[self.app.chunk_current])
+        self.app.table_label_left.text = ""
+        self.app.table_label_right.text = ""
+        self.app.table_label_left.text = \
+            self.app.syncs[self.app.current_select].chunks1[self.app.chunk_current]
+        self.app.table_label_right.text = \
+            self.app.syncs[self.app.current_select].chunks2[self.app.chunk_current]
 
-    def stop_button_click(self, event=None):
+    def stop_button_click(self, _):
         self.app.log.debug("Enter to function 'stop_button_click'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()
@@ -96,7 +89,7 @@ class Player:
             self.app.opt[POSITIONS][self.app.current_select][CHUNK] = 0
             self.app.conf.save_options()
 
-    def pause_button_click(self, event=None):
+    def pause_button_click(self, _):
         self.app.log.debug("Enter to function 'pause_button_click'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()

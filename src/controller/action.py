@@ -55,7 +55,7 @@ class Action:
             self.app.container.switch_to(self.app.catalog)
             return
 
-    def clock_action_time(self, event=None):
+    def clock_action_time(self, _):
         self.app.log.debug("Enter to function 'clock_action_time()'")
         if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
             text_area = self.app.table_label_left
@@ -81,15 +81,31 @@ class Action:
             self.app.opt[POSITIONS][self.app.current_select][CHUNK] = 0
             self.app.conf.save_options()
             return
+
         try:
-            position = sync[str(int(pos))][0]
+            position = 0
+            for current in range(len(self.app.syncs[self.app.current_select].chunks1)):
+                position += len(chunk[current])
+                if position > sync[str(int(pos))][0]:
+                    if current != self.app.chunk_current:
+                        self.app.chunk_current = current
+                        self.app.opt[POSITIONS][self.app.current_select][CHUNK] = \
+                            self.app.chunk_current
+                        self.app.conf.save_options()
+                        self.app.table_label_left.text = \
+                            self.app.syncs[self.app.current_select].chunks1[self.app.chunk_current]
+                        self.app.table_label_right.text = \
+                            self.app.syncs[self.app.current_select].chunks2[self.app.chunk_current]
+                        return
+                    else:
+                        break
+
+            position1 = sync[str(int(pos))][0]
             for p in range(self.app.chunk_current):
-                position -= len(chunk[p])
-            if position > len(chunk[self.app.chunk_current]):
-                self.app.nonstop = True
-                self.app.player.next_chunk()
-                return
-            text_area.select_text(0, position)
+                position1 -= len(chunk[p])
+            self.app.log.debug(f"position={position1}")
+
+            text_area.select_text(0, position1)
             y1 = text_area.get_cursor_from_index(
                 text_area.selection_to)[1]
             text_area.cursor = (0, y1)
@@ -101,15 +117,12 @@ class Action:
                 y = 0
             book_area.scroll_y = book_area. \
                 convert_distance_to_scroll(0, y)[1]
-        except Exception as e:
-            self.app.log.debug("WARNING: " + e.__str__())
-            return
 
-        position = sync[str(int(pos))][1]
-        self.app.log.debug(f"self.app.poses[int(pos)]['other']={position}")
-        for p in range(self.app.chunk_current):
-            position -= len(chunk_other[p])
-        try:
+            position = sync[str(int(pos))][1]
+            for p in range(self.app.chunk_current):
+                position -= len(chunk_other[p])
+            self.app.log.debug(f"position_other={position}")
+
             text_area_other.select_text(0, position)
             y1 = text_area_other.get_cursor_from_index(
                 text_area_other.selection_to)[1]
@@ -122,11 +135,11 @@ class Action:
                 y = 0
             book_area_other.scroll_y = book_area_other. \
                 convert_distance_to_scroll(0, y)[1]
-        except Exception as e:
-            self.app.log.debug("WARNING: " + e.__str__())
+        except KeyError as e:
+            self.app.log.debug(f"KeyError: {e.__str__()} (ignore this)")
             return
+
         self.app.opt[POSITIONS][self.app.current_select][POSI] = str(pos)
         self.app.opt[POSITIONS][self.app.current_select][CHUNK] = self.app.chunk_current
         self.app.set_sound_pos(pos)
         self.app.conf.save_options()
-        return

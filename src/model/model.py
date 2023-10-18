@@ -1,9 +1,6 @@
-import json
-
 from .log import Log
 from .conf import Conf
 from .storage import Storage
-from .utils import *
 
 
 class Model:
@@ -27,7 +24,7 @@ class Model:
         self.app.stor.list()
 
     def set_sound_pos(self, value: float):
-        self.sound_pos = value
+        self.app.sound_pos = value
 
     def get_sound_pos(self):
-        return self.sound_pos
+        return self.app.sound_pos

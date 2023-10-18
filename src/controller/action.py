@@ -100,12 +100,12 @@ class Action:
                     else:
                         break
 
-            position1 = sync[str(int(pos))][0]
+            position = sync[str(int(pos))][0]
             for p in range(self.app.chunk_current):
-                position1 -= len(chunk[p])
-            self.app.log.debug(f"position={position1}")
+                position -= len(chunk[p])
+            self.app.log.debug(f"position={position}")
 
-            text_area.select_text(0, position1)
+            text_area.select_text(0, position)
             y1 = text_area.get_cursor_from_index(
                 text_area.selection_to)[1]
             text_area.cursor = (0, y1)

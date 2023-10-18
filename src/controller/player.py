@@ -34,9 +34,10 @@ class Player:
         position = 0
         for p in range(self.app.chunk_current):
             position += len(chunk[p])
-        for z in range(len(sync)):
-            if sync[z][POS_START] > position:
-                self.app.set_sound_pos(sync[z][TIME_START])
+        for i in range(len(sync)):
+            if sync[i][POS_START] > position:
+                self.app.log.debug(f"Set sound pos, self.app.set_sound_pos({sync[i][TIME_START]})")
+                self.app.set_sound_pos(sync[i][TIME_START])
                 break
         Clock.schedule_once(self.delay_run, timeout=0)
 
@@ -54,6 +55,7 @@ class Player:
             try:
                 self.app.chunk_current = len(self.app.syncs[self.app.current_select].chunks1) - 1
             except KeyError:
+                self.app.log.debug("KeyError: self.app.syncs[self.app.current_select].chunks1")
                 self.app.chunk_current = 0
                 return
         self.app.log.debug(f"Current page chunk_current={self.app.chunk_current}")

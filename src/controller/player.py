@@ -50,15 +50,23 @@ class Player:
         self.app.log.debug("Enter to function 'prev_button_click()'")
         self.app.chunk_current -= 1
         if self.app.chunk_current < 0:
-            self.app.chunk_current = len(self.app.syncs[self.app.current_select].chunks1) - 1
+            try:
+                self.app.chunk_current = len(self.app.syncs[self.app.current_select].chunks1) - 1
+            except KeyError:
+                self.app.chunk_current = 0
+                return
         self.app.log.debug(f"chunk_current={self.app.chunk_current}")
         self.prev_next()
 
     def next_button_click(self, _):
         self.app.log.debug("Enter to function 'next_button_click()'")
         self.app.chunk_current += 1
-        if self.app.chunk_current >= len(self.app.syncs[self.app.current_select].chunks1):
+        try:
+            if self.app.chunk_current >= len(self.app.syncs[self.app.current_select].chunks1):
+                self.app.chunk_current = 0
+        except KeyError:
             self.app.chunk_current = 0
+            return
         self.app.log.debug(f"chunk_current={self.app.chunk_current}")
         self.app.log.debug(f"len(eng_chunks)={len(self.app.syncs[self.app.current_select].chunks1)}")
         self.prev_next()
@@ -74,7 +82,7 @@ class Player:
         self.app.table_label_right.text = ""
         Clock.schedule_once(self.delay_run, timeout=0)
 
-    def stop_button_click(self, _):
+    def stop_button_click(self, _=None):
         self.app.log.debug("Enter to function 'stop_button_click'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()

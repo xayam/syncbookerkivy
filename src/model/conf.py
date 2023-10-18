@@ -57,13 +57,12 @@ class Conf:
 
     def __init__(self, app=None):
         self.app = app
-        self.books = []
         self.app.opt = {FG: (0, 0, 0, 1),
                         BG: (1, 1, 1, 1),
                         SEL: (1, 1, 0, 0.4),
                         POSITIONS: {
-                               i: {POSI: "0.0", AUDIO: EN
-                                   } for i in self.books}
+                               i: {POSI: "0.0", AUDIO: EN, CHUNK: 0
+                                   } for i in []}
                         }
         self.load_options()
 

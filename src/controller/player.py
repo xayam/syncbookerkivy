@@ -92,6 +92,9 @@ class Player:
             self.app.set_sound_pos(0.0)
             self.app.sound.stop()
             self.app.chunk_current = 0
+            self.app.opt[POSITIONS][self.app.current_select][POSI] = "0.0"
+            self.app.opt[POSITIONS][self.app.current_select][CHUNK] = 0
+            self.app.conf.save_options()
 
     def pause_button_click(self, event=None):
         self.app.log.debug("Enter to function 'pause_button_click'")
@@ -100,3 +103,8 @@ class Player:
         if not (self.app.sound is None):
             self.app.set_sound_pos(self.app.sound.get_pos())
             self.app.sound.stop()
+            self.app.opt[POSITIONS][self.app.current_select][POSI] = \
+                str(self.app.get_sound_pos())
+            self.app.opt[POSITIONS][self.app.current_select][CHUNK] = \
+                self.app.chunk_current
+            self.app.conf.save_options()

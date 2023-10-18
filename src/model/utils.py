@@ -13,6 +13,7 @@ FONTSIZE = "fontsize"
 POSITIONS = "positions"
 POSI = "posi"
 AUDIO = "audio"
+CHUNK = "chunk"
 
 # Scheme sync.json
 TIME_START = 0

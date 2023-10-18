@@ -78,6 +78,7 @@ class Action:
                 self.app.sound._ffplayer.get_metadata()['duration']:
             self.app.player.stop_button_click()
             self.app.opt[POSITIONS][self.app.current_select][POSI] = "0.0"
+            self.app.opt[POSITIONS][self.app.current_select][CHUNK] = 0
             self.app.conf.save_options()
             return
         try:
@@ -124,8 +125,8 @@ class Action:
         except Exception as e:
             self.app.log.debug("WARNING: " + e.__str__())
             return
-        self.app.opt[POSITIONS][self.app.current_select][POSI] = \
-            str(pos)
+        self.app.opt[POSITIONS][self.app.current_select][POSI] = str(pos)
+        self.app.opt[POSITIONS][self.app.current_select][CHUNK] = self.app.chunk_current
         self.app.set_sound_pos(pos)
         self.app.conf.save_options()
         return

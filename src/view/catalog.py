@@ -80,9 +80,12 @@ class Catalog(TabbedPanelItem):
             self.app.log.debug("Warning: AttributeError (ignored this)")
         try:
             self.app.set_sound_pos(float(self.app.opt[POSITIONS][self.app.current_select][POSI]))
+            self.app.chunk_current = \
+                self.app.opt[POSITIONS][self.app.current_select][CHUNK]
         except KeyError:
             self.app.set_sound_pos(0.0)
-            self.app.opt[POSITIONS][self.app.current_select] = {POSI: "0", AUDIO: EN}
+            self.app.opt[POSITIONS][self.app.current_select] = {
+                POSI: "0", AUDIO: EN, CHUNK: 0}
         self.valid = value.background_normal[:-4] + "/valid"
         self.zip = self.app.current_select[5:-1] + ".zip"
         self.app.container.switch_to(self.app.table)

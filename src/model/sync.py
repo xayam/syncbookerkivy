@@ -33,19 +33,22 @@ class Sync:
             self.app.log.debug(f"False == self.loaded")
             self.book1 = Book(app=self.app, path=self.current_path, language=EN)
             self.book2 = Book(app=self.app, path=self.current_path, language=RU)
-            with open(self.current_path + self.app.conf.BOOK_SCHEME[MICRO],
-                      mode="r", encoding="UTF-8") as f:
-                self.micro = json.load(f)
-            with open(self.current_path + self.app.conf.BOOK_SCHEME[ENG2RUS],
-                      mode="r", encoding="UTF-8") as f:
-                self.eng2rus = json.load(f)
-            with open(self.current_path + self.app.conf.BOOK_SCHEME[RUS2ENG],
-                      mode="r", encoding="UTF-8") as f:
-                self.rus2eng = json.load(f)
-            self.split_book()
-            self.app.log.debug(f"Length of self.chunks1={len(self.chunks1)}")
-            self.app.log.debug(f"Length of self.chunks2={len(self.chunks2)}")
-            self.loaded = True
+            try:
+                with open(self.current_path + self.app.conf.BOOK_SCHEME[MICRO],
+                          mode="r", encoding="UTF-8") as f:
+                    self.micro = json.load(f)
+                with open(self.current_path + self.app.conf.BOOK_SCHEME[ENG2RUS],
+                          mode="r", encoding="UTF-8") as f:
+                    self.eng2rus = json.load(f)
+                with open(self.current_path + self.app.conf.BOOK_SCHEME[RUS2ENG],
+                          mode="r", encoding="UTF-8") as f:
+                    self.rus2eng = json.load(f)
+                self.split_book()
+                self.app.log.debug(f"Length of self.chunks1={len(self.chunks1)}")
+                self.app.log.debug(f"Length of self.chunks2={len(self.chunks2)}")
+                self.loaded = True
+            except Exception as e:
+                self.app.log.debug(type(e).__name__ + ": " + e.__str__())
 
     def split_book(self):
         self.app.log.debug("Enter function 'split_book()'")

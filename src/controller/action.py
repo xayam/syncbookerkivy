@@ -58,89 +58,74 @@ class Action:
     def clock_action_time(self, event=None):
         self.app.log.debug("Enter to function 'clock_action_time()'")
         if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
-            curr = R_POS
-            curr_other = L_POS
             text_area = self.app.table_label_left
             book_area = self.app.table_book_left
-            sync = self.app.syncs[self.app.current_select].book1.sync
-            sync_other = self.app.syncs[self.app.current_select].book2.sync
             text_area_other = self.app.table_label_right
             book_area_other = self.app.table_book_right
             chunk = self.app.syncs[self.app.current_select].chunks1
             chunk_other = self.app.syncs[self.app.current_select].chunks2
+            sync = self.app.syncs[self.app.current_select].eng2rus
         else:
-            curr = L_POS
-            curr_other = R_POS
             text_area = self.app.table_label_right
             book_area = self.app.table_book_right
-            sync_other = self.app.syncs[self.app.current_select].book1.sync
-            sync = self.app.syncs[self.app.current_select].book2.sync
             text_area_other = self.app.table_label_left
             book_area_other = self.app.table_book_left
             chunk_other = self.app.syncs[self.app.current_select].chunks1
             chunk = self.app.syncs[self.app.current_select].chunks2
+            sync = self.app.syncs[self.app.current_select].rus2eng
         pos = self.app.sound.get_pos()
         if self.app.sound._ffplayer.get_pts() + 0.5 >= \
                 self.app.sound._ffplayer.get_metadata()['duration']:
             self.app.player.stop_button_click()
             self.app.opt[POSITIONS][self.app.current_select][POSI] = "0.0"
             self.app.conf.save_options()
-        for i in range(len(sync)):
-            if sync[i][TIME_START] > pos:
-                for k in range(len(self.app.syncs[self.app.current_select].micro)):
-                    for j in range(len(self.app.syncs[self.app.current_select].micro[k])):
-                        if self.app.syncs[self.app.current_select].micro[k][j][curr] > sync[i][POS_START]:
-                            for z in range(len(sync_other)):
-                                if self.app.syncs[self.app.current_select].micro[k][j][curr_other] > sync_other[z][POS_START]:
-                                    self.app.pos_end = self.app.syncs[self.app.current_select].micro[k][j][curr]
-                                    self.app.sync_i = i
-                                    self.app.pos_end_other = self.app.syncs[self.app.current_select].micro[k][j][curr_other]
-                                    self.app.sync_other_i = z
-                                    self.app.start = sync[i][TIME_START]
+            return
+        try:
+            position = sync[str(int(pos))][0]
+            for p in range(self.app.chunk_current):
+                position -= len(chunk[p])
+            if position > len(chunk[self.app.chunk_current]):
+                self.app.nonstop = True
+                self.app.player.next_chunk()
+                return
+            text_area.select_text(0, position)
+            y1 = text_area.get_cursor_from_index(
+                text_area.selection_to)[1]
+            text_area.cursor = (0, y1)
+            y = text_area.cursor_pos[1] - book_area.height + \
+                y1 * (text_area.line_height + text_area.line_spacing)
+            if y >= text_area.cursor_pos[1] - book_area.height // 2:
+                y = text_area.cursor_pos[1] - book_area.height // 2
+            if y < 0:
+                y = 0
+            book_area.scroll_y = book_area. \
+                convert_distance_to_scroll(0, y)[1]
+        except Exception as e:
+            self.app.log.debug("WARNING: " + e.__str__())
+            return
 
-                                    position = sync[i][POS_START]
-                                    for p in range(self.app.chunk_current):
-                                        position -= len(chunk[p])
-                                    if position > len(chunk[self.app.chunk_current]):
-                                        self.app.nonstop = True
-                                        self.app.player.next_chunk()
-                                        return
-                                    try:
-                                        text_area.select_text(0, position)
-                                        y1 = text_area.get_cursor_from_index(
-                                            text_area.selection_to)[1]
-                                        text_area.cursor = (0, y1)
-                                        y = text_area.cursor_pos[1] - book_area.height + \
-                                            y1 * (text_area.line_height + text_area.line_spacing)
-                                        if y >= text_area.cursor_pos[1] - book_area.height // 2:
-                                            y = text_area.cursor_pos[1] - book_area.height // 2
-                                        if y < 0:
-                                            y = 0
-                                        book_area.scroll_y = book_area. \
-                                            convert_distance_to_scroll(0, y)[1]
-                                    except Exception:
-                                        return
-
-                                    position = self.app.pos_end_other
-                                    for p in range(self.app.chunk_current):
-                                        position -= len(chunk_other[p])
-                                    try:
-                                        text_area_other.select_text(0, position)
-                                        y1 = text_area_other.get_cursor_from_index(
-                                            text_area_other.selection_to)[1]
-                                        text_area_other.cursor = (0, y1)
-                                        y = text_area_other.cursor_pos[1] - book_area_other.height + \
-                                            y1 * (text_area_other.line_height + text_area_other.line_spacing)
-                                        if y >= text_area_other.cursor_pos[1] - book_area_other.height // 2:
-                                            y = text_area_other.cursor_pos[1] - book_area_other.height // 2
-                                        if y < 0:
-                                            y = 0
-                                        book_area_other.scroll_y = book_area_other. \
-                                            convert_distance_to_scroll(0, y)[1]
-                                    except Exception:
-                                        return
-                                    self.app.opt[POSITIONS][self.app.current_select][POSI] = \
-                                        str(pos)
-                                    self.app.set_sound_pos(pos)
-                                    self.app.conf.save_options()
-                                    return
+        position = sync[str(int(pos))][1]
+        self.app.log.debug(f"self.app.poses[int(pos)]['other']={position}")
+        for p in range(self.app.chunk_current):
+            position -= len(chunk_other[p])
+        try:
+            text_area_other.select_text(0, position)
+            y1 = text_area_other.get_cursor_from_index(
+                text_area_other.selection_to)[1]
+            text_area_other.cursor = (0, y1)
+            y = text_area_other.cursor_pos[1] - book_area_other.height + \
+                y1 * (text_area_other.line_height + text_area_other.line_spacing)
+            if y >= text_area_other.cursor_pos[1] - book_area_other.height // 2:
+                y = text_area_other.cursor_pos[1] - book_area_other.height // 2
+            if y < 0:
+                y = 0
+            book_area_other.scroll_y = book_area_other. \
+                convert_distance_to_scroll(0, y)[1]
+        except Exception as e:
+            self.app.log.debug("WARNING: " + e.__str__())
+            return
+        self.app.opt[POSITIONS][self.app.current_select][POSI] = \
+            str(pos)
+        self.app.set_sound_pos(pos)
+        self.app.conf.save_options()
+        return

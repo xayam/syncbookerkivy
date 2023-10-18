@@ -1,6 +1,6 @@
 import subprocess
 
-VERSION = "1.1"
+VERSION = "1.2"
 
 ARCH = "armeabi-v7a"
 # ARCH = "x86_64"

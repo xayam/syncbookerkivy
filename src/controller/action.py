@@ -49,11 +49,14 @@ class Action:
                     self.app.log.debug(f"create clock Clock.schedule_interval(self.clock_action_time)")
                     self.app.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                     return
-        except KeyError:
-            self.app.log.debug("WARNING, KeyError (ignored this)")
+        except Exception as e:
+            self.app.log.debug("ERROR: " + e.__str__())
             self.app.touch_pos = 0
             self.app.container.switch_to(self.app.catalog)
             return
+
+    def double_tap(self, _=None, __=None, ___=None):
+        self.app.log.debug("Fired function double_tap() for TextInput widget")
 
     def clock_action_time(self, _):
         self.app.log.debug("Enter to function 'clock_action_time()'")

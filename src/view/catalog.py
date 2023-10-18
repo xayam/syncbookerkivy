@@ -45,6 +45,7 @@ class Catalog(TabbedPanelItem):
                             width=(Window.size[0] - 3 * 140) // 2,
                             background_normal=cover,
                             on_release=self.catalog_button_click)
+            button.bind(on_double_tap=self.catalog_double_tap)
             self.catalog_buttons.add_widget(button)
         self.catalog_scrollview.add_widget(self.catalog_buttons)
 
@@ -106,6 +107,9 @@ class Catalog(TabbedPanelItem):
             self.app.syncs[self.app.current_select].chunks2[
                 self.app.chunk_current
             ]
+
+    def catalog_double_tap(self, _=None, __=None, ___=None):
+        self.app.log.debug("Fired function catalog_double_tap() for Button widget")
 
     def show_popup(self):
         self.app.popup_content = GridLayout(cols=1)

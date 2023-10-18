@@ -60,6 +60,7 @@ class Table(TabbedPanelItem):
         self.app.table_label_left.is_focusable = False
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
         self.app.table_label_left.bind(on_touch_up=self.app.action.touch_up_click)
+        self.app.table_label_left.bind(on_double_tap=self.app.action.double_tap)
 
         self.app.table_label_left.height = max(self.app.table_label_left.minimum_height,
                                                self.app.table_book_left.height)
@@ -79,6 +80,7 @@ class Table(TabbedPanelItem):
         self.app.table_label_right.is_focusable = False
         self.app.table_label_right.bind(text=self.on_text_table_label_right)
         self.app.table_label_right.bind(on_touch_up=self.app.action.touch_up_click)
+        self.app.table_label_right.bind(on_double_tap=self.app.action.double_tap)
         self.app.table_label_right.height = max(self.app.table_label_right.minimum_height,
                                                 self.app.table_book_right.height)
         self.app.table_book_right.add_widget(self.app.table_label_right)

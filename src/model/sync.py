@@ -9,7 +9,6 @@ class Sync:
 
     def __init__(self, app, current_path):
         self.app = app
-        self.app.poses = {}
         self.current_path = current_path
 
         self.chunks1 = []
@@ -34,7 +33,7 @@ class Sync:
             self.app.log.debug(f"self.loaded is False")
             self.book1 = Book(app=self.app, path=self.current_path, language=EN)
             self.book2 = Book(app=self.app, path=self.current_path, language=RU)
-            with open(self.current_path + self.app.conf.BOOK_SCHEME[MICRO_JSON],
+            with open(self.current_path + self.app.conf.BOOK_SCHEME[MICRO],
                       mode="r", encoding="UTF-8") as f:
                 self.micro = json.load(f)
             with open(self.current_path + self.app.conf.BOOK_SCHEME[ENG2RUS],

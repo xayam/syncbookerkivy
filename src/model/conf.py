@@ -21,7 +21,7 @@ class Conf:
     ENG_ANNOT = "eng.annot.txt"
     RUS_SYNC = "rus.sync.json"
     ENG_SYNC = "eng.sync.json"
-    MICRO_JSON = "micro2.json"
+    MICRO = "micro2.json"
     ENG2RUS = "eng2rus.json"
     RUS2ENG = "rus2eng.json"
     ENG_FB2 = "eng.fb2"
@@ -49,7 +49,7 @@ class Conf:
     ]
     BOOK_SCHEME = [
         COVER,
-        MICRO_JSON,
+        MICRO,
         ENG2RUS,
         RUS2ENG,
         VALID

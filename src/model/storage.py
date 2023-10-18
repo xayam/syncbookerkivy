@@ -1,7 +1,6 @@
 import io
 import os
 import requests
-import re
 import zipfile
 
 from src.model.sync import Sync
@@ -34,7 +33,7 @@ class Storage:
         self.app.log.debug("Enter to function storage_list()")
         try:
             direct_link = self.app.conf.LIST_URL
-            self.app.log.debug(f"{direct_link}")
+            self.app.log.debug(f"Update {direct_link}")
             resp = requests.get(direct_link,
                                 timeout=self.timeout,
                                 verify=self.verify,

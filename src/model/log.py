@@ -9,4 +9,4 @@ class Log:
     @staticmethod
     def debug(message):
         if DEBUG:
-            print(f"DEBUG: {message}")
+            print(f"[MYDEBUG] {message}")

@@ -22,6 +22,8 @@ class Catalog(TabbedPanelItem):
     def __init__(self, app):
         self.popup = None
         self.app = app
+        self.zip = None
+        self.valid = None
         TabbedPanelItem.__init__(self,
                                  background_normal="img/catalog.png",
                                  background_down="img/catalog_pressed.png")
@@ -84,7 +86,7 @@ class Catalog(TabbedPanelItem):
         self.show_popup()
         Clock.schedule_once(self.delay_start, timeout=1)
 
-    def delay_start(self, event=None):
+    def delay_start(self, _):
         self.app.log.debug("thread_download create")
         thread_download = threading.Thread(target=self.download_zip)
         self.app.log.debug("thread_download start()")
@@ -92,7 +94,6 @@ class Catalog(TabbedPanelItem):
         self.app.log.debug("thread_download join()")
         thread_download.join()
         self.app.syncs[self.app.current_select].loads()
-
         Clock.schedule_once(self.delay_run, timeout=0)
 
     def delay_run(self, _):

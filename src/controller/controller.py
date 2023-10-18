@@ -9,4 +9,3 @@ class Controller:
 
         self.app.player = Player(self.app)
         self.app.action = Action(self.app)
-

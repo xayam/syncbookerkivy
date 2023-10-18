@@ -72,10 +72,7 @@ class Player:
         self.app.sound.stop()
         self.app.table_label_left.text = ""
         self.app.table_label_right.text = ""
-        self.app.table_label_left.text = \
-            self.app.syncs[self.app.current_select].chunks1[self.app.chunk_current]
-        self.app.table_label_right.text = \
-            self.app.syncs[self.app.current_select].chunks2[self.app.chunk_current]
+        Clock.schedule_once(self.delay_run, timeout=0)
 
     def stop_button_click(self, _):
         self.app.log.debug("Enter to function 'stop_button_click'")

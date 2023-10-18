@@ -16,9 +16,9 @@ class MySound(SoundFFPy):
         self.quitted = False
 
         ff_opts = {'vn': True, 'sn': True,
-                   # 'ar': 48000,
-                   # 'ac': 2,
-                   'ss': position
+                   # 'ar': 48000, # audio rate
+                   # 'ac': 2, # count audio channel
+                   'ss': position  # seek position
                    }
         if DEBUG:
             print(f"DEBUG: 'ss':position={position}")

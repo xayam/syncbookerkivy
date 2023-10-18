@@ -75,6 +75,7 @@ class Catalog(TabbedPanelItem):
             self.app.set_sound_pos(0.0)
             self.app.opt[POSITIONS][self.app.current_select] = {
                 POSI: "0", AUDIO: EN, CHUNK: 0}
+            self.app.chunk_current = 0
             self.app.conf.save_options()
         self.valid = value.background_normal[:-4] + "/" + self.app.conf.VALID
         self.zip = self.app.current_select[5:-1] + ".zip"

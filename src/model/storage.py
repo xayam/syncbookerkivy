@@ -44,7 +44,7 @@ class Storage:
             z.extractall("data")
             z.close()
         except Exception as e:
-            self.app.log.debug(e)
+            self.app.log.debug("ERROR: " + e.__str__())
 
     def storage_book(self, book):
         self.app.log.debug(f"Enter to function storage_book(book='{book}')")

@@ -37,6 +37,7 @@ class Player:
         for i in range(len(sync)):
             if sync[i][POS_START] > position:
                 self.app.log.debug(f"Set sound pos, self.app.set_sound_pos({sync[i][TIME_START]})")
+                self.app.log.debug(f"Index i={i}, length of sync={len(sync)}")
                 self.app.set_sound_pos(sync[i][TIME_START])
                 break
         Clock.schedule_once(self.delay_run, timeout=0)

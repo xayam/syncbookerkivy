@@ -6,12 +6,12 @@
 
 # Audio player for
 
-- Synchrone reading
-- Synchrone listening two books: russian and english 
-- On two language: russian and english
+- Synchrone read book
+- Synchrone listen two books: russian or english 
+- Text book on two language: russian and english
 - Catalog audiobooks are included
 
-# List of books:
+# Catalog of books:
 
 - Kafka Franz The Metamorphosis
 - Kuttner Henry The Ego Machine

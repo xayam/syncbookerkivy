@@ -20,10 +20,10 @@ class MySound(SoundFFPy):
         ff_opts = {
             'vn': True,  # video mute
             'sn': True,  # subtitle mute
-            'infbuf': True,  # infinity buffer size
-            'genpts': True,
-            'fast': True,
             'ss': position  # seek position
+            # 'infbuf': True,
+            # 'genpts': True,
+            # 'fast': True,
             # 'ar': 48000, # audio rate
             # 'ac': 2, # count audio channel
         }
@@ -36,6 +36,10 @@ class MySound(SoundFFPy):
                                      ff_opts=ff_opts)
         self._state = 'playing'
         self.state = 'play'
+        self._ffplayer.seek(pts=position,
+                            relative=False,
+                            seek_by_bytes=False,
+                            accurate=False)
 
         # s = time.perf_counter()
         # while (player.get_metadata()['duration'] is None and

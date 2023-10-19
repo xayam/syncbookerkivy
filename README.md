@@ -16,7 +16,7 @@
 - Kafka Franz The Metamorphosis
 - Kuttner Henry The Ego Machine
 - Lewis Carroll Alices Adventures in Wonderland
-- Wells Herbert The Time Machine 
+- Wells Herbert The Time Machine
 
 # Binary and source download
 

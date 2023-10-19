@@ -76,8 +76,8 @@ class Action:
             chunk_other = self.app.syncs[self.app.current_select].chunks1
             chunk = self.app.syncs[self.app.current_select].chunks2
             sync = self.app.syncs[self.app.current_select].rus2eng
-        pos = self.app.sound.get_pos()
-        self.app.log.debug(f"Getting self.app.sound.get_pos()={pos}")
+        pos = self.app.sound._ffplayer.get_pts()
+        self.app.log.debug(f"Getting self.app.sound._ffplayer.get_pts()={pos}")
         if self.app.sound._ffplayer.get_pts() + 1.0 >= \
                 self.app.sound._ffplayer.get_metadata()['duration']:
             self.app.player.stop_button_click()

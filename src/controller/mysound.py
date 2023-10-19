@@ -21,6 +21,8 @@ class MySound(SoundFFPy):
             'vn': True,  # video mute
             'sn': True,  # subtitle mute
             'infbuf': True,  # infinity buffer size
+            'genpts': True,
+            'fast': True,
             'ss': position  # seek position
             # 'ar': 48000, # audio rate
             # 'ac': 2, # count audio channel

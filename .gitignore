@@ -6,6 +6,8 @@ src/__pycache__/
 src/model/__pycache__/
 src/view/__pycache__/
 src/controller/__pycache__/
+data/*.zip
+data/*.jpg
 data/*/
 options.json
 logcat.txt

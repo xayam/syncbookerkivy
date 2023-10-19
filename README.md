@@ -39,6 +39,7 @@
 # For own build apk (for run this file on Android)
 
 - Install Ubuntu 22 on VirtualBox
+- Run virtual machine with Ubuntu 22
 - Install depends: https://python-for-android.readthedocs.io/en/latest/quickstart/ for Ubuntu 22
 - Download build-template.sh
 - Copy build-template.sh in new file, run command "cp ./build-template.sh ./build.sh"

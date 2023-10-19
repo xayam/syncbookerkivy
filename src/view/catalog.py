@@ -93,18 +93,7 @@ class Catalog(TabbedPanelItem):
         thread_download.start()
         thread_download.join()
         self.app.syncs[self.app.current_select].loads()
-        Clock.schedule_once(self.delay_run, timeout=0)
-
-    def delay_run(self, _):
-        self.app.log.debug("Enter to function 'delay_run()'")
-        self.app.table_label_left.text = \
-            self.app.syncs[self.app.current_select].chunks1[
-                self.app.chunk_current
-            ]
-        self.app.table_label_right.text = \
-            self.app.syncs[self.app.current_select].chunks2[
-                self.app.chunk_current
-            ]
+        Clock.schedule_once(self.app.player.delay_run, timeout=0)
 
     def catalog_double_tap(self, _=None, __=None, ___=None):
         self.app.log.debug("Fired function catalog_double_tap() for Button widget")

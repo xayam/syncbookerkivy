@@ -1,3 +1,5 @@
+import time
+
 from kivy.core.audio import SoundLoader
 from kivy.core.audio.audio_ffpyplayer import *
 from ffpyplayer.player import MediaPlayer
@@ -29,8 +31,15 @@ class MySound(SoundFFPy):
                                      callback=self._player_callback,
                                      loglevel='debug',
                                      ff_opts=ff_opts)
+        player = self._ffplayer
         self._state = 'playing'
         self.state = 'play'
+
+        s = time.perf_counter()
+        while (player.get_metadata()['duration'] is None and
+               not self.quitted and time.perf_counter() - s < 10.):
+            time.sleep(0.005)
+
         return self
 
 

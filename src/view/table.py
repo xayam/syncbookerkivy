@@ -79,24 +79,18 @@ class Table(TabbedPanelItem):
         self.table_gridlayout.add_widget(self.app.table_book_right)
         self.add_widget(self.table_gridlayout)
 
-    def on_text_table_label_left(self, instance, value):
-        Clock.schedule_once(self.update_table_label_left, 1)
+    def on_text_table_label_left(self, _=None, __=None):
+        Clock.schedule_once(self.update_table_label_left, 0)
 
-    def update_table_label_left(self, *args):
+    def update_table_label_left(self, _=None):
         self.app.log.debug("Enter to function 'update_table_label_left()'")
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            (self.app.table_label_left.line_height +
                                             self.app.table_label_left.line_spacing)
-        # print("table_label_left.text[:10] = '" + self.app.table_label_left.text[:10] + "'")
         if self.app.table_label_left.text == "\n" * 50:
             self.app.log.debug("True is self.app.table_label_left.text == '\n'*50")
             return
         self.app.log.debug("MySound().load_seek")
-
-        if self.app.nonstop:
-            self.app.log.debug("True == self.app.nonstop")
-            self.app.nonstop = False
-            return
         try:
             self.app.sound.stop()
             self.app.clock_action.cancel()
@@ -107,19 +101,31 @@ class Table(TabbedPanelItem):
                 app=self.app,
                 source=self.app.current_select + self.app.conf.ENG_AUDIO). \
                 load_seek(self.app.get_sound_pos())
-        else:
-            self.app.sound = MySound(
-                app=self.app,
-                source=self.app.current_select + self.app.conf.RUS_AUDIO). \
-                load_seek(self.app.get_sound_pos())
-        self.app.log.debug("Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
-        self.app.clock_action = Clock.schedule_interval(self.app.action.clock_action_time, 0.5)
+            self.app.log.debug("Create Clock.schedule_interval(self.app.action.clock_action_time, 0.5)")
+            self.app.clock_action = Clock.schedule_interval(self.app.action.clock_action_time, 0.5)
 
-    def on_text_table_label_right(self, instance, value):
-        Clock.schedule_once(self.update_table_label_right, 1)
+    def on_text_table_label_right(self, _=None, __=None):
+        Clock.schedule_once(self.update_table_label_right, 0)
 
-    def update_table_label_right(self, *args):
+    def update_table_label_right(self, _=None):
         self.app.log.debug("Enter to function 'update_table_label_right()'")
         self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \
                                             (self.app.table_label_right.line_height +
                                              self.app.table_label_right.line_spacing)
+        if self.app.table_label_left.text == "\n" * 50:
+            self.app.log.debug("True is self.app.table_label_right.text == '\n'*50")
+            return
+        self.app.log.debug("MySound().load_seek")
+        try:
+            self.app.sound.stop()
+            self.app.clock_action.cancel()
+        except AttributeError:
+            self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
+        if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == RU:
+            self.app.sound = MySound(
+                app=self.app,
+                source=self.app.current_select + self.app.conf.RUS_AUDIO). \
+                load_seek(self.app.get_sound_pos())
+            self.app.log.debug("Create Clock.schedule_interval(self.app.action.clock_action_time, 0.5)")
+            self.app.clock_action = Clock.schedule_interval(self.app.action.clock_action_time, 0.5)
+

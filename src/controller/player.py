@@ -96,7 +96,7 @@ class Player:
             self.app.opt[POSITIONS][self.app.current_select][CHUNK] = 0
             self.app.conf.save_options()
 
-    def pause_button_click(self, _):
+    def pause_button_click(self, _=None):
         self.app.log.debug("Enter to function 'pause_button_click()'")
         if not (self.app.clock_action is None):
             self.app.clock_action.cancel()

@@ -6,10 +6,10 @@
 
 # Audio player for
 
-- synchrone reading
-- and synchrone listening two books: russian and english 
-- on two language: russian and english
-- catalog audiobooks are included
+- Synchrone reading
+- Synchrone listening two books: russian and english 
+- On two language: russian and english
+- Catalog audiobooks are included
 
 # List of books:
 
@@ -31,7 +31,7 @@
 - Activate venv, run command "venv/Scripts/activate.bat"
 - Upgrade pip, run command "python.exe -m pip install -upgrade pip"
 - Install requirements, run command "pip install -r requirements.txt"
-- Install Graphviz with set path env (installer by link https://graphviz.org/download/
+- Install Graphviz with set path env, installer by link https://graphviz.org/download/
 - For create project scheme app.svg run commands "cd src" and "pyan3 **/*.py --uses --no-defines --colored --grouped --annotated --svg > app.svg"
 
 # For own build apk
@@ -39,8 +39,10 @@
 - Install Ubuntu 22 on VirtualBox
 - Download build-template.sh
 - Install depends: https://python-for-android.readthedocs.io/en/latest/quickstart/ for Ubuntu 22
-- Copy in new file "cp ./build-template.sh ./build.sh"
-- Edit file build.sh, add path to SDK and NDK; add own vars 'ftp_site', 'username', and 'passwd'
+- Copy build-template.sh in new file, run command "cp ./build-template.sh ./build.sh"
+- Edit file build.sh: 
+  - add path to SDK and NDK 
+  - add own vars 'ftp_site', 'username', and 'passwd'
 - Run terminal in folder with file build.sh
 - You must mark the file as executable, run command "chmod +x build.sh"
-- Run ./build.sh as program
+- Run ./build.sh as program for create apk-file

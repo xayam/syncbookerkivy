@@ -2,8 +2,6 @@ from kivy.clock import Clock
 
 from src.model.utils import *
 
-from .mysound import *
-
 
 class Player:
 

@@ -5,8 +5,7 @@ from .utils import *
 
 
 class Conf:
-    OPTIONS_JSON = "options.json"
-    DISABLE_MARKER = "img/marker.png"
+    OPTIONS = "options.json"
 
     GITHUB_SYNCBOOKER = "https://github.com/xayam/syncbooker"
     UPDATE_URL = "https://github.com/xayam/syncbookerkivy/releases/download/SyncBookerKivy_v1.0/"
@@ -56,6 +55,8 @@ class Conf:
         VALID
     ]
 
+    DISABLE_MARKER = "img/marker.png"
+
     # Icon paths
     ICON_CATALOG = "img/catalog.png"
     ICON_CATALOG_PRESSED = "img/catalog_pressed.png"
@@ -87,13 +88,13 @@ class Conf:
         self.load_options()
 
     def load_options(self):
-        if os.path.exists(self.OPTIONS_JSON):
-            with open(self.OPTIONS_JSON, mode="r") as opt:
+        if os.path.exists(self.OPTIONS):
+            with open(self.OPTIONS, mode="r") as opt:
                 self.app.opt = json.load(opt)
         else:
             self.save_options()
 
     def save_options(self):
         json_string = json.dumps(self.app.opt)
-        with open(self.OPTIONS_JSON, mode="w") as opt:
+        with open(self.OPTIONS, mode="w") as opt:
             opt.write(json_string)

@@ -1,11 +1,11 @@
 from kivy.clock import Clock
-from kivy.core.audio import SoundLoader
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.tabbedpanel import TabbedPanelItem
 
+from src.controller.mysound import MySound
 from src.model.utils import *
 
 
@@ -103,10 +103,14 @@ class Table(TabbedPanelItem):
         except AttributeError:
             self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
         if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
-            self.app.sound = SoundLoader.load(self.app.current_select + self.app.conf.ENG_AUDIO). \
+            self.app.sound = MySound(
+                app=self.app,
+                source=self.app.current_select + self.app.conf.ENG_AUDIO). \
                 load_seek(self.app.get_sound_pos())
         else:
-            self.app.sound = SoundLoader.load(self.app.current_select + self.app.conf.RUS_AUDIO). \
+            self.app.sound = MySound(
+                app=self.app,
+                source=self.app.current_select + self.app.conf.RUS_AUDIO). \
                 load_seek(self.app.get_sound_pos())
         self.app.log.debug("Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
         self.app.clock_action = Clock.schedule_interval(self.app.action.clock_action_time, 0.5)

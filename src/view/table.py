@@ -91,12 +91,12 @@ class Table(TabbedPanelItem):
             self.app.log.debug("True is self.app.table_label_left.text == '\n'*50")
             return
         self.app.log.debug("MySound().load_seek")
-        try:
-            self.app.sound.stop()
-            self.app.clock_action.cancel()
-        except AttributeError:
-            self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
         if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
+            try:
+                self.app.sound.stop()
+                self.app.clock_action.cancel()
+            except AttributeError:
+                self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
             self.app.sound = MySound(
                 app=self.app,
                 source=self.app.current_select + self.app.conf.ENG_AUDIO). \
@@ -116,12 +116,12 @@ class Table(TabbedPanelItem):
             self.app.log.debug("True is self.app.table_label_right.text == '\n'*50")
             return
         self.app.log.debug("MySound().load_seek")
-        try:
-            self.app.sound.stop()
-            self.app.clock_action.cancel()
-        except AttributeError:
-            self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
         if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == RU:
+            try:
+                self.app.sound.stop()
+                self.app.clock_action.cancel()
+            except AttributeError:
+                self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
             self.app.sound = MySound(
                 app=self.app,
                 source=self.app.current_select + self.app.conf.RUS_AUDIO). \

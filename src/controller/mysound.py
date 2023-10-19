@@ -38,7 +38,6 @@ class MySound(SoundFFPy):
         self.state = 'play'
         self._ffplayer.seek(pts=position,
                             relative=False,
-                            seek_by_bytes=False,
                             accurate=False)
 
         # s = time.perf_counter()

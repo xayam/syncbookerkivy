@@ -20,8 +20,8 @@
 
 # Binary and source download
 
-- Last release for Android https://github.com/xayam/syncbookerkivy/releases
-- Last release for Windows x64 https://github.com/xayam/syncbooker/releases
+- Last release for Android https://github.com/xayam/syncbookerkivy/releases/latest
+- Last release for Windows x64 https://github.com/xayam/syncbooker/releases/latest
 - Copies in mail cloud https://cloud.mail.ru/public/rdBB/KHvCjQdaT
 
 # Install and run from sources (on Windows)

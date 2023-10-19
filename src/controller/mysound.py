@@ -20,6 +20,7 @@ class MySound(SoundFFPy):
         ff_opts = {
             'vn': True,  # video mute
             'sn': True,  # subtitle mute
+            'infbuf': True,  # infinity buffer size
             'ss': position  # seek position
             # 'ar': 48000, # audio rate
             # 'ac': 2, # count audio channel

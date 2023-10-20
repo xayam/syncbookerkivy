@@ -1,5 +1,11 @@
 #!/bin/bash
 
+export BEEP=/usr/share/sounds/gnome/default/alerts/bark.ogg
+
+# sudo apt-get install beep
+
+printf '\a'
+
 rm -rf syncbookerkivy-main
 
 git clone https://github.com/xayam/syncbookerkivy.git
@@ -25,12 +31,16 @@ export ANDROIDNDKVER="r25c"  # Version of the NDK you installed
 export TARGET_PLATFORM="armeabi-v7a"
 export TARGET_PLATFORM1="$TARGET_PLATFORM"
 
+p4a clean_all
+
 python3 p4a.py
 
 apk_file1="syncbooker-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
 
 export TARGET_PLATFORM="x86_64"
 export TARGET_PLATFORM2="$TARGET_PLATFORM"
+
+p4a clean_all
 
 python3 p4a.py
 
@@ -50,6 +60,8 @@ EOF
 echo ""
 echo "http://apk.delphima.z8.ru/apks/$TARGET_PLATFORM2/$apk_file2"
 echo ""
+
+printf '\a'
 
 read -p "Press ENTER for exit..."
 

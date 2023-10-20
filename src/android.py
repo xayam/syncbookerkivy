@@ -1,8 +1,4 @@
-import os
-
 from kivy import platform
-
-os.environ["KIVY_AUDIO"] = "ffpyplayer"
 
 
 class App:

@@ -1,8 +1,11 @@
+import os
+
+os.environ["KIVY_AUDIO"] = "ffpyplayer"
+
+from src.android import App
 from src.model.model import Model
 from src.view.android.view import AndroidView
 from src.controller.android.controller import AndroidController
-from src.android import App
-
 
 model = Model()
 view = AndroidView(model)

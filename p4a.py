@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-VERSION = "2.3"
+VERSION = "2.4"
 ARCH = os.environ["TARGET_ARCH"]
 
 command = \

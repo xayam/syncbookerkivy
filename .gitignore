@@ -2,8 +2,9 @@
 venv/
 .idea/
 __pycache__/
-bin/*.exe
-bin/options.json
+build/
+dist/
+*.exe
 recognize/rus/
 recognize/eng/
 src/__pycache__/

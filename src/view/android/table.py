@@ -6,7 +6,6 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.tabbedpanel import TabbedPanelItem
 
-from src.view.android.mysound import MySound
 from src.model.utils import *
 
 

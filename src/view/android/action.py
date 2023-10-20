@@ -1,7 +1,6 @@
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 
-from src.view.android.mysound import MySound
 from src.model.utils import *
 
 

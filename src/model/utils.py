@@ -1,6 +1,19 @@
+import os
 
+if "DEBUG" in os.environ:
+    DEBUG = os.environ["DEBUG"]
+else:
+    DEBUG = 1
 
-DEBUG = 1
+if "TARGET_PLATFORM" in os.environ:
+    ARCH = os.environ["TARGET_PLATFORM"]
+else:
+    ARCH = "x86_64"
+
+if "APP_VERSION" in os.environ:
+    VERSION = os.environ["APP_VERSION"]
+else:
+    VERSION = "Latest"
 
 # Langs
 EN = "English"

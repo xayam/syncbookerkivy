@@ -1,4 +1,3 @@
-import os
 import threading
 
 from kivy.clock import Clock
@@ -28,7 +27,7 @@ class Catalog(TabbedPanelItem):
         self.app.catalog_input = TextInput(size_hint_y=None,
                                            font_size='16sp',
                                            multiline=False,
-                                           hint_text="search book",
+                                           hint_text=f"v{VERSION}_{ARCH}",
                                            text="")
         self.app.catalog_input.size = ('32sp', '32sp')
         self.catalog_buttons = GridLayout(rows=1,

@@ -1,4 +1,5 @@
 from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
@@ -97,9 +98,8 @@ class Table(TabbedPanelItem):
                 self.app.model.clock_action.cancel()
             except AttributeError:
                 self.app.model.log.debug("WARNING: AttributeError self.app.model.sound.stop()")
-            self.app.model.sound = MySound(
-                app=self.app,
-                source=self.app.model.current_select + self.app.model.conf.ENG_AUDIO). \
+            self.app.model.sound = SoundLoader.load(
+                self.app.model.current_select + self.app.model.conf.ENG_AUDIO). \
                 load_seek(self.app.model.get_sound_pos())
             self.app.model.log.debug("Create Clock.schedule_interval(self.app.action.clock_action_time, 0.5)")
             self.app.model.clock_action = Clock.schedule_interval(self.app.action.clock_action_time, 0.5)
@@ -122,9 +122,8 @@ class Table(TabbedPanelItem):
                 self.app.model.clock_action.cancel()
             except AttributeError:
                 self.app.model.log.debug("WARNING: AttributeError self.app.model.sound.stop()")
-            self.app.model.sound = MySound(
-                app=self.app,
-                source=self.app.model.current_select + self.app.model.conf.RUS_AUDIO). \
+            self.app.model.sound = SoundLoader.load(
+                self.app.model.current_select + self.app.model.conf.RUS_AUDIO). \
                 load_seek(self.app.model.get_sound_pos())
             self.app.model.log.debug("Create Clock.schedule_interval(self.app.action.clock_action_time, 0.5)")
             self.app.model.clock_action = Clock.schedule_interval(self.app.action.clock_action_time, 0.5)

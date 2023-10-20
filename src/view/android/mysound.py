@@ -1,11 +1,15 @@
-from kivy.core.audio.audio_ffpyplayer import *
+from kivy.core.audio import SoundLoader
+from kivy.core.audio.audio_ffpyplayer import SoundFFPy
 from ffpyplayer.player import MediaPlayer
+
+from src.model.utils import DEBUG
+
+SoundLoader._classes = []
 
 
 class MySound(SoundFFPy):
 
-    def __init__(self, app, **kwargs):
-        self.app = app
+    def __init__(self, **kwargs):
         super(MySound, self).__init__(**kwargs)
 
     def load_seek(self, position):
@@ -23,8 +27,9 @@ class MySound(SoundFFPy):
             # 'ar': 48000, # audio rate
             # 'ac': 2, # count audio channels
         }
-        self.app.model.log.debug(f"Seek position ff_opts['ss'] is {position}")
-        self.app.model.log.debug(f"Set self._ffplayer = MediaPlayer({self.source})")
+        if DEBUG:
+            print(f"[MYDEBUG] Seek position ff_opts['ss'] is {position}")
+            print(f"[MYDEBUG] Set self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,
                                      callback=self._player_callback,
                                      loglevel='debug',
@@ -35,3 +40,5 @@ class MySound(SoundFFPy):
                             relative=False,
                             accurate=True)
         return self
+
+SoundLoader.register(MySound)

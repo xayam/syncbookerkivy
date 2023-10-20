@@ -1,4 +1,5 @@
 from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
 
 from src.view.android.mysound import MySound
 from src.model.utils import *
@@ -36,15 +37,13 @@ class Action:
                     self.app.model.opt[POSITIONS][self.app.model.current_select][POSI] = sync[i][TIME_START]
                     self.app.model.set_sound_pos(sync[i][TIME_START])
                     if instance == self.app.table_label_left:
-                        self.app.model.sound = MySound(
-                            app=self.app,
-                            source=self.app.model.current_select + self.app.model.conf.ENG_AUDIO). \
+                        self.app.model.sound = SoundLoader.load(
+                            self.app.model.current_select + self.app.model.conf.ENG_AUDIO). \
                             load_seek(self.app.model.get_sound_pos())
                         self.app.model.opt[POSITIONS][self.app.model.current_select][AUDIO] = EN
                     else:
-                        self.app.model.sound = MySound(
-                            app=self.app,
-                            source=self.app.model.current_select + self.app.model.conf.RUS_AUDIO). \
+                        self.app.model.sound = SoundLoader.load(
+                            self.app.model.current_select + self.app.model.conf.RUS_AUDIO). \
                             load_seek(self.app.model.get_sound_pos())
                         self.app.model.opt[POSITIONS][self.app.model.current_select][AUDIO] = RU
                     self.app.model.conf.save_options()

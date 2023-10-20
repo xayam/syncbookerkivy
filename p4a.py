@@ -2,7 +2,7 @@ import os
 import subprocess
 
 VERSION = os.environ["APP_VERSION"]
-ARCH = os.environ["TARGET_ARCH"]
+ARCH = os.environ["TARGET_PLATFORM"]
 
 command = \
     "p4a apk " + \

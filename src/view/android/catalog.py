@@ -13,8 +13,6 @@ from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 from kivy.uix.popup import Popup
 
-from p4a import VERSION, ARCH
-
 from src.model.utils import *
 
 
@@ -30,7 +28,7 @@ class Catalog(TabbedPanelItem):
         self.app.catalog_input = TextInput(size_hint_y=None,
                                            font_size='16sp',
                                            multiline=False,
-                                           hint_text=f"v{VERSION}_{ARCH}",
+                                           hint_text="search book",
                                            text="")
         self.app.catalog_input.size = ('32sp', '32sp')
         self.catalog_buttons = GridLayout(rows=1,

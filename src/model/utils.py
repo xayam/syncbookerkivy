@@ -1,4 +1,6 @@
-DEBUG = True
+
+
+DEBUG = 1
 
 # Langs
 EN = "English"

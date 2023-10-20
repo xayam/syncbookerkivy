@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-VERSION = "2.9"
+VERSION = os.environ["APP_VERSION"]
 ARCH = os.environ["TARGET_ARCH"]
 
 command = \
@@ -9,7 +9,7 @@ command = \
     "--debug " + \
     "--private=$HOME/PycharmProjects/syncbookerkivy-main " + \
     "--package=com.github.xayam.syncbookerkivy " + \
-    "--dist_name=syncbooker " + \
+    "--dist_name=syncbooker-" + ARCH + " " + \
     '--name="SyncBooker" ' + \
     "--wakelock " + \
     "--window " + \

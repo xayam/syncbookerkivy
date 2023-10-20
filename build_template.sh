@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export APP_VERSION="2.10"
+export DEBUG=1
+
 rm -rf syncbookerkivy-main
 
 git clone https://github.com/xayam/syncbookerkivy.git
@@ -7,6 +10,10 @@ git clone https://github.com/xayam/syncbookerkivy.git
 mv syncbookerkivy syncbookerkivy-main
 
 cd ./syncbookerkivy-main
+
+cp ./build_template ../new_build.sh
+
+chmod +x ../new_build.sh
 
 export ANDROIDSDK="$HOME/Documents/SDK"
 export ANDROIDNDK="$HOME/Documents/ndk"

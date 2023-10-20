@@ -38,7 +38,7 @@ class MySound(SoundFFPy):
         self.state = 'play'
         self._ffplayer.seek(pts=position,
                             relative=False,
-                            accurate=True)
+                            accurate=False)
         return self
 
 SoundLoader.register(MySound)

@@ -1,4 +1,16 @@
 import os
+import re
+
+
+def get_app_version():
+    with open("config.sh", mode="r") as f:
+        config = f.read()
+    result = re.findall(pattern=r'APP_VERSION="(.+?)"', string=config)
+    if result:
+        return result[0]
+    else:
+        return "Unknown"
+
 
 if "DEBUG" in os.environ:
     DEBUG = os.environ["DEBUG"]
@@ -8,12 +20,15 @@ else:
 if "TARGET_PLATFORM" in os.environ:
     ARCH = os.environ["TARGET_PLATFORM"]
 else:
-    ARCH = "x86_64"
+    ARCH = "Unknown"
 
 if "APP_VERSION" in os.environ:
     VERSION = os.environ["APP_VERSION"]
 else:
-    VERSION = "Latest"
+    VERSION = get_app_version()
+
+if DEBUG:
+    print(f"[MYDEBUG] App VERSION='{VERSION}', app ARCH='{ARCH}'")
 
 # Langs
 EN = "English"

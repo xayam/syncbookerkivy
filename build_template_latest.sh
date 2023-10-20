@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export BEEP=/usr/share/sounds/gnome/default/alerts/bark.ogg
-
 # sudo apt-get install beep
 
 printf '\a'
@@ -36,6 +34,8 @@ p4a clean_all
 python3 p4a.py
 
 apk_file1="syncbooker-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
+
+printf '\a'
 
 export TARGET_PLATFORM="x86_64"
 export TARGET_PLATFORM2="$TARGET_PLATFORM"

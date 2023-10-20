@@ -36,7 +36,7 @@
 - For create project scheme app.svg run commands "cd src" and "pyan3 **/*.py --uses --no-defines --colored --grouped --annotated --svg > app.svg"
 - Run main.py with python
 
-# For own build apk (for run this file on Android)
+# For own build apk (for run this file on Android) 
 
 - Install Ubuntu 22 on VirtualBox
 - Run virtual machine with Ubuntu 22

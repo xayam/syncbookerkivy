@@ -1,10 +1,10 @@
 from kivy.core.audio import SoundLoader
 from kivy.core.audio.audio_ffpyplayer import SoundFFPy
+import ffpyplayer
 from ffpyplayer.player import MediaPlayer
+from ffpyplayer.tools import set_log_callback, get_log_callback, formats_in
 
 from src.model.utils import DEBUG
-
-SoundLoader._classes = []
 
 
 class MySound(SoundFFPy):
@@ -41,4 +41,6 @@ class MySound(SoundFFPy):
                             accurate=False)
         return self
 
+
+SoundLoader._classes = []
 SoundLoader.register(MySound)

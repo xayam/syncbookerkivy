@@ -26,7 +26,7 @@ class Sync:
     def loads(self):
         self.app.log.debug("Enter to function 'sync.loads()'")
         if not os.path.exists(self.valid):
-            path = self.app.conf.UPDATE_URL + "/" + self.current_path[5:-1] + ".zip"
+            path = self.app.conf.UPDATE_URL + self.current_path + ".zip"
             self.app.log.debug(f"Try download '{path}'")
             self.app.stor.storage_book(path)
         if not self.loaded:

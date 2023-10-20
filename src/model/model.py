@@ -6,29 +6,21 @@ from .utils import *
 
 class Model:
 
-    def __init__(self):
+    def __init__(self, app):
+        self.app = app
+        self.opt = None
         self.clock_action = None
         self.sound_state = 0
         self.touch_pos = 0
         self.nonstop = False
         self.sound = None
         self.sound_pos = 0.0
-        self.chunk_width = 4000
+        self.chunk_width = 4000 if self.app.android else 20000
         self.chunk_current = 0
         self.syncs = {}
         self.current_select = None
-
         self.log = Log()
-        self.opt = {
-            FG: (0, 0, 0, 1),
-            BG: (1, 1, 1, 1),
-            SEL: (1, 1, 0, 0.4),
-            POSITIONS: {
-                i: {
-                    POSI: "0.0", AUDIO: EN, CHUNK: 0
-                } for i in []
-            }
-        }
+        self.reset_opt()
         self.conf = Conf(app=self)
         self.stor = Storage(app=self)
         self.stor.list()
@@ -38,3 +30,20 @@ class Model:
 
     def get_sound_pos(self):
         return self.sound_pos
+
+    def reset_opt(self):
+        self.opt = {
+            DHT: False,
+            PRELOAD: False,
+            LOCALE: EN,
+            FG: (0, 0, 0, 1),
+            BG: (1, 1, 1, 1),
+            SEL: (1, 1, 0, 0.4),
+            FONT: "Arial",
+            FONTSIZE: 20,
+            POSITIONS: {
+                i: {
+                    POSI: "0.0", AUDIO: EN, CHUNK: 0
+                } for i in []
+            }
+        }

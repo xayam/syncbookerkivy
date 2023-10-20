@@ -1,5 +1,4 @@
-RU = 'Русский'
-EN = 'English'
+from .utils import EN, RU
 
 
 # Menu items

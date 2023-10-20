@@ -4,7 +4,18 @@ from .utils import *
 
 
 class Conf:
+
+    NAME = "SyncBooker"
+
     OPTIONS = "options.json"
+
+    LICENSE = "LICENSE"
+    CASES_HTML = os.getcwd() + "/cases.html"
+    README_MD = os.getcwd() + "/README.md"
+    FAQ_HTML = os.getcwd() + "/faq.html"
+    DONATE = "https://yoomoney.ru/to/410014160363421"
+    ICON_ICO = "img/icon.ico"
+    ICON_PNG = "img/icon.png"
 
     GITHUB_SYNCBOOKER = "https://github.com/xayam/syncbooker"
     UPDATE_URL = "https://github.com/xayam/syncbookerkivy/releases/download/SyncBookerKivy_v1.0/"
@@ -27,23 +38,32 @@ class Conf:
     RUS_FB2 = "rus.fb2"
     ENG_TXT = "eng.txt"
     RUS_TXT = "rus.txt"
-    ENG_AUDIO = "eng.mp3"
-    RUS_AUDIO = "rus.mp3"
+    ENG_MP3 = "eng.mp3"
+    RUS_MP3 = "rus.mp3"
     COVER = "cover.jpg"
     VALID = "valid"
+
+    RUS_ORIG = "rus.orig.html"
+    ENG_ORIG = "eng.orig.html"
+    RUS_MAP = "rus.map.json"
+    ENG_MAP = "eng.map.json"
+    RUS_WAV = "rus.wav"
+    ENG_WAV = "eng.wav"
+    RUS_FLAC = "rus.flac"
+    ENG_FLAC = "eng.flac"
 
     BOOK_ENG_SCHEME = [
         ENG_ANNOT,
         ENG_TXT,
         ENG_FB2,
-        ENG_AUDIO,
+        ENG_MP3,
         ENG_SYNC
     ]
     BOOK_RUS_SCHEME = [
         RUS_ANNOT,
         RUS_TXT,
         RUS_FB2,
-        RUS_AUDIO,
+        RUS_MP3,
         RUS_SYNC
     ]
     BOOK_SCHEME = [
@@ -75,6 +95,10 @@ class Conf:
     def __init__(self, app):
         self.app = app
         self.load_options()
+        self.set_locale(self.app.opt[LOCALE])
+
+    def set_locale(self, locale):
+        self.locale = locale
 
     def load_options(self):
         if os.path.exists(self.OPTIONS):

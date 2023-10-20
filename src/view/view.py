@@ -1,7 +1,15 @@
 
+from .mykivy import MyKivy
 
-class View:
+from .action import Action
+from .player import Player
+from .mykivy import MyKivy
 
-    def __init__(self, model):
-        self.model = model
 
+class View(MyKivy):
+
+    def __init__(self, app, **kwargs):
+        self.app = app
+        self.player = Player(app=self)
+        self.action = Action(app=self)
+        super().__init__(app=self.app, **kwargs)

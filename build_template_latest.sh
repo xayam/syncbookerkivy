@@ -57,9 +57,9 @@ put $apk_file1 ./syncbooker.apk
 quit
 EOF
 
-echo ""
+echo "############################################################"
 echo "http://apk.delphima.z8.ru/apks/$TARGET_PLATFORM2/$apk_file2"
-echo ""
+echo "############################################################"
 
 printf '\a'
 

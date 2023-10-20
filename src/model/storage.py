@@ -10,6 +10,7 @@ class Storage:
 
     def __init__(self, app):
         self.app = app
+        self.data = "data"
         self.storage_books = {}
         self.timeout = 3
         self.verify = False
@@ -22,10 +23,11 @@ class Storage:
 
     def list(self):
         self.storage_list()
-        for i in os.listdir("data"):
-            if os.path.isfile("data/" + i) and (i[-4:] == ".jpg"):
-                cover = f"data/{i}"
-                self.storage_books[cover] = f"data/{i[:-4]}/"
+        for i in os.listdir(self.data):
+            if os.path.isfile(f"{self.data}/" + i) and (i[-4:] == ".jpg"):
+                cover = f"{self.data}/{i}"
+                self.storage_books[cover] = f"{self.data}/{i[:-4]}/"
+                self.app.log.debug(f"self.storage_books[cover]={self.storage_books[cover]}")
                 self.app.syncs[self.storage_books[cover]] = \
                     Sync(app=self.app, current_path=self.storage_books[cover])
 
@@ -41,7 +43,7 @@ class Storage:
             if resp.status_code == 200:
                 self.app.log.debug(f"Unzip list.zip")
                 z = zipfile.ZipFile(io.BytesIO(resp.content))
-                z.extractall("data")
+                z.extractall(self.data)
                 z.close()
             else:
                 raise Exception(f"resp.StatusCode={resp.status_code}")
@@ -58,7 +60,7 @@ class Storage:
                                 headers=self.headers)
             if resp.status_code == 200:
                 z = zipfile.ZipFile(io.BytesIO(resp.content))
-                output_dir = "data/" + book[:-4]
+                output_dir = self.data + "/" + book[:-4]
                 if not os.path.exists(output_dir):
                     os.mkdir(output_dir)
                 z.extractall(output_dir)

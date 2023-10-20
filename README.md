@@ -33,7 +33,8 @@
 - Upgrade pip, run command "python.exe -m pip install -upgrade pip"
 - Install requirements, run command "pip install -r requirements.txt"
 - Install Graphviz with set path env, installer by link https://graphviz.org/download/
-- For create project scheme app.svg run commands "cd src" and "pyan3 **/*.py --uses --no-defines --colored --grouped --annotated --svg > app.svg"
+- For create project scheme app.svg run commands 
+  "cd src" and "pyan3 src/**/*.py --uses --no-defines --colored --grouped --annotated --svg > app.svg"
 - Run main.py with python
 
 # For own build apk (for run this file on Android) 

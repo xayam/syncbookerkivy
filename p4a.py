@@ -1,13 +1,13 @@
 import os
 import subprocess
 
-VERSION = "2.7"
+VERSION = "2.8"
 ARCH = os.environ["TARGET_ARCH"]
 
 command = \
     "p4a apk " + \
     "--debug " + \
-    "--private=$HOME/PycharmProjects/syncbookerkivy-master " + \
+    "--private=$HOME/PycharmProjects/syncbookerkivy-main " + \
     "--package=com.github.xayam.syncbookerkivy " + \
     "--dist_name=syncbooker " + \
     '--name="SyncBooker" ' + \
@@ -20,8 +20,8 @@ command = \
     "android.permission.MEDIA_CONTENT_CONTROL " + \
     "android.permission.READ_MEDIA_AUDIO " + \
     "--orientation=landscape " + \
-    "--icon=$HOME/PycharmProjects/syncbookerkivy-master/img/icon.png " + \
-    "--presplash=$HOME/PycharmProjects/syncbookerkivy-master/img/presplash.png " + \
+    "--icon=$HOME/PycharmProjects/syncbookerkivy-main/img/icon.png " + \
+    "--presplash=$HOME/PycharmProjects/syncbookerkivy-main/img/presplash.png " + \
     "--version=" + VERSION + " " + \
     "--arch=" + ARCH + " " + \
     "--bootstrap=sdl2 " + \

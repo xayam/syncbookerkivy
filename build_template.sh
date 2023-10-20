@@ -1,12 +1,12 @@
 #!/bin/bash
 
-rm -rf syncbookerkivy-master
+rm -rf syncbookerkivy-main
 
 git clone https://github.com/xayam/syncbookerkivy.git
 
-mv syncbookerkivy syncbookerkivy-master
+mv syncbookerkivy syncbookerkivy-main
 
-cd ./syncbookerkivy-master
+cd ./syncbookerkivy-main
 
 export ANDROIDSDK="$HOME/Documents/SDK"
 export ANDROIDNDK="$HOME/Documents/ndk"

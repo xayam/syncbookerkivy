@@ -23,8 +23,8 @@ class MySound(SoundFFPy):
             # 'ar': 48000, # audio rate
             # 'ac': 2, # count audio channels
         }
-        self.app.log.debug(f"Seek position ff_opts['ss'] is {position}")
-        self.app.log.debug(f"Set self._ffplayer = MediaPlayer({self.source})")
+        self.app.model.log.debug(f"Seek position ff_opts['ss'] is {position}")
+        self.app.model.log.debug(f"Set self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,
                                      callback=self._player_callback,
                                      loglevel='debug',

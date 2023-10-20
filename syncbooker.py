@@ -1,12 +1,12 @@
 from src.model.model import Model
-from src.view.android.view import AndroidView
-from src.controller.android.controller import AndroidController
+from src.view.windows.view import WindowsView
+from src.controller.windows.controller import WindowsController
 from src.android import App
 
 
 model = Model()
-view = AndroidView(model)
-controller = AndroidController(view)
+view = WindowsView(model)
+controller = WindowsController(view)
 application = App(controller)
 
 try:
@@ -16,7 +16,7 @@ try:
 except Exception as e:
 
     application.model.log.debug(
-        "AndroidAppError: " +
+        "WindowsAppError: " +
         type(e).__name__ + ": " +
         e.__str__()
     )

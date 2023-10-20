@@ -73,18 +73,8 @@ class Conf:
     ICON_NEXT = "img/next.png"
     ICON_NEXT_PRESSED = "img/next_pressed.png"
 
-    def __init__(self, app=None):
+    def __init__(self, app):
         self.app = app
-        self.app.opt = {
-            FG: (0, 0, 0, 1),
-            BG: (1, 1, 1, 1),
-            SEL: (1, 1, 0, 0.4),
-            POSITIONS: {
-                i: {
-                    POSI: "0.0", AUDIO: EN, CHUNK: 0
-                } for i in []
-            }
-        }
         self.load_options()
 
     def load_options(self):

@@ -2,7 +2,7 @@
 venv/
 .idea/
 __pycache__/
-bin/
+bin/*.exe
 recognize/rus/
 recognize/eng/
 src/__pycache__/

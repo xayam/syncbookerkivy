@@ -41,8 +41,8 @@
 - Install Ubuntu 22 on VirtualBox
 - Run virtual machine with Ubuntu 22
 - Install depends: https://python-for-android.readthedocs.io/en/latest/quickstart/ for Ubuntu 22
-- Download build-template.sh
-- Copy build-template.sh in new file, run command "cp ./build-template.sh ./build.sh"
+- Download build_template.sh
+- Copy build_template.sh in new file, run command "cp ./build_template.sh ./build.sh"
 - Edit file build.sh: 
   - add path to SDK and NDK 
   - add own vars 'ftp_site', 'username', and 'passwd'

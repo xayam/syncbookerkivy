@@ -1,9 +1,8 @@
+import os
 import subprocess
 
-VERSION = "2.1"
-
-ARCH = "armeabi-v7a"
-# ARCH = "x86_64"
+VERSION = "2.2"
+ARCH = os.environ["TARGET_ARCH"]
 
 command = \
     "p4a apk " + \

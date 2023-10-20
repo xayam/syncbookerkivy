@@ -3,6 +3,7 @@ venv/
 .idea/
 __pycache__/
 bin/*.exe
+bin/options.json
 recognize/rus/
 recognize/eng/
 src/__pycache__/
@@ -14,4 +15,3 @@ data/*.jpg
 data/*/
 options.json
 logcat.txt
-syncbooker.apk

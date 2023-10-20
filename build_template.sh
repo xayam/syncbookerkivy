@@ -1,8 +1,5 @@
 #!/bin/bash
 
-export APP_VERSION="2.10"
-export DEBUG=1
-
 rm -rf syncbookerkivy-main
 
 git clone https://github.com/xayam/syncbookerkivy.git
@@ -11,9 +8,13 @@ mv syncbookerkivy syncbookerkivy-main
 
 cd ./syncbookerkivy-main
 
-cp ./build_template ../new_build.sh
+chmod +x config.sh
 
-chmod +x ../new_build.sh
+source config.sh
+
+ftp_site=
+username=
+passwd=
 
 export ANDROIDSDK="$HOME/Documents/SDK"
 export ANDROIDNDK="$HOME/Documents/ndk"
@@ -21,30 +22,34 @@ export ANDROIDAPI="27"  # Target API version of your application
 export NDKAPI="21"  # Minimum supported API version of your application
 export ANDROIDNDKVER="r25c"  # Version of the NDK you installed
 
-export TARGET_ARCH="armeabi-v7a"
+export TARGET_PLATFORM="armeabi-v7a"
+export TARGET_PLATFORM1="$TARGET_PLATFORM"
 
 python3 p4a.py
 
-export TARGET_ARCH="x86_64"
+apk_file1="syncbooker-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
+
+export TARGET_PLATFORM="x86_64"
+export TARGET_PLATFORM2="$TARGET_PLATFORM"
 
 python3 p4a.py
 
-apk_file=$(find . -maxdepth 1 -mindepth 1 -name '*.apk')
+apk_file2="syncbooker-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
 
-echo $apk_file
+ftp -n $ftp_site<<EOF
+quote USER $username
+quote PASS $passwd
+binary
+cd apks
+put $apk_file1 $TARGET_PLATFORM1/$apk_file1
+put $apk_file2 $TARGET_PLATFORM2/$apk_file2
+put $apk_file1 ./syncbooker.apk
+quit
+EOF
 
-# ftp_site=
-# username=
-# passwd=
-
-# ftp -n $ftp_site<<EOF
-# quote USER $username
-# quote PASS $passwd
-# binary
-# cd apks
-# put ./syncbooker.apk
-# quit
-# EOF
+echo ""
+echo "http://apk.delphima.z8.ru/apks/$TARGET_PLATFORM2/$apk_file2"
+echo ""
 
 read -p "Press ENTER for exit..."
 

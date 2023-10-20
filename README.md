@@ -27,7 +27,7 @@
 # Install and run from sources (on Windows)
 
 - Download sources
-- Install python 3.7-3.10 (tested only version 3.10)
+- Install python 3.8 - tested only this version
 - Create virtual env, run command "python.exe -m venv venv"
 - Activate venv, run command "venv/Scripts/activate.bat"
 - Upgrade pip, run command "python.exe -m pip install -upgrade pip"

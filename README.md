@@ -41,8 +41,8 @@
 - Install Ubuntu 22 on VirtualBox
 - Run virtual machine with Ubuntu 22
 - Install depends: https://python-for-android.readthedocs.io/en/latest/quickstart/ for Ubuntu 22
-- Download build_template.sh by link https://github.com/xayam/syncbookerkivy/blob/main/build_template.sh
-- Copy build_template.sh in new file, run command "cp ./build_template.sh ./build.sh"
+- Download build_template_latest.sh by link https://github.com/xayam/syncbookerkivy/blob/main/build_template_latest.sh
+- Copy build_template_latest.sh in new file, run command "cp ./build_template_latest.sh ./build.sh"
 - Edit file build.sh: 
   - add path to SDK and NDK 
   - add own vars 'ftp_site', 'username', and 'passwd'
@@ -50,4 +50,4 @@
 - You must mark the file as executable, run command "chmod +x build.sh"
 - Run ./build.sh as program for create and upload to ftp server apk-files for two archs (armeabi-v7a and x86_64)
 - Run .apk with arch 'armeabi-v7a' on Android; 
-- Arch 'x86_64' must be run in emulator on Android Studio
+- Arch 'x86_64' may be run in emulator on Android Studio

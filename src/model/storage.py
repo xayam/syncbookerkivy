@@ -3,7 +3,6 @@ import os
 import requests
 import zipfile
 
-from src.model.img import Img
 from src.model.sync import Sync
 from src.model.cimg import decode_image
 
@@ -22,9 +21,11 @@ class Storage:
                 "Gecko/20100101 Firefox/96.0",
             "Content-type": "application/x-www-form-urlencoded"
         }
-        if not os.path.exists("res"):
-            os.mkdir("res")
-        decode_image(folder="res/img/", img=Img())
+        if not self.app.android:
+            from src.model.img import Img
+            if not os.path.exists("res"):
+                os.mkdir("res")
+            decode_image(folder="res/img/", img=Img())
 
     def list(self):
         self.storage_list()

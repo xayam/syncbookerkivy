@@ -5,7 +5,7 @@ import re
 def get_app_version():
     filename = "config.sh"
     if not os.path.exists(filename):
-        filename = "../config.sh"
+        return "Unknown"
     with open(filename, mode="r") as f:
         config = f.read()
     result = re.findall(pattern=r'APP_VERSION="(.+?)"', string=config)
@@ -13,6 +13,7 @@ def get_app_version():
         return result[0]
     else:
         return "Unknown"
+
 
 if "DEBUG" in os.environ:
     DEBUG = os.environ["DEBUG"]
@@ -50,7 +51,6 @@ POSI = "posi"
 AUDIO = "audio"
 CHUNK = "chunk"
 
-
 # Scheme sync.json
 TIME_START = 0
 TIME_END = 1
@@ -83,6 +83,7 @@ RUS2ENG = 3
 VALID = 4
 
 barrier = 0.0
+
 
 def findnth(string, substring, n):
     parts = string.split(substring, n + 1)

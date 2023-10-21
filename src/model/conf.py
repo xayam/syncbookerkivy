@@ -8,14 +8,15 @@ class Conf:
     NAME = "SyncBooker"
 
     OPTIONS = "options.json"
+    CONFIG = "config.sh"
 
     LICENSE = "LICENSE"
     CASES_HTML = os.getcwd() + "/cases.html"
     README_MD = os.getcwd() + "/README.md"
     FAQ_HTML = os.getcwd() + "/faq.html"
     DONATE = "https://yoomoney.ru/to/410014160363421"
-    ICON_ICO = "img/icon.ico"
-    ICON_PNG = "img/icon.png"
+    ICON_ICO = "res/icon.ico"
+    ICON_PNG = "res/img/icon.png"
 
     GITHUB_SYNCBOOKER = "https://github.com/xayam/syncbooker"
     UPDATE_URL = "https://github.com/xayam/syncbookerkivy/releases/download/SyncBookerKivy_v1.0/"
@@ -74,23 +75,23 @@ class Conf:
         VALID
     ]
 
-    DISABLE_MARKER = "img/marker.png"
+    DISABLE_MARKER = "res/img/marker.png"
 
     # Icon paths
-    ICON_CATALOG = "img/catalog.png"
-    ICON_CATALOG_PRESSED = "img/catalog_pressed.png"
-    ICON_TABLE = "img/table.png"
-    ICON_TABLE_PRESSED = "img/table_pressed.png"
-    ICON_PREV = "img/prev.png"
-    ICON_PREV_PRESSED = "img/prev_pressed.png"
-    ICON_PLAY = "img/play.png"
-    ICON_PLAY_PRESSED = "img/play_pressed.png"
-    ICON_PAUSE = "img/pause.png"
-    ICON_PAUSE_PRESSED = "img/pause_pressed.png"
-    ICON_STOP = "img/stop.png"
-    ICON_STOP_PRESSED = "img/stop_pressed.png"
-    ICON_NEXT = "img/next.png"
-    ICON_NEXT_PRESSED = "img/next_pressed.png"
+    ICON_CATALOG = "res/img/catalog.png"
+    ICON_CATALOG_PRESSED = "res/img/catalog_pressed.png"
+    ICON_TABLE = "res/img/table.png"
+    ICON_TABLE_PRESSED = "res/img/table_pressed.png"
+    ICON_PREV = "res/img/prev.png"
+    ICON_PREV_PRESSED = "res/img/prev_pressed.png"
+    ICON_PLAY = "res/img/play.png"
+    ICON_PLAY_PRESSED = "res/img/play_pressed.png"
+    ICON_PAUSE = "res/img/pause.png"
+    ICON_PAUSE_PRESSED = "res/img/pause_pressed.png"
+    ICON_STOP = "res/img/stop.png"
+    ICON_STOP_PRESSED = "res/img/stop_pressed.png"
+    ICON_NEXT = "res/img/next.png"
+    ICON_NEXT_PRESSED = "res/img/next_pressed.png"
 
     def __init__(self, app):
         self.app = app

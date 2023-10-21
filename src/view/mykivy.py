@@ -1,4 +1,3 @@
-from kivy.clock import Clock
 from kivy.config import Config
 
 Config.set('graphics', 'window_state', 'maximized')
@@ -13,6 +12,8 @@ from .catalog import Catalog
 from .table import Table
 from .options import Options
 
+Window.minimum_width = 480
+Window.minimum_height = 360
 
 class MyKivy(KivyApp):
 

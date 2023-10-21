@@ -5,6 +5,7 @@ __pycache__/
 build/
 dist/
 server/
+*.zip
 *.exe
 recognize/rus/
 recognize/eng/

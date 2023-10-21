@@ -85,9 +85,13 @@ class Catalog(TabbedPanelItem):
         Clock.schedule_once(self.resize_widgets, timeout=0.5)
 
     def resize_widgets(self, _=None):
+        with self.app.table.table_gridlayout.canvas.before:
+            Color(0, 0, 0, mode="rgb")
+            Rectangle(size=(10 ** 6, Window.height - self.app.container.tab_height - 6),
+                      pos=(0, 0))
         for layout in self.catalog_buttons.children:
-            if layout.width >= Window.size[0]:
-                layout.width = Window.size[0]
+            if layout.width >= Window.width:
+                layout.width = Window.width
                 layout.children[0].size_hint = (1, None)
                 layout.children[1].size_hint = (1, None)
                 layout.children[2].size_hint = (1, None)
@@ -95,10 +99,10 @@ class Catalog(TabbedPanelItem):
                 layout.children[1].height = layout.width
                 layout.children[2].height = (layout.height - layout.width) // 2
             else:
-                layout.width = layout.children[1].height
                 layout.children[0].size_hint = (1, 0.25)
                 layout.children[1].size_hint = (1, 0.5)
                 layout.children[2].size_hint = (1, 0.25)
+                layout.width = layout.children[1].height
             layout.children[0].font_size = str(layout.width // 16) + 'px'
             layout.children[2].font_size = str(layout.width // 16) + 'px'
 

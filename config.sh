@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export APP_VERSION="2.54"
+export APP_VERSION="2.56"
 export DEBUG=1

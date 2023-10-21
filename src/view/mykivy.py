@@ -34,8 +34,4 @@ class MyKivy(KivyApp):
         self.container.add_widget(self.table)
         # self.app.container.add_widget(self.app.options)
         self.container.default_tab = self.table
-        with self.table.table_gridlayout.canvas.before:
-            Color(0, 0, 0, mode="rgb")
-            Rectangle(size=(10 ** 6, Window.height - self.container.tab_height - 6),
-                      pos=(0, 0))
         return self.container

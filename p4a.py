@@ -20,8 +20,8 @@ command = \
     "android.permission.MEDIA_CONTENT_CONTROL " + \
     "android.permission.READ_MEDIA_AUDIO " + \
     "--orientation=landscape " + \
-    "--icon=$HOME/PycharmProjects/syncbookerkivy-main/img/icon.png " + \
-    "--presplash=$HOME/PycharmProjects/syncbookerkivy-main/img/presplash.png " + \
+    "--icon=$HOME/PycharmProjects/syncbookerkivy-main/res/img/icon.png " + \
+    "--presplash=$HOME/PycharmProjects/syncbookerkivy-main/res/img/presplash.png " + \
     "--version=" + VERSION + " " + \
     "--arch=" + ARCH + " " + \
     "--bootstrap=sdl2 " + \

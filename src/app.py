@@ -7,8 +7,7 @@ from src.view.view import View
 
 class App(Model, Controller, View):
     def __init__(self):
-        self.android = True if platform == "android" else False
-        self.windows = True if platform == "windows" else False
+        self.android = platform == "android"
         Model.__init__(self, app=self)
         Controller.__init__(self, app=self)
         View.__init__(self, app=self)

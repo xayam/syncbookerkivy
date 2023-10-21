@@ -53,6 +53,7 @@ class Action:
             self.app.log.debug(type(e).__name__ + ": " + e.__str__())
             self.app.touch_pos = 0
             self.app.container.switch_to(self.app.catalog)
+            self.app.catalog.on_resize()
             return
 
     def double_tap(self, _=None, __=None, ___=None):

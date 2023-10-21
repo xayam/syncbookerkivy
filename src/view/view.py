@@ -12,4 +12,4 @@ class View(MyKivy):
         self.app = app
         self.player = Player(app=self)
         self.action = Action(app=self)
-        super().__init__(app=self.app, **kwargs)
+        super().__init__(app=self, **kwargs)

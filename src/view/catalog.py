@@ -38,12 +38,34 @@ class Catalog(TabbedPanelItem):
         self.catalog_scrollview = ScrollView(do_scroll_x=True, do_scroll_y=False)
 
         for cover in self.app.stor.storage_books:
-            button = Button(size_hint=(None, 1),
+            c = cover[5:-4]
+            title = c.split("_-_")
+            author = title[0].replace("_", " ")
+            book = title[1].replace("_", " ")
+            button_box_layout = BoxLayout(size_hint=(None, 1),
+                                          padding=(0, 0),
+                                          width=(Window.size[0] - 3 * 140) // 2,
+                                          orientation="vertical")
+            button_up = Label(text=author,
+                              font_size='32px',
+                              size_hint=(1, 0.1),
+                              padding=(0, 0),
+                              color="white")
+            button = Button(size_hint=(1, 0.5),
+                            padding=(0,0),
                             width=(Window.size[0] - 3 * 140) // 2,
                             background_normal=cover,
                             on_release=self.catalog_button_click)
+            button_down = Label(text=book,
+                                font_size='32px',
+                                size_hint=(1, 0.1),
+                                padding=(0, 0),
+                                color="white")
+            button_box_layout.add_widget(button_up)
+            button_box_layout.add_widget(button)
+            button_box_layout.add_widget(button_down)
+            self.catalog_buttons.add_widget(button_box_layout)
             button.bind(on_double_tap=self.catalog_double_tap)
-            self.catalog_buttons.add_widget(button)
         self.catalog_scrollview.add_widget(self.catalog_buttons)
 
         self.item_catalog_boxlayout = BoxLayout(orientation="vertical")
@@ -53,6 +75,18 @@ class Catalog(TabbedPanelItem):
         with self.catalog_buttons.canvas.before:
             Color(0, 0, 0, mode="rgb")
             Rectangle(size=(10 ** 6, 10 ** 6), pos=(-10 ** 3, 0))
+
+    def on_press(self):
+        self.on_resize()
+
+    def on_resize(self, _=None, __=None):
+        Clock.schedule_once(self.resize_widgets, timeout=0.5)
+
+    def resize_widgets(self, _=None):
+        for layout in self.catalog_buttons.children:
+            layout.width = layout.children[1].height
+            layout.children[0].font_size = str(layout.width // 16) + 'px'
+            layout.children[2].font_size = str(layout.width // 16) + 'px'
 
     def catalog_button_click(self, value=None):
         self.app.log.debug("Enter to function 'catalog_button_click()'")

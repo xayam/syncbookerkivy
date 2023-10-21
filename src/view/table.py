@@ -87,7 +87,7 @@ class Table(TabbedPanelItem):
         self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
                                            (self.app.table_label_left.line_height +
                                             self.app.table_label_left.line_spacing)
-        if self.app.table_label_left.text == "\n" * 50:
+        if self.app.table_label_left.text == "\n" * 100:
             self.app.log.debug("True is self.app.table_label_left.text == '\n'*50")
             return
         self.app.log.debug("MySound().load_seek")
@@ -115,7 +115,7 @@ class Table(TabbedPanelItem):
         self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \
                                             (self.app.table_label_right.line_height +
                                              self.app.table_label_right.line_spacing)
-        if self.app.table_label_left.text == "\n" * 50:
+        if self.app.table_label_left.text == "\n" * 100:
             self.app.log.debug("True is self.app.table_label_right.text == '\n'*50")
             return
         self.app.log.debug("MySound().load_seek")

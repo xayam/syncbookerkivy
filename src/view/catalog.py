@@ -94,6 +94,9 @@ class Catalog(TabbedPanelItem):
                 pos=(0, 0))
 
     def resize_catalog(self, _=None):
+        self.app.table.table_navigator.size_hint_x = None
+        self.app.table.table_navigator.width = \
+            (Window.height - self.app.container.tab_height - 6) // 5
         for layout in self.catalog_buttons.children:
             if layout.width >= Window.width:
                 layout.width = Window.width

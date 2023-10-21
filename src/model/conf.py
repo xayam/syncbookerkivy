@@ -82,6 +82,8 @@ class Conf:
     ICON_CATALOG_PRESSED = "res/img/catalog_pressed.png"
     ICON_TABLE = "res/img/table.png"
     ICON_TABLE_PRESSED = "res/img/table_pressed.png"
+    ICON_OPTIONS = "res/img/options.png"
+    ICON_OPTIONS_PRESSED = "res/img/options_pressed.png"
     ICON_PREV = "res/img/prev.png"
     ICON_PREV_PRESSED = "res/img/prev_pressed.png"
     ICON_PLAY = "res/img/play.png"

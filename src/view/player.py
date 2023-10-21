@@ -80,8 +80,8 @@ class Player:
         if self.app.sound is None:
             return
         self.app.sound.stop()
-        self.app.table_label_left.text = "\n" * 50
-        self.app.table_label_right.text = "\n" * 50
+        self.app.table_label_left.text = "\n" * 100
+        self.app.table_label_right.text = "\n" * 100
         Clock.schedule_once(self.delay_run, timeout=1)
 
     def stop_button_click(self, _=None):

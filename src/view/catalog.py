@@ -48,6 +48,7 @@ class Catalog(TabbedPanelItem):
                                           orientation="vertical")
             button_up = Label(text=author,
                               font_size='32px',
+                              bold=True,
                               size_hint=(1, 0.1),
                               padding=(0, 0),
                               color="white")
@@ -58,6 +59,7 @@ class Catalog(TabbedPanelItem):
                             on_release=self.catalog_button_click)
             button_down = Label(text=book,
                                 font_size='32px',
+                                bold=True,
                                 size_hint=(1, 0.1),
                                 padding=(0, 0),
                                 color="white")
@@ -84,7 +86,19 @@ class Catalog(TabbedPanelItem):
 
     def resize_widgets(self, _=None):
         for layout in self.catalog_buttons.children:
-            layout.width = layout.children[1].height
+            if layout.width >= Window.size[0]:
+                layout.width = Window.size[0]
+                layout.children[0].size_hint = (1, None)
+                layout.children[1].size_hint = (1, None)
+                layout.children[2].size_hint = (1, None)
+                layout.children[0].height = (layout.height - layout.width) // 2
+                layout.children[1].height = layout.width
+                layout.children[2].height = (layout.height - layout.width) // 2
+            else:
+                layout.width = layout.children[1].height
+                layout.children[0].size_hint = (1, 0.25)
+                layout.children[1].size_hint = (1, 0.5)
+                layout.children[2].size_hint = (1, 0.25)
             layout.children[0].font_size = str(layout.width // 16) + 'px'
             layout.children[2].font_size = str(layout.width // 16) + 'px'
 

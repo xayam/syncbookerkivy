@@ -4016,5 +4016,5 @@ class Img:
                 b'qZ9c6ieX+smlfnKpn1zqJ5f6yaV+cqmfXOonl/rJpX5yqZ9c6ieX+smlfnKp' +
                 b'n1zqJ5f6yaV+cqmfXOonl/rJpX5yqZ9c6ieX+rmS8c96B3Xrj/kRspizn++S' +
                 b'To3S9Tv+GbVv18I+PtsNfwo7LwLqHxjAFHlflRn1n9nAbzwiAgAAAAAAAAAA' +
-                b'AAAAAAD8t72/diWWt1mRS/2k2u2+AK5/pGgzXRpZAAAAAElFTkSuQmCC',
+                b'AAAAAAD8t72/diWWt1mRS/2k2u2+AK5/pGgzXRpZAAAAAElFTkSuQmCC'
         }

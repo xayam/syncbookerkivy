@@ -82,13 +82,18 @@ class Catalog(TabbedPanelItem):
         self.on_resize()
 
     def on_resize(self, _=None, __=None):
-        Clock.schedule_once(self.resize_widgets, timeout=0.5)
+        Clock.schedule_once(self.redraw_table, timeout=0)
+        Clock.schedule_once(self.resize_catalog, timeout=1)
 
-    def resize_widgets(self, _=None):
+    def redraw_table(self, _=None):
+        self.app.table.table_gridlayout.canvas.before.clear()
         with self.app.table.table_gridlayout.canvas.before:
-            Color(0, 0, 0, mode="rgb")
-            Rectangle(size=(10 ** 6, Window.height - self.app.container.tab_height - 6),
-                      pos=(0, 0))
+            self.canvas_color = Color(0, 0, 0, 1)
+            self.canvas_rect = Rectangle(
+                size=(Window.width, Window.height - self.app.container.tab_height - 6),
+                pos=(0, 0))
+
+    def resize_catalog(self, _=None):
         for layout in self.catalog_buttons.children:
             if layout.width >= Window.width:
                 layout.width = Window.width

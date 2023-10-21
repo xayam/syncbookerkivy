@@ -19,6 +19,7 @@ class MyKivy(KivyApp):
     def __init__(self, app, **kwargs):
         self.app = app
         Config.set('kivy', 'window_icon', self.app.conf.ICON_PNG)
+        Window.clearcolor = (0, 0, 0, 1)
         super().__init__(**kwargs)
         self.container = TabbedPanel()
         # self.app.options = Options(self.app)
@@ -35,3 +36,6 @@ class MyKivy(KivyApp):
         # self.app.container.add_widget(self.app.options)
         self.container.default_tab = self.table
         return self.container
+
+    def on_start(self):
+        self.catalog.on_resize()

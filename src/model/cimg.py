@@ -25,25 +25,27 @@ def encode_image(folder="../../res/img/"):
         f.write(result)
 
 
-def decode_image(folder="img/"):
+def decode_image(folder="img/", img=None):
+    if img is None:
+        return
     if not os.path.exists(folder):
         os.mkdir(folder)
-    img = Img()
     for image in img.images:
-        with open(folder + image.split("/")[-1], mode="wb") as f:
-            with open("tmp", mode="wb") as tmp:
-                tmp.write(img.images[image])
-            with open("tmp", mode="rb") as tmp:
-                base64.decode(tmp, f)
-    os.unlink("tmp")
+        filepath = folder + image.split("/")[-1]
+        if not os.path.exists(filepath):
+            with open(filepath, mode="wb") as f:
+                with open("tmp", mode="wb") as tmp:
+                    tmp.write(img.images[image])
+                with open("tmp", mode="rb") as tmp:
+                    base64.decode(tmp, f)
+                os.unlink("tmp")
 
 
 if __name__ == "__main__":
 
     try:
-        from img import Img
+        from img import Img as img
     except ModuleNotFoundError:
         encode_image()
-        from img import Img
-
-    decode_image(folder="../../res/img/")
+        from img import Img as img
+    decode_image(folder="../../res/img/", img=img())

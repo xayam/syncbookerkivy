@@ -2,6 +2,7 @@ from kivy.app import App as KivyApp
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle
 from kivy.uix.tabbedpanel import TabbedPanel
+from kivy.config import Config
 
 from src.model.mysound import MySound
 
@@ -15,12 +16,14 @@ class MyKivy(KivyApp):
         super().__init__(**kwargs)
 
         self.app = app
+        Config.set('kivy', 'window_icon', self.app.conf.ICON_PNG)
         self.container = TabbedPanel()
         # self.app.options = Options(self.app)
         self.table = Table(self)
         self.catalog = Catalog(self)
 
     def build(self):
+        self.icon = self.app.conf.ICON_ICO
         self.app.container.size_hint = (1, 1)
         self.app.container.do_default_tab = False
         self.app.container.add_widget(self.app.catalog)

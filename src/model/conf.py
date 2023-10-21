@@ -15,7 +15,7 @@ class Conf:
     README_MD = os.getcwd() + "/README.md"
     FAQ_HTML = os.getcwd() + "/faq.html"
     DONATE = "https://yoomoney.ru/to/410014160363421"
-    ICON_ICO = "res/icon.ico"
+    ICON_ICO = "res/img/icon.ico"
     ICON_PNG = "res/img/icon.png"
 
     GITHUB_SYNCBOOKER = "https://github.com/xayam/syncbooker"

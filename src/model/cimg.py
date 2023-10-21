@@ -7,7 +7,7 @@ def encode_image(folder="../../res/img/"):
     if os.path.exists(folder):
         files = os.listdir(folder)
         for file in files:
-            if not file.endswith(".png"):
+            if not file.endswith((".png", ".ico")):
                 continue
             filepath = f"{folder}{file}"
             with open(filepath, mode="rb") as f:
@@ -44,8 +44,8 @@ def decode_image(folder="img/", img=None):
 if __name__ == "__main__":
 
     try:
-        from img import Img as img
+        from img import Img
     except ModuleNotFoundError:
         encode_image()
-        from img import Img as img
-    decode_image(folder="../../res/img/", img=img())
+        from img import Img
+    decode_image(folder="../../res/img/", img=Img())

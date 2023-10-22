@@ -11,6 +11,7 @@ class MySound(SoundFFPy):
 
     def __init__(self, **kwargs):
         super(MySound, self).__init__(**kwargs)
+        self.ffplayer = None
 
     def load_seek(self, position):
         self._state = ''
@@ -36,9 +37,10 @@ class MySound(SoundFFPy):
                                      ff_opts=ff_opts)
         self._state = 'playing'
         self.state = 'play'
-        self._ffplayer.seek(pts=position,
-                            relative=False,
-                            accurate=False)
+        self.ffplayer = self._ffplayer
+        self.ffplayer.seek(pts=position,
+                           relative=False,
+                           accurate=False)
         return self
 
 

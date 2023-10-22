@@ -2,7 +2,7 @@ from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.textinput import TextInput
+
 from kivy.uix.button import Button
 from kivy.uix.tabbedpanel import TabbedPanelItem
 
@@ -42,7 +42,7 @@ class Table(TabbedPanelItem):
         self.app.table_book_left = ScrollView(do_scroll_x=False,
                                               do_scroll_y=True,
                                               bar_width=15)
-        self.app.table_label_left = TextInput(size_hint=(1, None),
+        self.app.table_label_left = MyTextInput(size_hint=(1, None),
                                               focus=False,
                                               selection_color=self.app.opt[SEL],
                                               background_color=self.app.opt[BG],
@@ -61,7 +61,7 @@ class Table(TabbedPanelItem):
         self.app.table_book_right = ScrollView(do_scroll_x=False,
                                                do_scroll_y=True,
                                                bar_width=15)
-        self.app.table_label_right = TextInput(size_hint=(1, None),
+        self.app.table_label_right = MyTextInput(size_hint=(1, None),
                                                focus=False,
                                                selection_color=self.app.opt[SEL],
                                                background_color=self.app.opt[BG],
@@ -84,7 +84,7 @@ class Table(TabbedPanelItem):
 
     def update_table_label_left(self, _=None):
         self.app.log.debug("Enter to function 'update_table_label_left()'")
-        self.app.table_label_left.height = (len(self.app.table_label_left._lines) + 1) * \
+        self.app.table_label_left.height = (len(self.app.table_label_left.lines) + 1) * \
                                            (self.app.table_label_left.line_height +
                                             self.app.table_label_left.line_spacing)
         if self.app.table_label_left.text == "\n" * 100:
@@ -112,7 +112,7 @@ class Table(TabbedPanelItem):
 
     def update_table_label_right(self, _=None):
         self.app.log.debug("Enter to function 'update_table_label_right()'")
-        self.app.table_label_right.height = (len(self.app.table_label_right._lines) + 1) * \
+        self.app.table_label_right.height = (len(self.app.table_label_right.lines) + 1) * \
                                             (self.app.table_label_right.line_height +
                                              self.app.table_label_right.line_spacing)
         if self.app.table_label_left.text == "\n" * 100:

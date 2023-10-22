@@ -53,7 +53,7 @@ class Catalog(TabbedPanelItem):
                               padding=(0, 0),
                               color="white")
             button = Button(size_hint=(1, 0.5),
-                            padding=(0,0),
+                            padding=(0, 0),
                             width=(Window.size[0] - 3 * 140) // 2,
                             background_normal=cover,
                             on_release=self.catalog_button_click)
@@ -81,7 +81,7 @@ class Catalog(TabbedPanelItem):
     def on_press(self):
         self.on_resize()
 
-    def on_resize(self, _=None, value=(800, 600)):
+    def on_resize(self, _=None, __=None):
         Clock.schedule_once(self.redraw_table, timeout=0)
         Clock.schedule_once(self.resize_catalog, timeout=1)
 
@@ -89,10 +89,9 @@ class Catalog(TabbedPanelItem):
         self.app.log.debug("Enter to function 'redraw_table()'")
         self.app.table.table_gridlayout.canvas.before.clear()
         with self.app.table.table_gridlayout.canvas.before:
-            self.canvas_color = Color(0, 0, 0, 1)
-            self.canvas_rect = Rectangle(
-                size=(Window.width, Window.height - self.app.container.tab_height - 6),
-                pos=(0, 0))
+            Color(0, 0, 0, 1)
+            Rectangle(size=(Window.width, Window.height - self.app.container.tab_height - 6),
+                      pos=(0, 0))
 
     def resize_catalog(self, _=None):
         self.app.log.debug("Enter to function 'resize_catalog()'")
@@ -115,7 +114,6 @@ class Catalog(TabbedPanelItem):
                 layout.width = layout.children[1].height
             layout.children[0].font_size = str(layout.width // 16) + 'px'
             layout.children[2].font_size = str(layout.width // 16) + 'px'
-
 
     def catalog_button_click(self, value=None):
         self.app.log.debug("Enter to function 'catalog_button_click()'")

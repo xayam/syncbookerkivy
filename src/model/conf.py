@@ -96,6 +96,7 @@ class Conf:
     ICON_NEXT_PRESSED = "res/img/next_pressed.png"
 
     def __init__(self, app):
+        self.locale = None
         self.app = app
         self.load_options()
         self.set_locale(self.app.opt[LOCALE])

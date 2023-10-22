@@ -15,6 +15,7 @@ from .options import Options
 Window.minimum_width = 480
 Window.minimum_height = 360
 
+
 class MyKivy(KivyApp):
 
     def __init__(self, app, **kwargs):

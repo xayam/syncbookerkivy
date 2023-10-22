@@ -15,14 +15,14 @@ class Model:
         self.nonstop = False
         self.sound = None
         self.sound_pos = 0.0
-        self.chunk_width = 4000 if self.app.android else 20000
+        self.chunk_width = 4000 if ANDROID else 20000
         self.chunk_current = 0
         self.syncs = {}
         self.current_select = None
         self.log = Log()
         self.reset_opt()
-        self.conf = Conf(app=self)
-        self.stor = Storage(app=self)
+        self.conf = Conf(model=self)
+        self.stor = Storage(model=self)
         self.stor.list()
 
     def set_sound_pos(self, value: float):

@@ -1,6 +1,6 @@
 import os
 import re
-
+from kivy.utils import platform
 
 def get_app_version():
     filename = "config.sh"
@@ -14,6 +14,7 @@ def get_app_version():
     else:
         return "Unknown"
 
+ANDROID = platform == "android"
 
 if "DEBUG" in os.environ:
     DEBUG = os.environ["DEBUG"]

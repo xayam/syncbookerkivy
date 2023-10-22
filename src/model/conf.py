@@ -95,11 +95,11 @@ class Conf:
     ICON_NEXT = "res/img/next.png"
     ICON_NEXT_PRESSED = "res/img/next_pressed.png"
 
-    def __init__(self, app):
+    def __init__(self, model):
+        self.model = model
         self.locale = None
-        self.app = app
         self.load_options()
-        self.set_locale(self.app.opt[LOCALE])
+        self.set_locale(self.model.opt[LOCALE])
 
     def set_locale(self, locale):
         self.locale = locale
@@ -107,11 +107,11 @@ class Conf:
     def load_options(self):
         if os.path.exists(self.OPTIONS):
             with open(self.OPTIONS, mode="r") as opt:
-                self.app.opt = json.load(opt)
+                self.model.opt = json.load(opt)
         else:
             self.save_options()
 
     def save_options(self):
-        json_string = json.dumps(self.app.opt)
+        json_string = json.dumps(self.model.opt)
         with open(self.OPTIONS, mode="w") as opt:
             opt.write(json_string)

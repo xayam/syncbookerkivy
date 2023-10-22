@@ -5,12 +5,13 @@ import zipfile
 
 from src.model.sync import Sync
 from src.model.cimg import decode_image
+from src.model.utils import ANDROID
 
 
 class Storage:
 
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, model):
+        self.model = model
         self.data = "data"
         self.storage_books = {}
         self.timeout = 3
@@ -21,7 +22,7 @@ class Storage:
                 "Gecko/20100101 Firefox/96.0",
             "Content-type": "application/x-www-form-urlencoded"
         }
-        if not self.app.android:
+        if not ANDROID:
             from src.model.img import Img
             if not os.path.exists("res"):
                 os.mkdir("res")
@@ -33,33 +34,33 @@ class Storage:
             if os.path.isfile(f"{self.data}/" + i) and (i[-4:] == ".jpg"):
                 cover = f"{self.data}/{i}"
                 self.storage_books[cover] = f"{self.data}/{i[:-4]}/"
-                self.app.log.debug(f"self.storage_books[cover]={self.storage_books[cover]}")
-                self.app.syncs[self.storage_books[cover]] = \
-                    Sync(app=self.app, current_path=self.storage_books[cover])
+                self.model.log.debug(f"self.storage_books[cover]={self.storage_books[cover]}")
+                self.model.syncs[self.storage_books[cover]] = \
+                    Sync(app=self.model, current_path=self.storage_books[cover])
 
     def storage_list(self):
-        self.app.log.debug("Enter to function storage_list()")
+        self.model.log.debug("Enter to function storage_list()")
         try:
-            direct_link = self.app.conf.LIST_URL
-            self.app.log.debug(f"Update {direct_link}")
+            direct_link = self.model.conf.LIST_URL
+            self.model.log.debug(f"Update {direct_link}")
             resp = requests.get(direct_link,
                                 timeout=self.timeout,
                                 verify=self.verify,
                                 headers=self.headers)
             if resp.status_code == 200:
-                self.app.log.debug(f"Unzip list.zip")
+                self.model.log.debug(f"Unzip list.zip")
                 z = zipfile.ZipFile(io.BytesIO(resp.content))
                 z.extractall(self.data)
                 z.close()
             else:
                 raise Exception(f"resp.StatusCode={resp.status_code}")
         except Exception as e:
-            self.app.log.debug("ERROR: " + e.__str__())
+            self.model.log.debug("ERROR: " + e.__str__())
 
     def storage_book(self, book):
-        self.app.log.debug(f"Enter to function storage_book(book='{book}')")
+        self.model.log.debug(f"Enter to function storage_book(book='{book}')")
         try:
-            direct_link = self.app.conf.UPDATE_URL + book
+            direct_link = self.model.conf.UPDATE_URL + book
             resp = requests.get(direct_link,
                                 timeout=self.timeout,
                                 verify=self.verify,
@@ -74,4 +75,4 @@ class Storage:
             else:
                 raise Exception(f"resp.StatusCode={resp.status_code}")
         except Exception as e:
-            self.app.log.debug("ERROR: " + e.__str__())
+            self.model.log.debug("ERROR: " + e.__str__())

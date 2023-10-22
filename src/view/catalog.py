@@ -16,20 +16,20 @@ from src.model.utils import *
 
 
 class Catalog(TabbedPanelItem):
-    def __init__(self, app):
+    def __init__(self, model):
+        self.model = model
         self.popup = None
-        self.app = app
         self.zip = None
         self.valid = None
         TabbedPanelItem.__init__(self,
-                                 background_normal=self.app.conf.ICON_CATALOG,
-                                 background_down=self.app.conf.ICON_CATALOG_PRESSED)
-        self.app.catalog_input = TextInput(size_hint_y=None,
-                                           font_size='16sp',
-                                           multiline=False,
-                                           hint_text=f"v{VERSION}_{ARCH}",
-                                           text="")
-        self.app.catalog_input.size = ('32sp', '32sp')
+                                 background_normal=self.model.conf.ICON_CATALOG,
+                                 background_down=self.model.conf.ICON_CATALOG_PRESSED)
+        self.model.catalog_input = TextInput(size_hint_y=None,
+                                             font_size='16sp',
+                                             multiline=False,
+                                             hint_text=f"v{VERSION}_{ARCH}",
+                                             text="")
+        self.model.catalog_input.size = ('32sp', '32sp')
         self.catalog_buttons = GridLayout(rows=1,
                                           size_hint_x=None,
                                           padding=[140, 15],
@@ -37,7 +37,7 @@ class Catalog(TabbedPanelItem):
         self.catalog_buttons.bind(minimum_width=self.catalog_buttons.setter('width'))
         self.catalog_scrollview = ScrollView(do_scroll_x=True, do_scroll_y=False)
 
-        for cover in self.app.stor.storage_books:
+        for cover in self.model.stor.storage_books:
             c = cover[5:-4]
             title = c.split("_-_")
             author = title[0].replace("_", " ")
@@ -71,7 +71,7 @@ class Catalog(TabbedPanelItem):
         self.catalog_scrollview.add_widget(self.catalog_buttons)
 
         self.item_catalog_boxlayout = BoxLayout(orientation="vertical")
-        self.item_catalog_boxlayout.add_widget(self.app.catalog_input)
+        self.item_catalog_boxlayout.add_widget(self.model.catalog_input)
         self.item_catalog_boxlayout.add_widget(self.catalog_scrollview)
         self.add_widget(self.item_catalog_boxlayout)
         with self.catalog_buttons.canvas.before:
@@ -86,18 +86,18 @@ class Catalog(TabbedPanelItem):
         Clock.schedule_once(self.resize_catalog, timeout=1)
 
     def redraw_table(self, _=None):
-        self.app.log.debug("Enter to function 'redraw_table()'")
-        self.app.table.table_gridlayout.canvas.before.clear()
-        with self.app.table.table_gridlayout.canvas.before:
+        self.model.log.debug("Enter to function 'redraw_table()'")
+        self.model.table.table_gridlayout.canvas.before.clear()
+        with self.model.table.table_gridlayout.canvas.before:
             Color(0, 0, 0, 1)
-            Rectangle(size=(Window.width, Window.height - self.app.container.tab_height - 6),
+            Rectangle(size=(Window.width, Window.height - self.model.container.tab_height - 6),
                       pos=(0, 0))
 
     def resize_catalog(self, _=None):
-        self.app.log.debug("Enter to function 'resize_catalog()'")
-        self.app.table.table_navigator.size_hint_x = None
-        self.app.table.table_navigator.width = \
-            (Window.height - self.app.container.tab_height - 6) // 5
+        self.model.log.debug("Enter to function 'resize_catalog()'")
+        self.model.table.table_navigator.size_hint_x = None
+        self.model.table.table_navigator.width = \
+            (Window.height - self.model.container.tab_height - 6) // 5
         for layout in self.catalog_buttons.children:
             if layout.width >= Window.width:
                 layout.width = Window.width
@@ -116,60 +116,60 @@ class Catalog(TabbedPanelItem):
             layout.children[2].font_size = str(layout.width // 16) + 'px'
 
     def catalog_button_click(self, value=None):
-        self.app.log.debug("Enter to function 'catalog_button_click()'")
-        if not (self.app.clock_action is None):
-            self.app.clock_action.cancel()
+        self.model.log.debug("Enter to function 'catalog_button_click()'")
+        if not (self.model.clock_action is None):
+            self.model.clock_action.cancel()
 
-        current = self.app.stor.storage_books[value.background_normal]
-        self.app.log.debug(f"Selected book - '{current}'")
-        self.app.conf.load_options()
+        current = self.model.stor.storage_books[value.background_normal]
+        self.model.log.debug(f"Selected book - '{current}'")
+        self.model.conf.load_options()
 
         try:
-            self.app.sound.stop()
+            self.model.sound.stop()
         except AttributeError:
-            self.app.log.debug("WARNING: AttributeError self.app.sound.stop()")
+            self.model.log.debug("WARNING: AttributeError self.app.sound.stop()")
         try:
-            self.app.current_select = current
-            self.app.set_sound_pos(float(self.app.opt[POSITIONS][self.app.current_select][POSI]))
-            self.app.chunk_current = \
-                self.app.opt[POSITIONS][self.app.current_select][CHUNK]
+            self.model.current_select = current
+            self.model.set_sound_pos(float(self.model.opt[POSITIONS][self.model.current_select][POSI]))
+            self.model.chunk_current = \
+                self.model.opt[POSITIONS][self.model.current_select][CHUNK]
         except KeyError:
-            self.app.set_sound_pos(0.0)
-            self.app.opt[POSITIONS][self.app.current_select] = {
+            self.model.set_sound_pos(0.0)
+            self.model.opt[POSITIONS][self.model.current_select] = {
                 POSI: "0", AUDIO: EN, CHUNK: 0}
-            self.app.chunk_current = 0
-            self.app.conf.save_options()
-        self.valid = value.background_normal[:-4] + "/" + self.app.conf.VALID
-        self.zip = self.app.current_select[5:-1] + ".zip"
-        self.app.container.switch_to(self.app.table)
+            self.model.chunk_current = 0
+            self.model.conf.save_options()
+        self.valid = value.background_normal[:-4] + "/" + self.model.conf.VALID
+        self.zip = self.model.current_select[5:-1] + ".zip"
+        self.model.container.switch_to(self.model.table)
         self.show_popup()
         Clock.schedule_once(self.start_thread, timeout=1)
 
     def start_thread(self, _):
-        self.app.log.debug("Enter to function 'start_thread()'")
+        self.model.log.debug("Enter to function 'start_thread()'")
         thread_download = threading.Thread(target=self.download_zip)
         thread_download.start()
         thread_download.join()
-        self.app.log.debug("self.app.syncs[self.app.current_select].loads()")
-        self.app.syncs[self.app.current_select].loads()
-        self.app.log.debug("Create Clock.schedule_once(self.app.player.delay_run, timeout=0)")
-        Clock.schedule_once(self.app.player.delay_run, timeout=0)
+        self.model.log.debug("self.app.syncs[self.app.current_select].loads()")
+        self.model.syncs[self.model.current_select].loads()
+        self.model.log.debug("Create Clock.schedule_once(self.app.player.delay_run, timeout=0)")
+        Clock.schedule_once(self.model.player.delay_run, timeout=0)
 
     def catalog_double_tap(self, _=None, __=None, ___=None):
-        self.app.log.debug("Fired function catalog_double_tap() for Button widget")
+        self.model.log.debug("Fired function catalog_double_tap() for Button widget")
 
     def show_popup(self):
-        self.app.log.debug("Enter to function 'show_popup()'")
-        self.app.popup_content = GridLayout(cols=1)
-        self.app.popup_label = Label(text=f"Load file '{self.zip}'")
-        self.app.popup_content.add_widget(self.app.popup_label)
-        self.app.popup = Popup(title="Loading...",
-                               size_hint=(0.8, 0.5),
-                               content=self.app.popup_content, disabled=True)
-        self.app.popup.open()
+        self.model.log.debug("Enter to function 'show_popup()'")
+        self.model.popup_content = GridLayout(cols=1)
+        self.model.popup_label = Label(text=f"Load file '{self.zip}'")
+        self.model.popup_content.add_widget(self.model.popup_label)
+        self.model.popup = Popup(title="Loading...",
+                                 size_hint=(0.8, 0.5),
+                                 content=self.model.popup_content, disabled=True)
+        self.model.popup.open()
 
     def download_zip(self):
-        self.app.log.debug("Enter to function 'download_zip()'")
+        self.model.log.debug("Enter to function 'download_zip()'")
         if not os.path.exists(self.valid):
-            self.app.stor.storage_book(self.zip)
-        self.app.popup.dismiss()
+            self.model.stor.storage_book(self.zip)
+        self.model.popup.dismiss()

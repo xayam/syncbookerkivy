@@ -1,14 +1,13 @@
 from .mykivy import MyKivy
-
 from .action import Action
 from .player import Player
-from .mykivy import MyKivy
 
 
 class View(MyKivy):
 
-    def __init__(self, app, **kwargs):
-        self.app = app
-        self.player = Player(app=self)
-        self.action = Action(app=self)
-        super().__init__(app=self, **kwargs)
+    def __init__(self, model, **kwargs):
+        self.model = model
+        print(str(self.model))
+        self.model.player = Player(model=self.model)
+        self.model.action = Action(model=self.model)
+        super().__init__(model=self.model, **kwargs)

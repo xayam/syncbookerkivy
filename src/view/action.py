@@ -6,109 +6,109 @@ from src.model.utils import *
 
 class Action:
 
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, model):
+        self.model = model
 
     def touch_up_click(self, instance, event):
-        self.app.log.debug("Enter to function 'touch_up_click()'")
+        self.model.log.debug("Enter to function 'touch_up_click()'")
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
-        if self.app.touch_pos == pos:
+        if self.model.touch_pos == pos:
             return
-        self.app.touch_pos = pos
-        if not (self.app.clock_action is None):
-            self.app.clock_action.cancel()
-        self.app.log.debug(f"Touch pos={pos}")
+        self.model.touch_pos = pos
+        if not (self.model.clock_action is None):
+            self.model.clock_action.cancel()
+        self.model.log.debug(f"Touch pos={pos}")
         try:
-            if instance == self.app.table_label_left:
-                sync = self.app.syncs[self.app.current_select].book1.sync
-                chunk = self.app.syncs[self.app.current_select].chunks1
+            if instance == self.model.table_label_left:
+                sync = self.model.syncs[self.model.current_select].book1.sync
+                chunk = self.model.syncs[self.model.current_select].chunks1
             else:
-                sync = self.app.syncs[self.app.current_select].book2.sync
-                chunk = self.app.syncs[self.app.current_select].chunks2
+                sync = self.model.syncs[self.model.current_select].book2.sync
+                chunk = self.model.syncs[self.model.current_select].chunks2
 
-            for p in range(self.app.chunk_current):
+            for p in range(self.model.chunk_current):
                 pos += len(chunk[p])
 
             for i in range(len(sync)):
                 if sync[i][POS_START] > pos:
-                    self.app.log.debug("Stop and reload self.app.sound")
-                    self.app.sound.stop()
-                    self.app.opt[POSITIONS][self.app.current_select][POSI] = sync[i][TIME_START]
-                    self.app.set_sound_pos(sync[i][TIME_START])
-                    if instance == self.app.table_label_left:
-                        self.app.sound = SoundLoader.load(
-                            self.app.current_select + self.app.conf.ENG_MP3). \
-                            load_seek(self.app.get_sound_pos())
-                        self.app.opt[POSITIONS][self.app.current_select][AUDIO] = EN
+                    self.model.log.debug("Stop and reload self.app.sound")
+                    self.model.sound.stop()
+                    self.model.opt[POSITIONS][self.model.current_select][POSI] = sync[i][TIME_START]
+                    self.model.set_sound_pos(sync[i][TIME_START])
+                    if instance == self.model.table_label_left:
+                        self.model.sound = SoundLoader.load(
+                            self.model.current_select + self.model.conf.ENG_MP3). \
+                            load_seek(self.model.get_sound_pos())
+                        self.model.opt[POSITIONS][self.model.current_select][AUDIO] = EN
                     else:
-                        self.app.sound = SoundLoader.load(
-                            self.app.current_select + self.app.conf.RUS_MP3). \
-                            load_seek(self.app.get_sound_pos())
-                        self.app.opt[POSITIONS][self.app.current_select][AUDIO] = RU
-                    self.app.conf.save_options()
-                    self.app.log.debug(f"Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
-                    self.app.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
+                        self.model.sound = SoundLoader.load(
+                            self.model.current_select + self.model.conf.RUS_MP3). \
+                            load_seek(self.model.get_sound_pos())
+                        self.model.opt[POSITIONS][self.model.current_select][AUDIO] = RU
+                    self.model.conf.save_options()
+                    self.model.log.debug(f"Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
+                    self.model.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                     return
         except Exception as e:
-            self.app.log.debug(type(e).__name__ + ": " + e.__str__())
-            self.app.touch_pos = 0
-            self.app.container.switch_to(self.app.catalog)
-            self.app.catalog.on_resize()
+            self.model.log.debug(type(e).__name__ + ": " + e.__str__())
+            self.model.touch_pos = 0
+            self.model.container.switch_to(self.model.catalog)
+            self.model.catalog.on_resize()
             return
 
     def double_tap(self, _=None, __=None, ___=None):
-        self.app.log.debug("Fired function double_tap() for TextInput widget")
+        self.model.log.debug("Fired function double_tap() for TextInput widget")
 
     def clock_action_time(self, _):
-        self.app.log.debug("Enter to function 'clock_action_time()'")
-        if self.app.opt[POSITIONS][self.app.current_select][AUDIO] == EN:
-            text_area = self.app.table_label_left
-            book_area = self.app.table_book_left
-            text_area_other = self.app.table_label_right
-            book_area_other = self.app.table_book_right
-            chunk = self.app.syncs[self.app.current_select].chunks1
-            chunk_other = self.app.syncs[self.app.current_select].chunks2
-            sync = self.app.syncs[self.app.current_select].eng2rus
+        self.model.log.debug("Enter to function 'clock_action_time()'")
+        if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
+            text_area = self.model.table_label_left
+            book_area = self.model.table_book_left
+            text_area_other = self.model.table_label_right
+            book_area_other = self.model.table_book_right
+            chunk = self.model.syncs[self.model.current_select].chunks1
+            chunk_other = self.model.syncs[self.model.current_select].chunks2
+            sync = self.model.syncs[self.model.current_select].eng2rus
         else:
-            text_area = self.app.table_label_right
-            book_area = self.app.table_book_right
-            text_area_other = self.app.table_label_left
-            book_area_other = self.app.table_book_left
-            chunk_other = self.app.syncs[self.app.current_select].chunks1
-            chunk = self.app.syncs[self.app.current_select].chunks2
-            sync = self.app.syncs[self.app.current_select].rus2eng
-        pos = self.app.sound.ffplayer.get_pts()
-        self.app.log.debug(f"Getting self.app.sound._ffplayer.get_pts()={pos}")
-        if self.app.sound.ffplayer.get_pts() + 1.0 >= \
-                self.app.sound.ffplayer.get_metadata()['duration']:
-            self.app.player.pause_button_click()
-            self.app.opt[POSITIONS][self.app.current_select][POSI] = "0.0"
-            self.app.opt[POSITIONS][self.app.current_select][CHUNK] = 0
-            self.app.conf.save_options()
+            text_area = self.model.table_label_right
+            book_area = self.model.table_book_right
+            text_area_other = self.model.table_label_left
+            book_area_other = self.model.table_book_left
+            chunk_other = self.model.syncs[self.model.current_select].chunks1
+            chunk = self.model.syncs[self.model.current_select].chunks2
+            sync = self.model.syncs[self.model.current_select].rus2eng
+        pos = self.model.sound.ffplayer.get_pts()
+        self.model.log.debug(f"Getting self.app.sound._ffplayer.get_pts()={pos}")
+        if self.model.sound.ffplayer.get_pts() + 1.0 >= \
+                self.model.sound.ffplayer.get_metadata()['duration']:
+            self.model.player.pause_button_click()
+            self.model.opt[POSITIONS][self.model.current_select][POSI] = "0.0"
+            self.model.opt[POSITIONS][self.model.current_select][CHUNK] = 0
+            self.model.conf.save_options()
             return
 
         try:
             position = 0
-            for current in range(len(self.app.syncs[self.app.current_select].chunks1)):
+            for current in range(len(self.model.syncs[self.model.current_select].chunks1)):
                 position += len(chunk[current])
                 if position > sync[str(int(pos))][0]:
-                    if current != self.app.chunk_current:
-                        self.app.chunk_current = current
-                        self.app.opt[POSITIONS][self.app.current_select][CHUNK] = \
-                            self.app.chunk_current
-                        self.app.conf.save_options()
-                        self.app.table_label_left.text = \
-                            self.app.syncs[self.app.current_select].chunks1[self.app.chunk_current]
-                        self.app.table_label_right.text = \
-                            self.app.syncs[self.app.current_select].chunks2[self.app.chunk_current]
+                    if current != self.model.chunk_current:
+                        self.model.chunk_current = current
+                        self.model.opt[POSITIONS][self.model.current_select][CHUNK] = \
+                            self.model.chunk_current
+                        self.model.conf.save_options()
+                        self.model.table_label_left.text = \
+                            self.model.syncs[self.model.current_select].chunks1[self.model.chunk_current]
+                        self.model.table_label_right.text = \
+                            self.model.syncs[self.model.current_select].chunks2[self.model.chunk_current]
                         return
                     else:
                         break
 
             position = sync[str(int(pos))][0]
-            for p in range(self.app.chunk_current):
+            for p in range(self.model.chunk_current):
                 position -= len(chunk[p])
-            self.app.log.debug(f"Position={position}")
+            self.model.log.debug(f"Position={position}")
 
             text_area.select_text(0, position)
             y1 = text_area.get_cursor_from_index(
@@ -124,9 +124,9 @@ class Action:
                 convert_distance_to_scroll(0, y)[1]
 
             position = sync[str(int(pos))][1]
-            for p in range(self.app.chunk_current):
+            for p in range(self.model.chunk_current):
                 position -= len(chunk_other[p])
-            self.app.log.debug(f"Position_other={position}")
+            self.model.log.debug(f"Position_other={position}")
 
             text_area_other.select_text(0, position)
             y1 = text_area_other.get_cursor_from_index(
@@ -141,10 +141,10 @@ class Action:
             book_area_other.scroll_y = book_area_other. \
                 convert_distance_to_scroll(0, y)[1]
         except Exception as e:
-            self.app.log.debug(type(e).__name__ + ": " + e.__str__())
+            self.model.log.debug(type(e).__name__ + ": " + e.__str__())
             return
 
-        self.app.opt[POSITIONS][self.app.current_select][POSI] = str(pos)
-        self.app.opt[POSITIONS][self.app.current_select][CHUNK] = self.app.chunk_current
-        self.app.set_sound_pos(pos)
-        self.app.conf.save_options()
+        self.model.opt[POSITIONS][self.model.current_select][POSI] = str(pos)
+        self.model.opt[POSITIONS][self.model.current_select][CHUNK] = self.model.chunk_current
+        self.model.set_sound_pos(pos)
+        self.model.conf.save_options()

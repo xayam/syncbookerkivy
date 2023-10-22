@@ -10,7 +10,7 @@ try:
 
 except Exception as e:
 
-    application.app.log.debug(
+    application.controller.model.log.debug(
         "AppError: " +
         type(e).__name__ + ": " +
         e.__str__()

@@ -1,9 +1,11 @@
-from kivy.utils import platform
+
 
 from src.controller.controller import Controller
 
 
-class App(Controller):
+class App:
     def __init__(self):
-        self.android = platform == "android"
-        self.controller = Controller.__init__(self, app=self)
+        self.controller = Controller(app=self)
+
+    def run(self):
+        self.controller.view.run()

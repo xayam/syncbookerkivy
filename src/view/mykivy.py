@@ -15,27 +15,27 @@ Window.minimum_height = 360
 
 class MyKivy(KivyApp):
 
-    def __init__(self, app, **kwargs):
-        self.app = app
-        Config.set('kivy', 'window_icon', self.app.conf.ICON_PNG)
-        Window.clearcolor = (0, 0, 0, 1)
+    def __init__(self, model, **kwargs):
         super().__init__(**kwargs)
-        self.container = TabbedPanel()
-        self.app.options = Options(self.app)
-        self.table = Table(app=self)
-        self.catalog = Catalog(app=self)
-        self.options = Options(app=self)
+        self.model = model
+        print(str(self.model))
+        Config.set('kivy', 'window_icon', self.model.conf.ICON_PNG)
+        Window.clearcolor = (0, 0, 0, 1)
+        self.model.container = TabbedPanel()
+        self.model.table = Table(model=self.model)
+        self.model.catalog = Catalog(model=self.model)
+        self.model.options = Options(model=self.model)
+        Window.bind(size=self.model.catalog.on_resize)
 
     def build(self):
-        Window.bind(size=self.catalog.on_resize)
-        self.icon = self.app.conf.ICON_ICO
-        self.container.size_hint = (1, 1)
-        self.container.do_default_tab = False
-        self.container.add_widget(self.catalog)
-        self.container.add_widget(self.table)
-        self.container.add_widget(self.options)
-        self.container.default_tab = self.table
-        return self.container
+        self.icon = self.model.conf.ICON_ICO
+        self.model.container.size_hint = (1, 1)
+        self.model.container.do_default_tab = False
+        self.model.container.add_widget(self.model.catalog)
+        self.model.container.add_widget(self.model.table)
+        self.model.container.add_widget(self.model.options)
+        self.model.container.default_tab = self.model.table
+        return self.model.container
 
     def on_start(self):
-        self.catalog.on_resize()
+        self.model.catalog.on_resize()

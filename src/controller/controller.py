@@ -4,13 +4,14 @@ from src.model.model import Model
 from src.view.view import View
 
 
-class Controller(Model, View):
+class Controller:
 
     def __init__(self, app):
         self.app = app
 
-        self.model = Model.__init__(self, app=self)
-        self.view = View.__init__(self, app=self.model)
+        self.model = Model(app=self.app)
+        print(str(self.model))
+        self.view = View(model=self.model)
 
         self.init()
 

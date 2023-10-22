@@ -9,4 +9,3 @@ chardet
 numpy
 Pillow
 scikit-learn
-android

@@ -7,6 +7,7 @@ from kivy.uix.button import Button
 from kivy.uix.tabbedpanel import TabbedPanelItem
 
 from src.model.utils import *
+from src.view.mytextinput import MyTextInput
 
 
 class Table(TabbedPanelItem):
@@ -43,13 +44,13 @@ class Table(TabbedPanelItem):
                                               do_scroll_y=True,
                                               bar_width=15)
         self.app.table_label_left = MyTextInput(size_hint=(1, None),
-                                              focus=False,
-                                              selection_color=self.app.opt[SEL],
-                                              background_color=self.app.opt[BG],
-                                              foreground_color=self.app.opt[FG],
-                                              handle_image_left=self.app.conf.DISABLE_MARKER,
-                                              handle_image_right=self.app.conf.DISABLE_MARKER,
-                                              text="Select a book in the 'Catalog' section")
+                                                focus=False,
+                                                selection_color=self.app.opt[SEL],
+                                                background_color=self.app.opt[BG],
+                                                foreground_color=self.app.opt[FG],
+                                                handle_image_left=self.app.conf.DISABLE_MARKER,
+                                                handle_image_right=self.app.conf.DISABLE_MARKER,
+                                                text="Select a book in the 'Catalog' section")
         self.app.table_label_left.is_focusable = False
         self.app.table_label_left.bind(text=self.on_text_table_label_left)
         self.app.table_label_left.bind(on_touch_up=self.app.action.touch_up_click)
@@ -62,13 +63,13 @@ class Table(TabbedPanelItem):
                                                do_scroll_y=True,
                                                bar_width=15)
         self.app.table_label_right = MyTextInput(size_hint=(1, None),
-                                               focus=False,
-                                               selection_color=self.app.opt[SEL],
-                                               background_color=self.app.opt[BG],
-                                               foreground_color=self.app.opt[FG],
-                                               handle_image_left=self.app.conf.DISABLE_MARKER,
-                                               handle_image_right=self.app.conf.DISABLE_MARKER,
-                                               text="Выберите книгу в разделе 'Catalog'")
+                                                 focus=False,
+                                                 selection_color=self.app.opt[SEL],
+                                                 background_color=self.app.opt[BG],
+                                                 foreground_color=self.app.opt[FG],
+                                                 handle_image_left=self.app.conf.DISABLE_MARKER,
+                                                 handle_image_right=self.app.conf.DISABLE_MARKER,
+                                                 text="Выберите книгу в разделе 'Catalog'")
         self.app.table_label_right.is_focusable = False
         self.app.table_label_right.bind(text=self.on_text_table_label_right)
         self.app.table_label_right.bind(on_touch_up=self.app.action.touch_up_click)

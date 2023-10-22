@@ -2,6 +2,7 @@ import os
 import re
 from kivy.utils import platform
 
+
 def get_app_version():
     filename = "config.sh"
     if not os.path.exists(filename):
@@ -13,6 +14,7 @@ def get_app_version():
         return result[0]
     else:
         return "Unknown"
+
 
 ANDROID = platform == "android"
 

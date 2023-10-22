@@ -8,6 +8,7 @@ class Action:
 
     def __init__(self, model):
         self.model = model
+        self.controller = self.model.controller
 
     def touch_up_click(self, instance, event):
         self.model.log.debug("Enter to function 'touch_up_click()'")
@@ -19,7 +20,7 @@ class Action:
             self.model.clock_action.cancel()
         self.model.log.debug(f"Touch pos={pos}")
         try:
-            if instance == self.model.table_label_left:
+            if instance == self.controller.table_label_left:
                 sync = self.model.syncs[self.model.current_select].book1.sync
                 chunk = self.model.syncs[self.model.current_select].chunks1
             else:
@@ -35,7 +36,7 @@ class Action:
                     self.model.sound.stop()
                     self.model.opt[POSITIONS][self.model.current_select][POSI] = sync[i][TIME_START]
                     self.model.set_sound_pos(sync[i][TIME_START])
-                    if instance == self.model.table_label_left:
+                    if instance == self.controller.table_label_left:
                         self.model.sound = SoundLoader.load(
                             self.model.current_select + self.model.conf.ENG_MP3). \
                             load_seek(self.model.get_sound_pos())
@@ -52,8 +53,8 @@ class Action:
         except Exception as e:
             self.model.log.debug(type(e).__name__ + ": " + e.__str__())
             self.model.touch_pos = 0
-            self.model.container.switch_to(self.model.catalog)
-            self.model.catalog.on_resize()
+            self.controller.container.switch_to(self.controller.catalog)
+            self.controller.catalog.on_resize()
             return
 
     def double_tap(self, _=None, __=None, ___=None):
@@ -62,18 +63,18 @@ class Action:
     def clock_action_time(self, _):
         self.model.log.debug("Enter to function 'clock_action_time()'")
         if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
-            text_area = self.model.table_label_left
-            book_area = self.model.table_book_left
-            text_area_other = self.model.table_label_right
-            book_area_other = self.model.table_book_right
+            text_area = self.controller.table_label_left
+            book_area = self.controller.table_book_left
+            text_area_other = self.controller.table_label_right
+            book_area_other = self.controller.table_book_right
             chunk = self.model.syncs[self.model.current_select].chunks1
             chunk_other = self.model.syncs[self.model.current_select].chunks2
             sync = self.model.syncs[self.model.current_select].eng2rus
         else:
-            text_area = self.model.table_label_right
-            book_area = self.model.table_book_right
-            text_area_other = self.model.table_label_left
-            book_area_other = self.model.table_book_left
+            text_area = self.controller.table_label_right
+            book_area = self.controller.table_book_right
+            text_area_other = self.controller.table_label_left
+            book_area_other = self.controller.table_book_left
             chunk_other = self.model.syncs[self.model.current_select].chunks1
             chunk = self.model.syncs[self.model.current_select].chunks2
             sync = self.model.syncs[self.model.current_select].rus2eng
@@ -81,7 +82,7 @@ class Action:
         self.model.log.debug(f"Getting self.app.sound._ffplayer.get_pts()={pos}")
         if self.model.sound.ffplayer.get_pts() + 1.0 >= \
                 self.model.sound.ffplayer.get_metadata()['duration']:
-            self.model.player.pause_button_click()
+            self.controller.player.pause_button_click()
             self.model.opt[POSITIONS][self.model.current_select][POSI] = "0.0"
             self.model.opt[POSITIONS][self.model.current_select][CHUNK] = 0
             self.model.conf.save_options()
@@ -97,9 +98,9 @@ class Action:
                         self.model.opt[POSITIONS][self.model.current_select][CHUNK] = \
                             self.model.chunk_current
                         self.model.conf.save_options()
-                        self.model.table_label_left.text = \
+                        self.controller.table_label_left.text = \
                             self.model.syncs[self.model.current_select].chunks1[self.model.chunk_current]
-                        self.model.table_label_right.text = \
+                        self.controller.table_label_right.text = \
                             self.model.syncs[self.model.current_select].chunks2[self.model.chunk_current]
                         return
                     else:

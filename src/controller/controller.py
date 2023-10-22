@@ -4,17 +4,11 @@ from src.view.view import View
 
 class Controller:
 
-    def __init__(self, app):
-        self.app = app
+    def __init__(self):
 
-        self.model = Model(app=self.app)
-        print(str(self.model))
+        self.model = Model(controller=self)
         self.view = View(model=self.model)
 
-        self.init()
-
-    def init(self):
-        pass
         # if self.app.android:
         #     from android.permissions import request_permissions, Permission
         #     request_permissions([

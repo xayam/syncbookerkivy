@@ -7,6 +7,7 @@ class Player:
 
     def __init__(self, model):
         self.model = model
+        self.controller = self.model.controller
 
     def next_chunk(self):
         self.model.log.debug("Enter to function 'next_chunk()'")
@@ -42,9 +43,9 @@ class Player:
 
     def delay_run(self, _):
         self.model.log.debug("Enter to function 'delay_run()'")
-        self.model.table_label_left.text = \
+        self.controller.table_label_left.text = \
             self.model.syncs[self.model.current_select].chunks1[self.model.chunk_current]
-        self.model.table_label_right.text = \
+        self.controller.table_label_right.text = \
             self.model.syncs[self.model.current_select].chunks2[self.model.chunk_current]
 
     def prev_button_click(self, _):
@@ -80,8 +81,8 @@ class Player:
         if self.model.sound is None:
             return
         self.model.sound.stop()
-        self.model.table_label_left.text = "\n" * 100
-        self.model.table_label_right.text = "\n" * 100
+        self.controller.table_label_left.text = "\n" * 100
+        self.controller.table_label_right.text = "\n" * 100
         Clock.schedule_once(self.delay_run, timeout=1)
 
     def stop_button_click(self, _=None):

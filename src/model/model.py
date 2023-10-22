@@ -6,8 +6,9 @@ from .utils import *
 
 class Model:
 
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, controller):
+        self.controller = controller
+
         self.opt = None
         self.clock_action = None
         self.sound_state = 0

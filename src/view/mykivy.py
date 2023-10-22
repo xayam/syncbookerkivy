@@ -18,24 +18,25 @@ class MyKivy(KivyApp):
     def __init__(self, model, **kwargs):
         super().__init__(**kwargs)
         self.model = model
-        print(str(self.model))
+        self.controller = self.model.controller
+        
         Config.set('kivy', 'window_icon', self.model.conf.ICON_PNG)
         Window.clearcolor = (0, 0, 0, 1)
-        self.model.container = TabbedPanel()
-        self.model.table = Table(model=self.model)
-        self.model.catalog = Catalog(model=self.model)
-        self.model.options = Options(model=self.model)
-        Window.bind(size=self.model.catalog.on_resize)
+        self.controller.container = TabbedPanel()
+        self.controller.table = Table(model=self.model)
+        self.controller.catalog = Catalog(model=self.model)
+        self.controller.options = Options(model=self.model)
+        Window.bind(size=self.controller.catalog.on_resize)
 
     def build(self):
         self.icon = self.model.conf.ICON_ICO
-        self.model.container.size_hint = (1, 1)
-        self.model.container.do_default_tab = False
-        self.model.container.add_widget(self.model.catalog)
-        self.model.container.add_widget(self.model.table)
-        self.model.container.add_widget(self.model.options)
-        self.model.container.default_tab = self.model.table
-        return self.model.container
+        self.controller.container.size_hint = (1, 1)
+        self.controller.container.do_default_tab = False
+        self.controller.container.add_widget(self.controller.catalog)
+        self.controller.container.add_widget(self.controller.table)
+        self.controller.container.add_widget(self.controller.options)
+        self.controller.container.default_tab = self.controller.table
+        return self.controller.container
 
     def on_start(self):
-        self.model.catalog.on_resize()
+        self.controller.catalog.on_resize()

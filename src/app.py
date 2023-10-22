@@ -3,7 +3,8 @@ from src.controller.controller import Controller
 
 class App:
     def __init__(self):
-        self.controller = Controller(app=self)
+        self.controller = Controller()
+        self.view = self.controller.view
 
     def run(self):
-        self.controller.view.run()
+        self.view.run()

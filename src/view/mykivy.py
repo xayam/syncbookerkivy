@@ -1,7 +1,4 @@
 from kivy.config import Config
-
-Config.set('graphics', 'window_state', 'maximized')
-
 from kivy.app import App as KivyApp
 from kivy.core.window import Window
 from kivy.uix.tabbedpanel import TabbedPanel

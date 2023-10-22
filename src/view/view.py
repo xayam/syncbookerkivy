@@ -1,4 +1,3 @@
-
 from .mykivy import MyKivy
 
 from .action import Action

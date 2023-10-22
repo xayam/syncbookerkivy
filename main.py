@@ -1,8 +1,6 @@
-import os
-
-os.environ["KIVY_AUDIO"] = "ffpyplayer"
-
+from src import init
 from src.app import App
+
 
 application = App()
 

@@ -1,5 +1,3 @@
-import src.controller.init
-
 from src.model.model import Model
 from src.view.view import View
 

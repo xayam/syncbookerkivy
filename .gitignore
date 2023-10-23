@@ -17,3 +17,4 @@ src/model/img.py
 data/
 options.json
 logcat.txt
+ftpconfig.py

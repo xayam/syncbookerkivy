@@ -4,11 +4,11 @@ import subprocess
 from ..ftpconfig import HOST, USER, PASSWORD
 from src.model.utils import get_app_version
 
-build_syncbooker = "venv/Scripts/python.exe -m PyInstaller syncbooker.spec"
-build_createsync = "venv/Scripts/python.exe -m PyInstaller createsync.spec"
-
-subprocess.call([build_syncbooker], shell=True)
-subprocess.call([build_createsync], shell=True)
+# build_syncbooker = "venv/Scripts/python.exe -m PyInstaller syncbooker.spec"
+# build_createsync = "venv/Scripts/python.exe -m PyInstaller createsync.spec"
+#
+# subprocess.call([build_syncbooker], shell=True)
+# subprocess.call([build_createsync], shell=True)
 
 latest = "latest.txt"
 version = "v" + get_app_version()

@@ -9,6 +9,7 @@ class Action:
     def __init__(self, model):
         self.model = model
         self.controller = self.model.controller
+        self.app = self.model.app
 
     def touch_up_click(self, instance, event):
         self.model.log.debug("Enter to function 'touch_up_click()'")
@@ -54,7 +55,7 @@ class Action:
             self.model.log.debug(type(e).__name__ + ": " + e.__str__())
             self.model.touch_pos = 0
             self.controller.container.switch_to(self.controller.catalog)
-            self.controller.catalog.on_resize()
+            self.controller.catalog.on_resize(timeout_catalog=0)
             return
 
     def double_tap(self, _=None, __=None, ___=None):

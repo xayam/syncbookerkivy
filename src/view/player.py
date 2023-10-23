@@ -8,6 +8,7 @@ class Player:
     def __init__(self, model):
         self.model = model
         self.controller = self.model.controller
+        self.app = self.model.app
 
     def next_chunk(self):
         self.model.log.debug("Enter to function 'next_chunk()'")

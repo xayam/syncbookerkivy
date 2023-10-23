@@ -35,7 +35,7 @@ class Catalog(TabbedPanelItem):
                                                   text="")
         self.controller.catalog_input.size = ('32sp', '32sp')
         self.catalog_buttons = GridLayout(rows=1,
-                                          size_hint_x=None,
+                                          size_hint=(None, 1),
                                           padding=[140, 15],
                                           spacing=[140])
         self.catalog_buttons.bind(minimum_width=self.catalog_buttons.setter('width'))
@@ -53,7 +53,7 @@ class Catalog(TabbedPanelItem):
             button_up = Label(text=author,
                               font_size='32px',
                               bold=True,
-                              size_hint=(1, 0.1),
+                              size_hint=(1, 0.25),
                               padding=(0, 0),
                               color="white")
             button = Button(size_hint=(1, 0.5),
@@ -64,7 +64,7 @@ class Catalog(TabbedPanelItem):
             button_down = Label(text=book,
                                 font_size='32px',
                                 bold=True,
-                                size_hint=(1, 0.1),
+                                size_hint=(1, 0.25),
                                 padding=(0, 0),
                                 color="white")
             button_box_layout.add_widget(button_up)
@@ -83,11 +83,11 @@ class Catalog(TabbedPanelItem):
             Rectangle(size=(10 ** 6, 10 ** 6), pos=(-10 ** 3, 0))
 
     def on_press(self):
-        self.on_resize()
+        self.on_resize(timeout_catalog=0)
 
-    def on_resize(self, _=None, __=None):
-        Clock.schedule_once(self.redraw_table, timeout=0)
-        Clock.schedule_once(self.resize_catalog, timeout=1)
+    def on_resize(self, _=None, __=None, timeout_table=0, timeout_catalog=1):
+        Clock.schedule_once(self.redraw_table, timeout=timeout_table)
+        Clock.schedule_once(self.resize_catalog, timeout=timeout_catalog)
 
     def redraw_table(self, _=None):
         self.model.log.debug("Enter to function 'redraw_table()'")
@@ -103,21 +103,23 @@ class Catalog(TabbedPanelItem):
         self.controller.table.table_navigator.width = \
             (Window.height - self.controller.container.tab_height - 6) // 5
         for layout in self.catalog_buttons.children:
-            if layout.width >= Window.width:
-                layout.width = Window.width
-                layout.children[0].size_hint = (1, None)
-                layout.children[1].size_hint = (1, None)
-                layout.children[2].size_hint = (1, None)
-                layout.children[0].height = (layout.height - layout.width) // 2
-                layout.children[1].height = layout.width
-                layout.children[2].height = (layout.height - layout.width) // 2
-            else:
-                layout.children[0].size_hint = (1, 0.25)
-                layout.children[1].size_hint = (1, 0.5)
-                layout.children[2].size_hint = (1, 0.25)
-                layout.width = layout.children[1].height
+            # layout.width = min([
+            #     Window.width,
+            #     Window.height - self.controller.container.tab_height - 6,
+            #     layout.height
+            # ])
+            layout.width = min([
+                Window.width,
+                int(0.5 * (Window.height - self.controller.container.tab_height - 6))])
+            layout.children[0].size_hint = (1, None)
+            layout.children[1].size_hint = (1, None)
+            layout.children[2].size_hint = (1, None)
+            layout.children[1].height = layout.width
+            layout.children[0].height = (layout.height - layout.width) // 2
+            layout.children[2].height = (layout.height - layout.width) // 2
             layout.children[0].font_size = str(layout.width // 16) + 'px'
             layout.children[2].font_size = str(layout.width // 16) + 'px'
+
 
     def catalog_button_click(self, value=None):
         self.model.log.debug("Enter to function 'catalog_button_click()'")

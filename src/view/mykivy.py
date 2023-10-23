@@ -19,6 +19,7 @@ class MyKivy(KivyApp):
         super().__init__(**kwargs)
         self.model = model
         self.controller = self.model.controller
+        self.app = self.model.app
         
         Config.set('kivy', 'window_icon', self.model.conf.ICON_PNG)
         Window.clearcolor = (0, 0, 0, 1)

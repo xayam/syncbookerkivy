@@ -50,15 +50,17 @@ class Table(TabbedPanelItem):
                                                        selection_color=self.model.opt[SEL],
                                                        background_color=self.model.opt[BG],
                                                        foreground_color=self.model.opt[FG],
-                                                       handle_image_left=self.model.conf.DISABLE_MARKER,
-                                                       handle_image_right=self.model.conf.DISABLE_MARKER,
+                                                       use_bubble=False,
+                                                       use_handles=False,
+                                                       # handle_image_left=self.model.conf.DISABLE_MARKER,
+                                                       # handle_image_right=self.model.conf.DISABLE_MARKER,
                                                        text="Select a book in the 'Catalog' section")
         self.controller.table_label_left.is_focusable = False
         self.controller.table_label_left.bind(text=self.on_text_table_label_left)
         self.controller.table_label_left.bind(on_touch_up=self.controller.action.touch_up_click)
         self.controller.table_label_left.bind(on_double_tap=self.controller.action.double_tap)
         self.controller.table_label_left.height = max(self.controller.table_label_left.minimum_height,
-                                                 self.controller.table_book_left.height)
+                                                  self.controller.table_book_left.height)
         self.controller.table_book_left.add_widget(self.controller.table_label_left)
         self.table_gridlayout.add_widget(self.controller.table_book_left)
         self.controller.table_book_right = ScrollView(do_scroll_x=False,
@@ -69,8 +71,10 @@ class Table(TabbedPanelItem):
                                                         selection_color=self.model.opt[SEL],
                                                         background_color=self.model.opt[BG],
                                                         foreground_color=self.model.opt[FG],
-                                                        handle_image_left=self.model.conf.DISABLE_MARKER,
-                                                        handle_image_right=self.model.conf.DISABLE_MARKER,
+                                                        use_bubble=False,
+                                                        use_handles=False,
+                                                        # handle_image_left=self.model.conf.DISABLE_MARKER,
+                                                        # handle_image_right=self.model.conf.DISABLE_MARKER,
                                                         text="Выберите книгу в разделе 'Catalog'")
         self.controller.table_label_right.is_focusable = False
         self.controller.table_label_right.bind(text=self.on_text_table_label_right)

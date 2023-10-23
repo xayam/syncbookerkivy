@@ -21,7 +21,7 @@ latest = "latest.txt"
 version = "v" + get_app_version()
 
 with open(latest, mode="w") as f:
-    f.write(version)
+    f.write(version + "\n")
 
 print(f"Connecting to server '{HOST}'...")
 session = ftplib.FTP(HOST, USER, PASSWORD)

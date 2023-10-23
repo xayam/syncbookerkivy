@@ -4,8 +4,9 @@ from src.view.view import View
 
 class Controller:
 
-    def __init__(self):
+    def __init__(self, app):
 
+        self.app = app
         self.model = Model(controller=self)
         self.view = View(model=self.model)
 

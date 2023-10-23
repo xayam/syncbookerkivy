@@ -97,6 +97,8 @@ class Conf:
 
     def __init__(self, model):
         self.model = model
+        self.app = self.model.app
+
         self.locale = None
         self.load_options()
         self.set_locale(self.model.opt[LOCALE])

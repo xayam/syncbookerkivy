@@ -12,6 +12,8 @@ class Storage:
 
     def __init__(self, model):
         self.model = model
+        self.app = self.model.app
+
         self.data = "data"
         self.storage_books = {}
         self.timeout = 3

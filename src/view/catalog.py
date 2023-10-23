@@ -103,13 +103,8 @@ class Catalog(TabbedPanelItem):
         self.controller.table.table_navigator.width = \
             (Window.height - self.controller.container.tab_height - 6) // 5
         for layout in self.catalog_buttons.children:
-            # layout.width = min([
-            #     Window.width,
-            #     Window.height - self.controller.container.tab_height - 6,
-            #     layout.height
-            # ])
             layout.width = min([
-                Window.width,
+                Window.width - 40,
                 int(0.5 * (Window.height - self.controller.container.tab_height - 6))])
             layout.children[0].size_hint = (1, None)
             layout.children[1].size_hint = (1, None)

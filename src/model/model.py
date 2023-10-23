@@ -8,7 +8,7 @@ class Model:
 
     def __init__(self, controller=None):
         self.controller = controller
-        self.app = controller.app if not(self.controller is None) else None
+        self.app = None if self.controller is None else controller.app
 
         self.opt = None
         self.clock_action = None

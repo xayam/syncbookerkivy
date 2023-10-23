@@ -1,5 +1,7 @@
 from src.model.model import Model
-from src.view.view import View
+from src.model.utils import *
+from src.view.view import ViewSyncBooker
+from src.view.createsync.viewsync import ViewCreateSync
 
 
 class Controller:
@@ -8,8 +10,10 @@ class Controller:
 
         self.app = app
         self.model = Model(controller=self)
-        self.view = View(model=self.model)
-
+        if self.app[APP_NAME] == APP_CREATESYNC:
+            self.view = ViewCreateSync(model=self.model)
+        else:
+            self.view = ViewSyncBooker(model=self.model)
         # if self.app.android:
         #     from android.permissions import request_permissions, Permission
         #     request_permissions([

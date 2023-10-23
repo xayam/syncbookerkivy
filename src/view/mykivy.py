@@ -15,8 +15,8 @@ Window.minimum_height = 360
 
 class MyKivy(KivyApp):
 
-    def __init__(self, model, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, model):
+        super().__init__()
         self.model = model
         self.controller = self.model.controller
         self.app = self.model.app

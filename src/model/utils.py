@@ -2,6 +2,10 @@ import os
 import re
 from kivy.utils import platform
 
+APP_NAME = "APP_NAME"
+APP_SYNCBOOKER = "SYNCBOOKER"
+APP_CREATESYNC = "CREATESYNC"
+
 
 def get_app_version():
     filename = "config.sh"

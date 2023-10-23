@@ -1,6 +1,9 @@
+from src.model.utils import *
 from src.app import App
 
-application = App()
+APP = APP_SYNCBOOKER
+
+application = App(app={APP_NAME: APP})
 
 try:
 
@@ -9,7 +12,7 @@ try:
 except Exception as e:
 
     application.model.log.debug(
-        "AppError: " +
+        APP + "Error: " +
         type(e).__name__ + ": " +
         e.__str__()
     )

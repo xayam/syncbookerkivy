@@ -1,8 +1,6 @@
 import json
-import os
 import sys
-import numpy as np
-from PIL import Image, ImageDraw
+from PIL import ImageDraw
 
 import audio
 import recognizer
@@ -10,7 +8,7 @@ import sync
 import cross
 
 from src.model.model import Model
-from src.model.eps import *
+from src.controller.eps import *
 from src.model.utils import *
 
 model = Model()

@@ -6,7 +6,7 @@ from .utils import *
 
 class Model:
 
-    def __init__(self, controller):
+    def __init__(self, controller=None):
         self.controller = controller
 
         self.opt = None
@@ -43,8 +43,8 @@ class Model:
             FONT: "Arial",
             FONTSIZE: 20,
             POSITIONS: {
-                i: {
+                path: {
                     POSI: "0.0", AUDIO: EN, CHUNK: 0
-                } for i in []
+                } for path in []
             }
         }

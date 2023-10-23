@@ -8,7 +8,7 @@ try:
 
 except Exception as e:
 
-    application.controller.model.log.debug(
+    application.model.log.debug(
         "AppError: " +
         type(e).__name__ + ": " +
         e.__str__()

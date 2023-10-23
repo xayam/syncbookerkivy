@@ -1,7 +1,7 @@
 import ftplib
 import subprocess
 
-from ..ftpconfig import HOST, USER, PASSWORD
+from ftpconfig import HOST, USER, PASSWORD
 from src.model.utils import get_app_version
 
 # build_syncbooker = "venv/Scripts/python.exe -m PyInstaller syncbooker.spec"

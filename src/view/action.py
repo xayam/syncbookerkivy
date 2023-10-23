@@ -83,7 +83,7 @@ class Action:
         self.model.log.debug(f"Getting self.app.sound._ffplayer.get_pts()={pos}")
         if self.model.sound.ffplayer.get_pts() + 1.0 >= \
                 self.model.sound.ffplayer.get_metadata()['duration']:
-            self.controller.player.pause_button_click()
+            self.controller.player.stop_button_click()
             self.model.opt[POSITIONS][self.model.current_select][POSI] = "0.0"
             self.model.opt[POSITIONS][self.model.current_select][CHUNK] = 0
             self.model.conf.save_options()

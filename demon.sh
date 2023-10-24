@@ -15,9 +15,9 @@ export ANDROIDNDKVER="_ANDROIDNDKVER_"  # Version of the NDK you installed
 export COMPLETE_LOOP=20
 export NAME_APP="_NAME_APP_"
 
-cd $CURR_DIR
-
 while true; do
+
+cd $CURR_DIR
 
 wget  --quiet --output-document=latest_new.txt "$HTTP_SERVER/latest/latest.txt"
 

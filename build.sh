@@ -19,6 +19,7 @@ p4a clean_all
 python3 p4a.py
 
 apk_file1="$NAME_APP-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
+apk_file1_="$NAME_APP-$TARGET_PLATFORM-debug-v$APP_VERSION.apk"
 
 ftp -n $FTP_SITE<<EOF
 quote USER $FTP_USER
@@ -26,7 +27,7 @@ quote PASS $FTP_PASSWORD
 mkdir "v$APP_VERSION"
 cd "v$APP_VERSION"
 binary
-put $apk_file1 $apk_file1
+put $apk_file1 $apk_file1_
 quit
 EOF
 
@@ -39,6 +40,7 @@ p4a clean_all
 python3 p4a.py
 
 apk_file2="$NAME_APP-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
+apk_file2_="$NAME_APP-$TARGET_PLATFORM-debug-v$APP_VERSION.apk"
 
 echo "v$APP_VERSION" > ../latest.txt
 
@@ -48,7 +50,7 @@ quote PASS $FTP_PASSWORD
 mkdir "v$APP_VERSION"
 cd "v$APP_VERSION"
 binary
-put $apk_file2 $apk_file2
+put $apk_file2 $apk_file2_
 cd ../latest
 put ../latest.txt latest.txt
 quit

@@ -23,7 +23,7 @@ wget  --quiet --output-document=demon.sh "$GITHUB/demon.sh"
 sudo chmod +x demon.sh
 wget  --quiet --output-document=build.sh "$GITHUB/build.sh"
 sudo chmod +x build.sh
-wget  --quiet --output-document=complete.mp3 "$GITHUB/complete.mp3"
+wget  --quiet --output-document=complete.mp3 "$GITHUB/res/complete.mp3"
 
 echo "Testing complete.mp3..."
 mpg123 -q complete.mp3

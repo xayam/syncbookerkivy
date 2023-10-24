@@ -3,7 +3,7 @@ from src.app import App
 
 APP = APP_CREATESYNC
 
-application = App(app={"APP_NAME": APP})
+application = App(app={APP_NAME: APP})
 
 try:
 

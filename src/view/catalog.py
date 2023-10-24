@@ -101,7 +101,18 @@ class Catalog(TabbedPanelItem):
         self.model.log.debug("Enter to function 'resize_catalog()'")
         self.controller.table.table_navigator.size_hint_x = None
         self.controller.table.table_navigator.width = \
-            (Window.height - self.controller.container.tab_height - 6) // 5
+            min([
+                (Window.height - self.controller.container.tab_height - 6) // 5,
+                self.controller.container.tab_width
+            ])
+        self.controller.table.table_navigator.padding = [0,
+            (Window.height - self.controller.container.tab_height - 6 -
+             5 * self.controller.table.table_navigator.width) // 2
+        ]
+        for button in self.controller.table.table_navigator.children:
+            button.size_hint = (1, None)
+            button.height = self.controller.table.table_navigator.width
+
         for layout in self.catalog_buttons.children:
             layout.width = min([
                 Window.width - 40,

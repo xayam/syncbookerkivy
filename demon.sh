@@ -1,16 +1,19 @@
 #!/bin/bash
 
-export CURR_DIR="{{{CURR_DIR}}}"
-export HTTP_SERVER="{{{HTTP_SERVER}}}"
-export FTP_SITE="{{{FTP_SITE}}}"
-export FTP_USER="{{{FTP_USER}}}"
-export FTP_PASSWORD="{{{FTP_PASSWORD}}}"
+export NAME_GITHUB="_NAME_GITHUB_"
+export NAME_PROJECT="_NAME_PROJECT_"
+export CURR_DIR="_CURR_DIR_"
+export HTTP_SERVER="_HTTP_SERVER_"
+export FTP_SITE="_FTP_SITE_"
+export FTP_USER="_FTP_USER_"
+export FTP_PASSWORD="_FTP_PASSWORD_"
+export ANDROIDSDK="_ANDROIDSDK_"
+export ANDROIDNDK="_ANDROIDNDK_"
+export ANDROIDAPI="_ANDROIDAPI_"  # Target API version of your application
+export NDKAPI="_NDKAPI_"  # Minimum supported API version of your application
+export ANDROIDNDKVER="_ANDROIDNDKVER_"  # Version of the NDK you installed
 export COMPLETE_LOOP=20
-export ANDROIDSDK="{{{ANDROIDSDK}}}"
-export ANDROIDNDK="{{{ANDROIDNDK}}}"
-export ANDROIDAPI="{{{ANDROIDAPI}}}"  # Target API version of your application
-export NDKAPI="{{{NDKAPI}}}"  # Minimum supported API version of your application
-export ANDROIDNDKVER="{{{ANDROIDNDKVER}}}"  # Version of the NDK you installed
+export NAME_APP="_NAME_APP_"
 
 cd $CURR_DIR
 

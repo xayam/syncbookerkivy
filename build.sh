@@ -2,13 +2,11 @@
 
 printf '\a'
 
-rm -rf syncbookerkivy-main
+rm -rf $NAME_PROJECT
 
-git clone https://github.com/xayam/syncbookerkivy.git
+git clone "https://github.com/$NAME_GITHUB/$NAME_PROJECT.git"
 
-mv syncbookerkivy syncbookerkivy-main
-
-cd ./syncbookerkivy-main
+cd $NAME_PROJECT
 
 chmod +x config.sh
 
@@ -20,7 +18,7 @@ p4a clean_all
 
 python3 p4a.py
 
-apk_file1="syncbooker-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
+apk_file1="$NAME_APP-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
 
 ftp -n $FTP_SITE<<EOF
 quote USER $FTP_USER
@@ -40,7 +38,7 @@ p4a clean_all
 
 python3 p4a.py
 
-apk_file2="syncbooker-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
+apk_file2="$NAME_APP-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
 
 echo "v$APP_VERSION" > ../latest.txt
 

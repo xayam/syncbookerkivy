@@ -14,7 +14,6 @@ class Controller:
             self.view = ViewCreateSync(model=self.model)
         else:
             self.view = ViewSyncBooker(model=self.model)
-
         # if self.app.android:
         #     from android.permissions import request_permissions, Permission
         #     request_permissions([

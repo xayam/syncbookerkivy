@@ -52,6 +52,7 @@
      $ ./setup.sh
 - Waiting while run demon.sh, no close terminal
 - Commit and push new version in you config.sh on github
+- Create file ftpconfig.py with vars HOST, USER, PASSWORD for access to ftp server for uploading exe files
 - Run local (on Windows) build.py for create exe files and upload on server with change version in latest/latest.txt
 - Wait all complete
 - Run .apk with arch 'armeabi-v7a' on Android; 

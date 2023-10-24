@@ -2,7 +2,7 @@ import ftplib
 import subprocess
 
 from ftpconfig import HOST, USER, PASSWORD
-from src.model.utils import get_app_version
+from src.model.utils import get_app_version, APP_SYNCBOOKER, APP_CREATESYNC
 
 
 def directory_exists(ftp, folder):
@@ -32,11 +32,11 @@ if directory_exists(session, version) is False:
 
 print(f"Uploading {version}/syncbooker-{version}.exe...")
 with open("dist/syncbooker.exe", mode="rb") as f:
-    session.storbinary(f"STOR {version}/syncbooker-{version}.exe", f)
+    session.storbinary(f"STOR {version}/{APP_SYNCBOOKER.lower()}-{version}.exe", f)
 
 print(f"Uploading {version}/createsync-{version}.exe...")
 with open("dist/createsync.exe", mode="rb") as f:
-    session.storbinary(f"STOR {version}/createsync-{version}.exe", f)
+    session.storbinary(f"STOR {version}/{APP_CREATESYNC.lower()}-{version}.exe", f)
 
 print(f"Uploading latest/{latest}...")
 with open(latest, mode="rb") as f:

@@ -1,16 +1,12 @@
-import os
 import subprocess
-
-VERSION = os.environ["APP_VERSION"]
-ARCH = os.environ["TARGET_PLATFORM"]
 
 command = \
     "p4a apk " + \
     "--debug " + \
-    "--private=$HOME/PycharmProjects/syncbookerkivy-main " + \
-    "--package=com.github.xayam.syncbookerkivy " + \
-    "--dist_name=syncbooker-" + ARCH + " " + \
-    '--name="SyncBooker" ' + \
+    "--private=$CURR_DIR/$NAME_PROJECT " + \
+    "--package=com.github.$NAME_GITHUB.$NAME_PROJECT " + \
+    "--dist_name=$NAME_APP-$TARGET_PLATFORM " + \
+    '--name="$NAME_APP" ' + \
     "--wakelock " + \
     "--window " + \
     "--permission android.permission.INTERNET " + \
@@ -20,10 +16,10 @@ command = \
     "android.permission.MEDIA_CONTENT_CONTROL " + \
     "android.permission.READ_MEDIA_AUDIO " + \
     "--orientation=landscape " + \
-    "--icon=$HOME/PycharmProjects/syncbookerkivy-main/res/img/icon.png " + \
-    "--presplash=$HOME/PycharmProjects/syncbookerkivy-main/res/img/presplash.png " + \
-    "--version=" + VERSION + " " + \
-    "--arch=" + ARCH + " " + \
+    "--icon=$CURR_DIR/$NAME_PROJECT/res/img/icon.png " + \
+    "--presplash=$CURR_DIR/$NAME_PROJECT/res/img/presplash.png " + \
+    "--version=$APP_VERSION " + \
+    "--arch=$TARGET_PLATFORM " + \
     "--bootstrap=sdl2 " + \
     "--requirements=android,python3,kivy,cython,ffmpeg,libx264,libshine,libvpx," + \
     "av_codecs,ffpyplayer,openssl,ffpyplayer_codecs,setuptools,regex," + \

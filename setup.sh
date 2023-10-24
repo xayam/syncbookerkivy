@@ -28,7 +28,7 @@ wget  --quiet --output-document=complete.mp3 "$GITHUB/res/complete.mp3"
 echo "Testing complete.mp3..."
 mpg123 -q complete.mp3
 
-touch latest.txt
+echo "v1.0\n" > latest.txt
 echo "\nOptions +Indexes\nIndexOptions NameWidth=*\nIndexOptions FancyIndexing\nIndexOrderDefault Descending Date\n" > .htaccess
 
 echo "Setup options. This require only once."

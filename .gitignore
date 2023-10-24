@@ -19,3 +19,4 @@ options.json
 logcat.txt
 latest.txt
 ftpconfig.py
+*.apk

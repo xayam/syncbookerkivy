@@ -97,6 +97,7 @@ class Conf:
 
     def __init__(self, model):
         self.model = model
+        self.controller = self.model.controller
         self.app = self.model.app
 
         self.locale = None
@@ -114,6 +115,8 @@ class Conf:
             self.save_options()
 
     def save_options(self):
+        if self.controller is None:
+            return
         json_string = json.dumps(self.model.opt)
         with open(self.OPTIONS, mode="w") as opt:
             opt.write(json_string)

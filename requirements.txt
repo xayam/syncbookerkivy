@@ -12,6 +12,4 @@ vosk
 gensim
 pandas
 regex
-tensorflow
-tensorflow-hub
 tensorflow_text==2.10.0

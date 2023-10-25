@@ -1,4 +1,5 @@
 import json
+import os.path
 import sys
 from PIL import ImageDraw
 
@@ -17,6 +18,8 @@ config = model.conf
 data = "../../data"
 folder_of_books = os.listdir(data)
 for book in folder_of_books:
+    if not os.path.isdir(f"{data}/{book}"):
+        continue
     if os.path.exists(f"{data}/{book}/{config.VALID}"):
         with open(f"{data}/{book}/{config.VALID}", mode="r", encoding="UTF-8") as f:
             valid = f.read()

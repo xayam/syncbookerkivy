@@ -12,6 +12,7 @@ class Storage:
 
     def __init__(self, model):
         self.model = model
+        self.controller = self.model.controller
         self.app = self.model.app
 
         self.data = "data"
@@ -24,13 +25,15 @@ class Storage:
                 "Gecko/20100101 Firefox/96.0",
             "Content-type": "application/x-www-form-urlencoded"
         }
-        if not ANDROID:
+        if not ANDROID and self.controller is not None:
             from src.model.img import Img
             if not os.path.exists("res"):
                 os.mkdir("res")
             decode_image(folder="res/img/", img=Img())
 
     def list(self):
+        if self.controller is None:
+            return
         self.storage_list()
         for i in os.listdir(self.data):
             if os.path.isfile(f"{self.data}/" + i) and (i[-4:] == ".jpg"):

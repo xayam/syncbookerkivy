@@ -16,8 +16,8 @@ NAME_APP=${NAME_APP:-syncbooker}
 cd "$CURR_DIR" || exit
 
 echo "Installing depends..."
-sudo apt install mpg123
-sudo apt-get install beep
+apt install mpg123
+apt-get install beep
 
 wget  --quiet --output-document=daemon.sh "$GITHUB/daemon.sh"
 sudo chmod +x daemon.sh

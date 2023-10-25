@@ -32,11 +32,11 @@ if directory_exists(session, version) is False:
 
 print(f"Uploading {version}/syncbooker-{version}.exe...")
 with open("dist/syncbooker.exe", mode="rb") as f:
-    session.storbinary(f"STOR {version}/{APP_SYNCBOOKER.lower()}-{version}.exe", f)
+    session.storbinary(f"STOR {version}/{APP_SYNCBOOKER.lower()}-x64-{version}.exe", f)
 
 print(f"Uploading {version}/createsync-{version}.exe...")
 with open("dist/createsync.exe", mode="rb") as f:
-    session.storbinary(f"STOR {version}/{APP_CREATESYNC.lower()}-{version}.exe", f)
+    session.storbinary(f"STOR {version}/{APP_CREATESYNC.lower()}-x64-{version}.exe", f)
 
 print(f"Uploading latest/{latest}...")
 with open(latest, mode="rb") as f:

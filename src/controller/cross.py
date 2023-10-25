@@ -102,9 +102,9 @@ def get_sim_v21(labels_1, labels_2):
 def find_shortest_paths(graph, start_point):
     visited = [[True if graph[row][col] is None else False
                 for col in range(len(graph[row]))] for row in range(len(graph))]
-    distance = [[float('inf') for col in row] for row in graph]
+    distance = [[float('inf') for _ in row] for row in graph]
     distance[start_point[0]][start_point[1]] = 0
-    prev_point = [[None for col in row] for row in graph]
+    prev_point = [[None for _ in row] for row in graph]
     n, m = len(graph), len(graph[0])
     visited_count = 0
     for row in range(len(visited)):

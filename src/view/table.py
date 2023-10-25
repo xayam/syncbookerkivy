@@ -21,7 +21,7 @@ class Table(TabbedPanelItem):
                                  background_down=self.model.conf.ICON_TABLE_PRESSED)
         self.table_gridlayout = GridLayout(cols=3, padding=(6, 6), spacing=3)
         self.table_navigator = BoxLayout(orientation="vertical",
-                                         size_hint= (1, 0.3))
+                                         size_hint=(1, 0.3))
         self.table_prev = Button(background_normal=self.model.conf.ICON_PREV,
                                  background_down=self.model.conf.ICON_PREV_PRESSED,
                                  on_release=self.controller.player.prev_button_click)
@@ -50,8 +50,9 @@ class Table(TabbedPanelItem):
                                                        text="Select a book in the 'Catalog' section")
         self.controller.table_label_left.bind(on_touch_up=self.controller.action.touch_up_click)
         self.controller.table_label_left.bind(on_double_tap=self.controller.action.double_tap)
-        self.controller.table_label_left.height = max(self.controller.table_label_left.minimum_height,
-                                                  self.controller.table_book_left.height)
+        self.controller.table_label_left.height = \
+            max([self.controller.table_label_left.minimum_height,
+                 self.controller.table_book_left.height])
         self.controller.table_book_left.add_widget(self.controller.table_label_left)
         self.table_gridlayout.add_widget(self.controller.table_book_left)
         self.controller.table_book_right = ScrollView(do_scroll_x=False,
@@ -61,8 +62,9 @@ class Table(TabbedPanelItem):
                                                         text="Выберите книгу в разделе 'Catalog'")
         self.controller.table_label_right.bind(on_touch_up=self.controller.action.touch_up_click)
         self.controller.table_label_right.bind(on_double_tap=self.controller.action.double_tap)
-        self.controller.table_label_right.height = max(self.controller.table_label_right.minimum_height,
-                                                  self.controller.table_book_right.height)
+        self.controller.table_label_right.height = \
+            max([self.controller.table_label_right.minimum_height,
+                self.controller.table_book_right.height])
         self.controller.table_book_right.add_widget(self.controller.table_label_right)
         self.table_gridlayout.add_widget(self.controller.table_book_right)
         self.add_widget(self.table_gridlayout)

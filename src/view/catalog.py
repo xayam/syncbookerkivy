@@ -105,7 +105,8 @@ class Catalog(TabbedPanelItem):
                 (Window.height - self.controller.container.tab_height - 6) // 5,
                 self.controller.container.tab_width
             ])
-        self.controller.table.table_navigator.padding = [0,
+        self.controller.table.table_navigator.padding = [
+            0,
             (Window.height - self.controller.container.tab_height - 6 -
              5 * self.controller.table.table_navigator.width) // 2
         ]

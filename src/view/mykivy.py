@@ -9,8 +9,6 @@ from .table import Table
 from .options import Options
 
 
-
-
 class MyKivy(KivyApp):
 
     def __init__(self, model):

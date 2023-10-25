@@ -173,8 +173,8 @@ class Catalog(TabbedPanelItem):
         self.controller.popup_label = Label(text=f"Load file '{self.zip}'")
         self.controller.popup_content.add_widget(self.controller.popup_label)
         self.controller.popup = Popup(title="Loading...",
-                                 size_hint=(0.8, 0.5),
-                                 content=self.controller.popup_content, disabled=True)
+                                      size_hint=(0.8, 0.5),
+                                      content=self.controller.popup_content, disabled=True)
         self.controller.popup.open()
 
     def download_zip(self):

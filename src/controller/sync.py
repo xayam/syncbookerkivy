@@ -10,7 +10,7 @@ from src.model.utils import *
 class Sync:
     def __init__(self, output, language):
         self.output = output
-        np.set_printoptions(threshold=np.inf)
+        np.set_printoptions(threshold=int(np.inf))
         self.MAPJSON = f"{self.output}/{language}.map.json"
         self.SYNCJSON = f"{self.output}/{language}.sync.json"
         self.TWOSYNC = f"{self.output}/two.json"
@@ -75,7 +75,8 @@ class Sync:
 
         return sync
 
-    def create_sync_v2(self, synchronize, L_word, R_word, L_end, R_end, L_len, R_len,
+    @staticmethod
+    def create_sync_v2(synchronize, L_word, R_word, L_end, R_end, L_len, R_len,
                        append=True, L_window=50):
         sync1 = []
         L = 0
@@ -127,7 +128,8 @@ class Sync:
 
         return sync1
 
-    def create_sync_v3(self, synchronize, L_word, R_word, L_end, R_end, L_len, R_len, two):
+    @staticmethod
+    def create_sync_v3(synchronize, L_word, R_word, L_end, R_end, L_len, R_len, two):
         sync1 = []
         for i in range(L_len):
             sync1.append([L_end[i],

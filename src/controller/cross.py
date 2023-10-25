@@ -13,13 +13,13 @@ print("Loading multilingual model...")
 model = hub.load(module_url)
 
 
-def embed_text(input):
-    return model(input)
+def embed_text(inp):
+    return model(inp)
 
 
-def get_sim(html, map):
+def get_sim(html, map_1):
     labels_1 = re.findall(r"<p>(.*?)</p>", html, flags=re.DOTALL | re.UNICODE)
-    labels_2 = map
+    labels_2 = map_1
     sim = [[0 for _ in range(len(labels_2))] for _ in range(len(labels_1))]
     for i in range(len(labels_1)):
         for j in range(len(labels_2)):
@@ -99,13 +99,13 @@ def get_sim_v21(labels_1, labels_2):
     return sim, labels_1, labels_2, L_end, R_end
 
 
-def find_shortest_paths(graph, start_point):
-    visited = [[True if graph[row][col] is None else False
-                for col in range(len(graph[row]))] for row in range(len(graph))]
-    distance = [[float('inf') for _ in row] for row in graph]
-    distance[start_point[0]][start_point[1]] = 0
-    prev_point = [[None for _ in row] for row in graph]
-    n, m = len(graph), len(graph[0])
+def find_shortest_paths(graph_1, start_point):
+    visited = [[True if graph_1[row][col] is None else False
+                for col in range(len(graph_1[row]))] for row in range(len(graph_1))]
+    distance_1 = [[float('inf') for _ in row] for row in graph_1]
+    distance_1[start_point[0]][start_point[1]] = 0
+    prev_point_1 = [[None for _ in row] for row in graph_1]
+    n, m = len(graph_1), len(graph_1[0])
     visited_count = 0
     for row in range(len(visited)):
         for col in range(len(visited[row])):
@@ -120,7 +120,7 @@ def find_shortest_paths(graph, start_point):
 
     # min_heap item format:
     # (pt's dist from start on this path, pt's row, pt's col)
-    heapq.heappush(min_heap, (distance[start_point[0]][start_point[1]], start_point[0], start_point[1]))
+    heapq.heappush(min_heap, (distance_1[start_point[0]][start_point[1]], start_point[0], start_point[1]))
 
     while visited_count < number_of_points:
         current_point = heapq.heappop(min_heap)
@@ -128,15 +128,15 @@ def find_shortest_paths(graph, start_point):
         for direction in directions:
             new_row, new_col = row + direction[0], col + direction[1]
             if -1 < new_row < n and -1 < new_col < m and not visited[new_row][new_col]:
-                dist_to_new_point = distance_from_start + graph[new_row][new_col]
-                if dist_to_new_point < distance[new_row][new_col]:
-                    distance[new_row][new_col] = dist_to_new_point
-                    prev_point[new_row][new_col] = (row, col)
+                dist_to_new_point = distance_from_start + graph_1[new_row][new_col]
+                if dist_to_new_point < distance_1[new_row][new_col]:
+                    distance_1[new_row][new_col] = dist_to_new_point
+                    prev_point_1[new_row][new_col] = (row, col)
                     heapq.heappush(min_heap, (dist_to_new_point, new_row, new_col))
         visited[row][col] = True
         visited_count += 1
 
-    return distance, prev_point
+    return distance_1, prev_point_1
 
 
 def find_shortest_path(prev_point_graph, end_point):

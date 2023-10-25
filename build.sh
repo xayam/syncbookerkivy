@@ -42,8 +42,6 @@ python3 p4a.py
 apk_file2="$NAME_APP-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
 apk_file2_="$NAME_APP-$TARGET_PLATFORM-debug-v$APP_VERSION.apk"
 
-echo "$NEW_VERSION" > ../latest.txt
-
 ftp -n "$FTP_SITE"<<EOF
 quote USER $FTP_USER
 quote PASS $FTP_PASSWORD
@@ -53,6 +51,8 @@ binary
 put $apk_file2 $apk_file2_
 quit
 EOF
+
+echo "$NEW_VERSION" > ../latest.txt
 
 echo ""
 echo "$HTTP_SERVER/latest"

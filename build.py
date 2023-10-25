@@ -45,6 +45,7 @@ if resp.status_code == 200:
     with open(f"dist/{APP_SYNCBOOKER.lower()}-src-{version}.zip", mode="wb") as f:
         f.write(resp.content)
     with open(f"dist/{APP_SYNCBOOKER.lower()}-src-{version}.zip", mode="rb") as f:
+        print(f"Uploading {version}/{APP_SYNCBOOKER.lower()}-src-{version}.zip...")
         session.storbinary(f"STOR {version}/{APP_SYNCBOOKER.lower()}-src-{version}.zip", f)
 else:
     print(f"WARNING: resp.StatusCode={resp.status_code}")

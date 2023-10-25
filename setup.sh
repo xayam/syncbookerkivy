@@ -20,9 +20,9 @@ apt install mpg123
 apt-get install beep
 
 wget  --quiet --output-document=daemon.sh "$GITHUB/daemon.sh"
-sudo chmod +x daemon.sh
+chmod +x daemon.sh
 wget  --quiet --output-document=build.sh "$GITHUB/build.sh"
-sudo chmod +x build.sh
+chmod +x build.sh
 wget  --quiet --output-document=complete.mp3 "$GITHUB/res/complete.mp3"
 
 echo "Testing complete.mp3..."
@@ -35,7 +35,7 @@ echo "Setup options. This require only once."
 read -r -p "Enter URL you http server in format 'http://you.domain.zone': " HTTP_SERVER
 read -r -p "Enter you ftp site for server '$HTTP_SERVER': " FTP_SITE
 read -r -p "Enter ftp user for login on ftp site '$FTP_SITE': " FTP_USER
-read -s -p "Enter ftp password for login on ftp site '$FTP_SITE': " FTP_PASSWORD
+read -r -s -p "Enter ftp password for login on ftp site '$FTP_SITE': " FTP_PASSWORD
 read -r -p "Enter path to Android SDK [$HOME/Documents/SDK]: " ANDROIDSDK
 ANDROIDSDK=${ANDROIDSDK:-$HOME/Documents/SDK}
 read -r -p "Enter path to Android NDK [$HOME/Documents/ndk]: " ANDROIDNDK

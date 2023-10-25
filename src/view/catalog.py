@@ -125,28 +125,25 @@ class Catalog(TabbedPanelItem):
             layout.children[2].height = (layout.height - layout.width) // 2
             layout.children[0].font_size = str(layout.width // 16) + 'px'
             layout.children[2].font_size = str(layout.width // 16) + 'px'
-        self.controller.table_label_left.on_text()
-        self.controller.table_label_right.on_text()
+        self.controller.table_label_left.resize()
+        self.controller.table_label_right.resize()
 
     def catalog_button_click(self, value=None):
         self.model.log.debug("Enter to function 'catalog_button_click()'")
-        if not (self.model.clock_action is None):
+        if self.model.clock_action is not None:
             self.model.clock_action.cancel()
 
         current = self.model.stor.storage_books[value.background_normal]
         self.model.log.debug(f"Selected book - '{current}'")
         self.model.conf.load_options()
-
-        try:
+        if self.model.sound is not None:
             self.model.sound.stop()
-        except AttributeError:
-            self.model.log.debug("WARNING: AttributeError self.app.sound.stop()")
-        try:
-            self.model.current_select = current
+        self.model.current_select = current
+        if self.model.current_select in self.model.opt[POSITIONS]:
             self.model.set_sound_pos(float(self.model.opt[POSITIONS][self.model.current_select][POSI]))
             self.model.chunk_current = \
                 self.model.opt[POSITIONS][self.model.current_select][CHUNK]
-        except KeyError:
+        else:
             self.model.set_sound_pos(0.0)
             self.model.opt[POSITIONS][self.model.current_select] = {
                 POSI: "0", AUDIO: EN, CHUNK: 0}
@@ -163,9 +160,7 @@ class Catalog(TabbedPanelItem):
         thread_download = threading.Thread(target=self.download_zip)
         thread_download.start()
         thread_download.join()
-        self.model.log.debug("self.app.syncs[self.app.current_select].loads()")
-        self.model.syncs[self.model.current_select].loads()
-        self.model.log.debug("Create Clock.schedule_once(self.app.player.delay_run, timeout=0)")
+        self.model.log.debug("Create Clock.schedule_once(self.controller.player.delay_run, timeout=0)")
         Clock.schedule_once(self.controller.player.delay_run, timeout=0)
 
     def catalog_double_tap(self, _=None, __=None, ___=None):

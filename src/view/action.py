@@ -17,10 +17,13 @@ class Action:
         if self.model.touch_pos == pos:
             return
         self.model.touch_pos = pos
-        if not (self.model.clock_action is None):
+        if self.model.clock_action is not None:
             self.model.clock_action.cancel()
         self.model.log.debug(f"Touch pos={pos}")
-        try:
+        if self.model.current_select in self.model.opt[POSITIONS]:
+            if self.model.sound.state == "stop":
+                self.controller.player.play_button_click()
+                return
             if instance == self.controller.table_label_left:
                 sync = self.model.syncs[self.model.current_select].book1.sync
                 chunk = self.model.syncs[self.model.current_select].chunks1
@@ -33,7 +36,7 @@ class Action:
 
             for i in range(len(sync)):
                 if sync[i][POS_START] > pos:
-                    self.model.log.debug("Stop and reload self.app.sound")
+                    self.model.log.debug("Stop and reload self.model.sound")
                     self.model.sound.stop()
                     self.model.opt[POSITIONS][self.model.current_select][POSI] = sync[i][TIME_START]
                     self.model.set_sound_pos(sync[i][TIME_START])
@@ -51,12 +54,10 @@ class Action:
                     self.model.log.debug(f"Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
                     self.model.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                     return
-        except Exception as e:
-            self.model.log.debug(type(e).__name__ + ": " + e.__str__())
+        else:
             self.model.touch_pos = 0
             self.controller.container.switch_to(self.controller.catalog)
             self.controller.catalog.on_resize(timeout_catalog=0)
-            return
 
     def double_tap(self, _=None, __=None, ___=None):
         self.model.log.debug("Fired function double_tap() for TextInput widget")
@@ -80,7 +81,7 @@ class Action:
             chunk = self.model.syncs[self.model.current_select].chunks2
             sync = self.model.syncs[self.model.current_select].rus2eng
         pos = self.model.sound.ffplayer.get_pts()
-        self.model.log.debug(f"Getting self.model.sound._ffplayer.get_pts()={pos}")
+        self.model.log.debug(f"Getting self.model.sound.ffplayer.get_pts()={pos}")
         if self.model.sound.ffplayer.get_pts() + 1.0 >= \
                 self.model.sound.ffplayer.get_metadata()['duration']:
             self.controller.player.stop_button_click()

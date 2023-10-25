@@ -27,16 +27,18 @@ class MyTextInput(TextInput):
         self.is_focusable = False
 
     def on_text(self, _=None, __=None):
+        self.resize()
+        if self.model.current_select in self.model.opt[POSITIONS]:
+            if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
+                self._on_text(mp3=self.model.conf.ENG_MP3)
+            else:
+                self._on_text(mp3=self.model.conf.RUS_MP3)
+
+    def resize(self):
         self.model.log.debug("Enter to function 'MyTextInput.on_text()'")
         self.height = (len(self._lines) + 1) * (self.line_height + self.line_spacing)
         height = Window.height - self.controller.container.tab_height - 6
-        self.height = height if self.height < height else self.height
-        if not self.model.current_select in self.model.opt[POSITIONS]:
-            return
-        if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
-            self._on_text(mp3=self.model.conf.ENG_MP3)
-        else:
-            self._on_text(mp3=self.model.conf.RUS_MP3)
+        self.height = max([self.height, height])
 
     def _on_text(self, mp3):
         self.model.log.debug("Enter to function 'MyTextInput._on_text()'")
@@ -44,7 +46,10 @@ class MyTextInput(TextInput):
             self.model.log.debug("WARNING: self.model.sound is None")
         else:
             self.model.sound.stop()
-            self.model.clock_action.cancel()
+            if self.model.clock_action is None:
+                self.model.log.debug("WARNING: self.model.clock_action is None")
+            else:
+                self.model.clock_action.cancel()
         load = self.model.current_select + mp3
         self.model.log.debug("MySound().load_seek")
         self.model.sound = SoundLoader.load(load).load_seek(self.model.get_sound_pos())

@@ -15,7 +15,12 @@ from src.model.utils import *
 model = Model()
 config = model.conf
 
-data = "../../data"
+data = "../../datacreate"
+if not os.path.exists(data):
+    data = "datacreate"
+    if not os.path.exists(data):
+        os.mkdir(data)
+
 folder_of_books = os.listdir(data)
 for book in folder_of_books:
     if not os.path.isdir(f"{data}/{book}"):

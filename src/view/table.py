@@ -20,29 +20,29 @@ class Table(TabbedPanelItem):
                                  background_normal=self.model.conf.ICON_TABLE,
                                  background_down=self.model.conf.ICON_TABLE_PRESSED)
         self.table_gridlayout = GridLayout(cols=3, padding=(6, 6), spacing=3)
-        self.table_navigator = BoxLayout(orientation="vertical",
+        self.controller.table_navigator = BoxLayout(orientation="vertical",
                                          size_hint=(1, 0.3))
         self.table_prev = Button(background_normal=self.model.conf.ICON_PREV,
                                  background_down=self.model.conf.ICON_PREV_PRESSED,
                                  on_release=self.controller.player.prev_button_click)
-        self.table_navigator.add_widget(self.table_prev)
+        self.controller.table_navigator.add_widget(self.table_prev)
         self.table_play = Button(background_normal=self.model.conf.ICON_PLAY,
                                  background_down=self.model.conf.ICON_PLAY_PRESSED,
                                  on_release=self.controller.player.play_button_click)
-        self.table_navigator.add_widget(self.table_play)
+        self.controller.table_navigator.add_widget(self.table_play)
         self.table_pause = Button(background_normal=self.model.conf.ICON_PAUSE,
                                   background_down=self.model.conf.ICON_PAUSE_PRESSED,
                                   on_release=self.controller.player.pause_button_click)
-        self.table_navigator.add_widget(self.table_pause)
+        self.controller.table_navigator.add_widget(self.table_pause)
         self.table_stop = Button(background_normal=self.model.conf.ICON_STOP,
                                  background_down=self.model.conf.ICON_STOP_PRESSED,
                                  on_release=self.controller.player.stop_button_click)
-        self.table_navigator.add_widget(self.table_stop)
+        self.controller.table_navigator.add_widget(self.table_stop)
         self.table_next = Button(background_normal=self.model.conf.ICON_NEXT,
                                  background_down=self.model.conf.ICON_NEXT_PRESSED,
                                  on_release=self.controller.player.next_button_click)
-        self.table_navigator.add_widget(self.table_next)
-        self.table_gridlayout.add_widget(self.table_navigator)
+        self.controller.table_navigator.add_widget(self.table_next)
+        self.table_gridlayout.add_widget(self.controller.table_navigator)
         self.controller.table_book_left = ScrollView(do_scroll_x=False,
                                                      do_scroll_y=True,
                                                      bar_width=15)

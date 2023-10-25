@@ -27,15 +27,16 @@ class MyTextInput(TextInput):
         self.is_focusable = False
 
     def on_text(self, _=None, __=None):
-        self.resize()
         if self.model.current_select in self.model.opt[POSITIONS]:
             if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
                 self._on_text(mp3=self.model.conf.ENG_MP3)
             else:
                 self._on_text(mp3=self.model.conf.RUS_MP3)
+        self.resize()
 
     def resize(self):
         self.model.log.debug("Enter to function 'MyTextInput.on_text()'")
+
         self.height = (len(self._lines) + 1) * (self.line_height + self.line_spacing)
         height = Window.height - self.controller.container.tab_height - 6
         self.height = max([self.height, height])

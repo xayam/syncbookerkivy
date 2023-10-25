@@ -5,8 +5,8 @@ from src.model.utils import *
 
 class Book:
 
-    def __init__(self, app, path, language):
-        self.app = app
+    def __init__(self, model, path, language):
+        self.model = model
         self.path = path
         self.language = language
 
@@ -17,11 +17,11 @@ class Book:
         self.init()
 
     def init(self):
-        self.app.log.debug("Enter to function 'Book.init()', " + self.language + " book")
+        self.model.log.debug("Enter to function 'Book.init()', " + self.language + " book")
         if self.language == EN:
-            current = self.app.conf.BOOK_ENG_SCHEME
+            current = self.model.conf.BOOK_ENG_SCHEME
         else:
-            current = self.app.conf.BOOK_RUS_SCHEME
+            current = self.model.conf.BOOK_RUS_SCHEME
         try:
             with open(self.path + current[ANNOT], mode="r", encoding="UTF-8") as f:
                 self.annot = f.read() + "\n\n"
@@ -30,10 +30,9 @@ class Book:
             with open(self.path + current[SYNC], mode="r", encoding="UTF-8") as f:
                 self.sync = json.load(f)
         except Exception as e:
-            self.app.log.debug(type(e).__name__ + ": " + e.__str__())
-        try:
-            self.app.chunk_current = \
-                self.app.opt[POSITIONS][self.app.current_select][CHUNK]
-        except KeyError as e:
-            self.app.log.debug("KeyError: " + e.__str__())
-            self.app.chunk_current = 0
+            self.model.log.debug("BookInit: " + type(e).__name__ + ": " + e.__str__())
+        if self.model.current_select in self.model.opt[POSITIONS]:
+            self.model.chunk_current = \
+                self.model.opt[POSITIONS][self.model.current_select][CHUNK]
+        else:
+            self.model.chunk_current = 0

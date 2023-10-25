@@ -38,7 +38,7 @@ class Storage:
                 self.storage_books[cover] = f"{self.data}/{i[:-4]}/"
                 self.model.log.debug(f"self.storage_books[cover]={self.storage_books[cover]}")
                 self.model.syncs[self.storage_books[cover]] = \
-                    Sync(app=self.model, current_path=self.storage_books[cover])
+                    Sync(model=self.model, current_path=self.storage_books[cover])
 
     def storage_list(self):
         self.model.log.debug("Enter to function storage_list()")

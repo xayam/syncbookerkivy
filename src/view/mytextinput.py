@@ -40,6 +40,11 @@ class MyTextInput(TextInput):
         self.height = (len(self._lines) + 1) * (self.line_height + self.line_spacing)
         height = Window.height - self.controller.container.tab_height - 6
         self.height = max([self.height, height])
+        # Clock.schedule_once(self.delay, timeout=1)
+
+    def delay(self, _=None):
+        height = Window.height - self.controller.container.tab_height - 6
+        self.font_size = str(height // 20) + "px"
 
     def _on_text(self, mp3):
         self.model.log.debug("Enter to function 'MyTextInput._on_text()'")

@@ -26,7 +26,7 @@ NEW_VERSION=$(<latest_new.txt)
 
 if cmp latest_new.txt latest.txt
 then
-    echo "Remote version $NEW_VERSION equal local version $OLD_VERSION"
+    echo "Remote version equal local version"
 else
     echo "Find new version $NEW_VERSION"
     ./build.sh

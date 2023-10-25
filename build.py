@@ -1,6 +1,8 @@
 import ftplib
 import subprocess
 
+import requests
+
 from ftpconfig import HOST, USER, PASSWORD
 from src.model.utils import get_app_version, APP_SYNCBOOKER, APP_CREATESYNC
 
@@ -29,6 +31,23 @@ session = ftplib.FTP(HOST, USER, PASSWORD)
 print(f"Creating folder {version}...")
 if directory_exists(session, version) is False:
     session.mkd(version)
+
+resp = requests.get("https://github.com/xayam/syncbookerkivy/archive/refs/heads/main.zip",
+                    timeout=3,
+                    verify=False,
+                    headers={
+                        "User-Agent":
+                            r"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) " +
+                            "Gecko/20100101 Firefox/96.0",
+                        "Content-type": "application/x-www-form-urlencoded"
+                    })
+if resp.status_code == 200:
+    with open(f"dist/{APP_SYNCBOOKER.lower()}-src-{version}.zip", mode="wb") as f:
+        f.write(resp.content)
+    with open(f"dist/{APP_SYNCBOOKER.lower()}-src-{version}.zip", mode="rb") as f:
+        session.storbinary(f"STOR {version}/{APP_SYNCBOOKER.lower()}-src-{version}.zip", f)
+else:
+    print(f"WARNING: resp.StatusCode={resp.status_code}")
 
 print(f"Uploading {version}/syncbooker-{version}.exe...")
 with open("dist/syncbooker.exe", mode="rb") as f:

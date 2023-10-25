@@ -36,15 +36,11 @@ class MyTextInput(TextInput):
 
     def resize(self):
         self.model.log.debug("Enter to function 'MyTextInput.on_text()'")
-
         self.height = (len(self._lines) + 1) * (self.line_height + self.line_spacing)
         height = Window.height - self.controller.container.tab_height - 6
         self.height = max([self.height, height])
-        # Clock.schedule_once(self.delay, timeout=1)
-
-    def delay(self, _=None):
-        height = Window.height - self.controller.container.tab_height - 6
-        self.font_size = str(height // 20) + "px"
+        height = self.controller.table_navigator.children[0].height
+        self.font_size = str(height // 3) + "px"
 
     def _on_text(self, mp3):
         self.model.log.debug("Enter to function 'MyTextInput._on_text()'")

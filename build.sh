@@ -42,7 +42,7 @@ python3 p4a.py
 apk_file2="$NAME_APP-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
 apk_file2_="$NAME_APP-$TARGET_PLATFORM-debug-v$APP_VERSION.apk"
 
-echo "v$APP_VERSION" > ../latest.txt
+echo "$NEW_VERSION" > ../latest.txt
 
 ftp -n "$FTP_SITE"<<EOF
 quote USER $FTP_USER
@@ -51,8 +51,6 @@ mkdir "v$APP_VERSION"
 cd "v$APP_VERSION"
 binary
 put $apk_file2 $apk_file2_
-cd ../latest
-put ../latest.txt latest.txt
 quit
 EOF
 

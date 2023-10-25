@@ -15,7 +15,7 @@ src/view/__pycache__/
 src/controller/__pycache__/
 src/model/img.py
 data/
-data1/
+datacreate/
 options.json
 logcat.txt
 latest.txt

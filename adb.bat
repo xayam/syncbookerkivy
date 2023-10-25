@@ -4,7 +4,7 @@ powershell -Command "Invoke-WebRequest http://apk.delphima.z8.ru/latest/latest.t
 set /p VERSION=<latest.txt
 set APK=syncbooker-armeabi-v7a-debug-%VERSION%.apk
 echo %APK%
-powershell -Command "Invoke-WebRequest http://apk.delphima.z8.ru/%VERSION%/%APK% -OutFile %APK%"
+REM powershell -Command "Invoke-WebRequest http://apk.delphima.z8.ru/%VERSION%/%APK% -OutFile %APK%"
 
 adb.exe install -r %APK%
 adb.exe logcat --clear

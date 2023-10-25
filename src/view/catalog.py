@@ -125,7 +125,8 @@ class Catalog(TabbedPanelItem):
             layout.children[2].height = (layout.height - layout.width) // 2
             layout.children[0].font_size = str(layout.width // 16) + 'px'
             layout.children[2].font_size = str(layout.width // 16) + 'px'
-
+        self.controller.table_label_left.on_text()
+        self.controller.table_label_right.on_text()
 
     def catalog_button_click(self, value=None):
         self.model.log.debug("Enter to function 'catalog_button_click()'")

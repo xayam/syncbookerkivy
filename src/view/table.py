@@ -46,12 +46,8 @@ class Table(TabbedPanelItem):
         self.controller.table_book_left = ScrollView(do_scroll_x=False,
                                                      do_scroll_y=True,
                                                      bar_width=15)
-        self.controller.table_label_left = MyTextInput(size_hint=(1, None),
-                                                       selection_color=self.model.opt[SEL],
-                                                       background_color=self.model.opt[BG],
-                                                       foreground_color=self.model.opt[FG],
+        self.controller.table_label_left = MyTextInput(model=self.model,
                                                        text="Select a book in the 'Catalog' section")
-        self.controller.table_label_left.bind(text=self.on_text_table_label_left)
         self.controller.table_label_left.bind(on_touch_up=self.controller.action.touch_up_click)
         self.controller.table_label_left.bind(on_double_tap=self.controller.action.double_tap)
         self.controller.table_label_left.height = max(self.controller.table_label_left.minimum_height,
@@ -61,12 +57,8 @@ class Table(TabbedPanelItem):
         self.controller.table_book_right = ScrollView(do_scroll_x=False,
                                                       do_scroll_y=True,
                                                       bar_width=15)
-        self.controller.table_label_right = MyTextInput(size_hint=(1, None),
-                                                        selection_color=self.model.opt[SEL],
-                                                        background_color=self.model.opt[BG],
-                                                        foreground_color=self.model.opt[FG],
+        self.controller.table_label_right = MyTextInput(model=self.model,
                                                         text="Выберите книгу в разделе 'Catalog'")
-        self.controller.table_label_right.bind(text=self.on_text_table_label_right)
         self.controller.table_label_right.bind(on_touch_up=self.controller.action.touch_up_click)
         self.controller.table_label_right.bind(on_double_tap=self.controller.action.double_tap)
         self.controller.table_label_right.height = max(self.controller.table_label_right.minimum_height,
@@ -74,58 +66,3 @@ class Table(TabbedPanelItem):
         self.controller.table_book_right.add_widget(self.controller.table_label_right)
         self.table_gridlayout.add_widget(self.controller.table_book_right)
         self.add_widget(self.table_gridlayout)
-
-    def on_text_table_label_left(self, _=None, __=None):
-        Clock.schedule_once(self.update_table_label_left, 0)
-
-    def update_table_label_left(self, _=None):
-        self.model.log.debug("Enter to function 'update_table_label_left()'")
-        self.controller.table_label_left.height = (len(self.controller.table_label_left.lines) + 1) * \
-                                                  (self.controller.table_label_left.line_height +
-                                                  self.controller.table_label_left.line_spacing)
-        if self.controller.table_label_left.text == "\n" * 100:
-            self.model.log.debug("True is self.controller.table_label_left.text == '\n'*50")
-            return
-        self.model.log.debug("MySound().load_seek")
-        if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
-            try:
-                self.model.sound.stop()
-                self.model.clock_action.cancel()
-            except AttributeError:
-                self.model.log.debug("WARNING: AttributeError self.model.sound.stop()")
-            self.model.log.debug(f"self.app.chunk_current={self.model.chunk_current}")
-            self.model.log.debug("self.app.opt[POSITIONS][self.model.current_select][CHUNK]=" +
-                                 str(self.model.opt[POSITIONS][self.model.current_select][CHUNK]))
-
-            self.model.sound = SoundLoader.load(
-                self.model.current_select + self.model.conf.ENG_MP3). \
-                load_seek(self.model.get_sound_pos())
-            self.model.log.debug("Create Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)")
-            self.model.clock_action = Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)
-
-    def on_text_table_label_right(self, _=None, __=None):
-        Clock.schedule_once(self.update_table_label_right, 0)
-
-    def update_table_label_right(self, _=None):
-        self.model.log.debug("Enter to function 'update_table_label_right()'")
-        self.controller.table_label_right.height = (len(self.controller.table_label_right.lines) + 1) * \
-                                                   (self.controller.table_label_right.line_height +
-                                                   self.controller.table_label_right.line_spacing)
-        if self.controller.table_label_left.text == "\n" * 100:
-            self.model.log.debug("True is self.controller.table_label_right.text == '\n'*50")
-            return
-        self.model.log.debug("MySound().load_seek")
-        if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == RU:
-            try:
-                self.model.sound.stop()
-                self.model.clock_action.cancel()
-            except AttributeError:
-                self.model.log.debug("WARNING: AttributeError self.model.sound.stop()")
-            self.model.log.debug(f"self.controller.chunk_current={self.model.chunk_current}")
-            self.model.log.debug("self.app.opt[POSITIONS][self.model.current_select][CHUNK]=" +
-                                 str(self.model.opt[POSITIONS][self.model.current_select][CHUNK]))
-            self.model.sound = SoundLoader.load(
-                self.model.current_select + self.model.conf.RUS_MP3). \
-                load_seek(self.model.get_sound_pos())
-            self.model.log.debug("Create Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)")
-            self.model.clock_action = Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)

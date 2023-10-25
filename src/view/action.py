@@ -61,7 +61,7 @@ class Action:
     def double_tap(self, _=None, __=None, ___=None):
         self.model.log.debug("Fired function double_tap() for TextInput widget")
 
-    def clock_action_time(self, _):
+    def clock_action_time(self, _=None):
         self.model.log.debug("Enter to function 'clock_action_time()'")
         if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
             text_area = self.controller.table_label_left
@@ -80,10 +80,11 @@ class Action:
             chunk = self.model.syncs[self.model.current_select].chunks2
             sync = self.model.syncs[self.model.current_select].rus2eng
         pos = self.model.sound.ffplayer.get_pts()
-        self.model.log.debug(f"Getting self.app.sound._ffplayer.get_pts()={pos}")
+        self.model.log.debug(f"Getting self.model.sound._ffplayer.get_pts()={pos}")
         if self.model.sound.ffplayer.get_pts() + 1.0 >= \
                 self.model.sound.ffplayer.get_metadata()['duration']:
             self.controller.player.stop_button_click()
+            self.model.chunk_current = 0
             self.model.opt[POSITIONS][self.model.current_select][POSI] = "0.0"
             self.model.opt[POSITIONS][self.model.current_select][CHUNK] = 0
             self.model.conf.save_options()

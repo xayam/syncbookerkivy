@@ -38,5 +38,5 @@ class MyKivy(KivyApp):
         return self.controller.container
 
     def on_start(self):
-        self.controller.container.tab_width = 3 * (self.controller.container.tab_height - 6)
+        self.controller.container.tab_width = 3 * self.controller.container.tab_height
         self.controller.catalog.on_resize()

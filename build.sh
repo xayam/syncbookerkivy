@@ -2,11 +2,11 @@
 
 printf '\a'
 
-rm -rf $NAME_PROJECT
+rm -rf "$NAME_PROJECT"
 
 git clone "https://github.com/$NAME_GITHUB/$NAME_PROJECT.git"
 
-cd $NAME_PROJECT
+cd "$NAME_PROJECT" || exit
 
 chmod +x config.sh
 
@@ -21,7 +21,7 @@ python3 p4a.py
 apk_file1="$NAME_APP-$TARGET_PLATFORM-debug-$APP_VERSION.apk"
 apk_file1_="$NAME_APP-$TARGET_PLATFORM-debug-v$APP_VERSION.apk"
 
-ftp -n $FTP_SITE<<EOF
+ftp -n "$FTP_SITE"<<EOF
 quote USER $FTP_USER
 quote PASS $FTP_PASSWORD
 mkdir "v$APP_VERSION"
@@ -44,7 +44,7 @@ apk_file2_="$NAME_APP-$TARGET_PLATFORM-debug-v$APP_VERSION.apk"
 
 echo "v$APP_VERSION" > ../latest.txt
 
-ftp -n $FTP_SITE<<EOF
+ftp -n "$FTP_SITE"<<EOF
 quote USER $FTP_USER
 quote PASS $FTP_PASSWORD
 mkdir "v$APP_VERSION"

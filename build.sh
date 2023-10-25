@@ -52,7 +52,9 @@ put $apk_file2 $apk_file2_
 quit
 EOF
 
-echo "$NEW_VERSION" > ../latest.txt
+cd ../
+rm latest.txt
+cp latest_new.txt latest.txt
 
 echo ""
 echo "$HTTP_SERVER/latest"

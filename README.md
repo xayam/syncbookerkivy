@@ -48,10 +48,10 @@
 - Install requirements, run command "pip install -r requirements.txt"
 - run commands in terminal Ubuntu:
    - $ wget --quiet --output-document=setup.sh https://raw.githubusercontent.com/xayam/syncbookerkivy/main/setup.sh
-   - $ sudo chmod +x setup.sh 
+   - $ chmod +x setup.sh 
    - $ ./setup.sh
 - Waiting while run daemon.sh, no close terminal
-- Commit and push new version in you config.sh on github
+- Commit and push new version in you config.sh on Github
 - Create file ftpconfig.py with vars HOST, USER, PASSWORD for access to ftp server for uploading exe files
 - Run local (on Windows) build.py for create exe files and upload on server with change version in latest/latest.txt
 - Wait all complete

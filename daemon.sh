@@ -17,27 +17,27 @@ export NAME_APP="_NAME_APP_"
 
 while true; do
 
-cd $CURR_DIR
+    cd $CURR_DIR || exit
 
-wget  --quiet --output-document=latest_new.txt "$HTTP_SERVER/latest/latest.txt"
+    wget  --quiet --output-document=latest_new.txt "$HTTP_SERVER/latest/latest.txt"
 
-OLD_VERSION=$(<latest.txt)
-NEW_VERSION=$(<latest_new.txt)
+    # OLD_VERSION=$(<latest.txt)
+    NEW_VERSION=$(<latest_new.txt)
 
-if cmp latest_new.txt latest.txt
-then
-    echo "Remote version equal local version"
-else
-    echo "Find new version $NEW_VERSION"
-    ./build.sh
-    rm $CURR_DIR/latest_new.txt
-    for ((i=1;i<=$COMPLETE_LOOP;i++)); do
-        mpg123 -q complete.mp3
-    done
-fi
+    if cmp latest_new.txt latest.txt
+    then
+        echo "Remote version equal local version"
+    else
+        echo "Find new version $NEW_VERSION"
+        ./build.sh
+        rm $CURR_DIR/latest_new.txt
+        for ((i=1;i<=$COMPLETE_LOOP;i++)); do
+            mpg123 -q complete.mp3
+        done
+    fi
 
-sleep 10s
+    sleep 10s
 
 done
 
-read -p "Press ENTER for exit..."
+read -r -p "Press ENTER for exit..."

@@ -41,6 +41,7 @@ class MySound(SoundFFPy):
         if DEBUG:
             print(f"[MYDEBUG] Seek ffplayer")
         self.ffplayer.seek(pts=position,
+                           seek_by_bytes=True,
                            relative=False,
                            accurate=False)
         if DEBUG:

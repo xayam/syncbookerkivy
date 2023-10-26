@@ -38,6 +38,8 @@ class MySound(SoundFFPy):
         self._state = 'playing'
         self.state = 'play'
         self.ffplayer = self._ffplayer
+        if DEBUG:
+            print(f"[MYDEBUG] Seek ffplayer")
         self.ffplayer.seek(pts=position,
                            relative=False,
                            accurate=False)

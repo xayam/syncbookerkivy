@@ -26,12 +26,14 @@ class MyTextInput(TextInput):
         )
         self.is_focusable = False
 
-    def on_text(self, _=None, __=None):
+    def on_text(self, instance=None, __=None):
         if self.model.current_select in self.model.opt[POSITIONS]:
             if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
-                self._on_text(mp3=self.model.conf.ENG_MP3)
+                if instance == self.controller.table_label_left:
+                    self._on_text(mp3=self.model.conf.ENG_MP3)
             else:
-                self._on_text(mp3=self.model.conf.RUS_MP3)
+                if instance == self.controller.table_label_right:
+                    self._on_text(mp3=self.model.conf.RUS_MP3)
         self.resize()
 
     def resize(self):

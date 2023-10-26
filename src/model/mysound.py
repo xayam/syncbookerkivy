@@ -21,7 +21,7 @@ class MySound(SoundFFPy):
         ff_opts = {
             'vn': True,  # video disable
             'sn': True,  # subtitle disable
-            'ss': position,  # seek position
+            # 'ss': position,  # seek position
             # 'infbuf': True,
             # 'genpts': True,
             # 'fast': True,
@@ -38,9 +38,9 @@ class MySound(SoundFFPy):
         self._state = 'playing'
         self.state = 'play'
         self.ffplayer = self._ffplayer
-        # self.ffplayer.seek(pts=position,
-        #                    relative=False,
-        #                    accurate=False)
+        self.ffplayer.seek(pts=position,
+                           relative=False,
+                           accurate=False)
         return self
 
 

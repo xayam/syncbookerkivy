@@ -26,6 +26,7 @@ class MyTextInput(TextInput):
         self.is_focusable = False
 
     def on_text(self, instance=None, __=None):
+        self.model.log.debug("Enter to function 'MyTextInput.on_text()'")
         if self.model.current_select in self.model.opt[POSITIONS]:
             if self.model.opt[POSITIONS][self.model.current_select][AUDIO] == EN:
                 if instance == self.controller.table_label_left:

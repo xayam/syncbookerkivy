@@ -21,7 +21,7 @@ class MySound(SoundFFPy):
         ff_opts = {
             'vn': True,  # video disable
             'sn': True,  # subtitle disable
-            # 'ss': position,  # seek position
+            'ss': position,  # seek position
             # 'infbuf': True,
             # 'genpts': True,
             # 'fast': True,
@@ -41,6 +41,8 @@ class MySound(SoundFFPy):
         self.ffplayer.seek(pts=position,
                            relative=False,
                            accurate=False)
+        if DEBUG:
+            print(f"[MYDEBUG] Exit from function 'load_seek()'")
         return self
 
 

@@ -11,7 +11,6 @@ class MyTextInput(TextInput):
     def __init__(self, model, **kwargs):
         self.model = model
         self.controller = self.model.controller
-
         super().__init__(
             size_hint=(1, None),
             padding=(10, 10),
@@ -37,7 +36,7 @@ class MyTextInput(TextInput):
         self.resize()
 
     def resize(self):
-        self.model.log.debug("Enter to function 'MyTextInput.on_text()'")
+        self.model.log.debug("Enter to function 'MyTextInput.resize()'")
         self.height = (len(self._lines) + 1) * (self.line_height + self.line_spacing)
         height = Window.height - self.controller.container.tab_height - 6
         self.height = max([self.height, height])

@@ -42,9 +42,9 @@ resp = requests.get("https://github.com/xayam/syncbookerkivy/archive/refs/heads/
                         "Content-type": "application/x-www-form-urlencoded"
                     })
 if resp.status_code == 200:
-    with open(f"dist/{APP_SYNCBOOKER.lower()}-src-{version}.zip", mode="wb") as f:
+    with open(f"dist/{APP_SYNCBOOKER.lower()}-src.zip", mode="wb") as f:
         f.write(resp.content)
-    with open(f"dist/{APP_SYNCBOOKER.lower()}-src-{version}.zip", mode="rb") as f:
+    with open(f"dist/{APP_SYNCBOOKER.lower()}-src.zip", mode="rb") as f:
         print(f"Uploading {version}/{APP_SYNCBOOKER.lower()}-src-{version}.zip...")
         session.storbinary(f"STOR {version}/{APP_SYNCBOOKER.lower()}-src-{version}.zip", f)
 else:

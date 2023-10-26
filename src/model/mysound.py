@@ -35,8 +35,8 @@ class MySound(SoundFFPy):
                                      callback=self._player_callback,
                                      loglevel='debug',
                                      ff_opts=ff_opts)
-        self._state = 'playing'
-        self.state = 'play'
+        # self._state = 'playing'
+        # self.state = 'play'
         self.ffplayer = self._ffplayer
         if DEBUG:
             print(f"[MYDEBUG] Seek ffplayer")

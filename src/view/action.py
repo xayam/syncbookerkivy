@@ -11,19 +11,19 @@ class Action:
         self.controller = self.model.controller
         self.app = self.model.app
 
-    def touch_up_click(self, instance, event):
+    def touch_down_click(self, instance, event):
         self.model.log.debug("Enter to function 'touch_up_click()'")
         pos = instance.cursor_index(instance.get_cursor_from_xy(*event.pos))
         if self.model.touch_pos == pos:
-            return
+            return True
         self.model.touch_pos = pos
         if self.model.clock_action is not None:
             self.model.clock_action.cancel()
         self.model.log.debug(f"Touch pos={pos}")
         if self.model.current_select in self.model.opt[POSITIONS]:
-            if self.model.sound.state == "stop":
+            if self.model.sound.has_stop:
                 self.controller.player.play_button_click()
-                return
+                return True
             if instance == self.controller.table_label_left:
                 sync = self.model.syncs[self.model.current_select].book1.sync
                 chunk = self.model.syncs[self.model.current_select].chunks1
@@ -41,23 +41,24 @@ class Action:
                     self.model.opt[POSITIONS][self.model.current_select][POSI] = sync[i][TIME_START]
                     self.model.set_sound_pos(sync[i][TIME_START])
                     if instance == self.controller.table_label_left:
+                        self.model.opt[POSITIONS][self.model.current_select][AUDIO] = EN
                         self.model.sound = SoundLoader.load(
                             self.model.current_select + self.model.conf.ENG_MP3). \
                             load_seek(self.model.get_sound_pos())
-                        self.model.opt[POSITIONS][self.model.current_select][AUDIO] = EN
                     else:
+                        self.model.opt[POSITIONS][self.model.current_select][AUDIO] = RU
                         self.model.sound = SoundLoader.load(
                             self.model.current_select + self.model.conf.RUS_MP3). \
                             load_seek(self.model.get_sound_pos())
-                        self.model.opt[POSITIONS][self.model.current_select][AUDIO] = RU
                     self.model.conf.save_options()
                     self.model.log.debug(f"Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
                     self.model.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
-                    return
+                    return True
         else:
             self.model.touch_pos = 0
             self.controller.container.switch_to(self.controller.catalog)
             self.controller.catalog.on_resize(timeout_catalog=0)
+        return True
 
     def double_tap(self, _=None, __=None, ___=None):
         self.model.log.debug("Fired function double_tap() for TextInput widget")

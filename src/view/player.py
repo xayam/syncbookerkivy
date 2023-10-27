@@ -88,6 +88,7 @@ class Player:
         if self.model.sound is not None:
             self.model.set_sound_pos(0.0)
             self.model.sound.stop()
+            self.model.sound.has_stop = True
             self.model.log.debug(f"self.model.sound.state={self.model.sound.state}")
             self.model.chunk_current = 0
             self.model.opt[POSITIONS][self.model.current_select][POSI] = "0.0"

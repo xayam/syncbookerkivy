@@ -12,6 +12,7 @@ class MySound(SoundFFPy):
         super(MySound, self).__init__(**kwargs)
         self.model = None
         self.ffplayer = None
+        self.has_stop = False
 
     def _get_length(self):
         return audio(self.source).info.length

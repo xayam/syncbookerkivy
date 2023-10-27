@@ -46,7 +46,7 @@ class Table(TabbedPanelItem):
                                                      bar_width=15)
         self.controller.table_label_left = MyTextInput(model=self.model,
                                                        text="Select a book in the 'Catalog' section")
-        self.controller.table_label_left.bind(on_touch_up=self.controller.action.touch_up_click)
+        self.controller.table_label_left.bind(on_touch_down=self.controller.action.touch_down_click)
         self.controller.table_label_left.bind(on_double_tap=self.controller.action.double_tap)
         self.controller.table_label_left.height = \
             max([self.controller.table_label_left.minimum_height,
@@ -58,7 +58,7 @@ class Table(TabbedPanelItem):
                                                       bar_width=15)
         self.controller.table_label_right = MyTextInput(model=self.model,
                                                         text="Выберите книгу в разделе 'Catalog'")
-        self.controller.table_label_right.bind(on_touch_up=self.controller.action.touch_up_click)
+        self.controller.table_label_right.bind(on_touch_down=self.controller.action.touch_down_click)
         self.controller.table_label_right.bind(on_double_tap=self.controller.action.double_tap)
         self.controller.table_label_right.height = \
             max([self.controller.table_label_right.minimum_height,

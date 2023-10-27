@@ -25,8 +25,8 @@ class MySound(SoundFFPy):
             # 'infbuf': True,
             # 'genpts': True,
             # 'fast': True,
-            # 'ar': 48000, # audio rate
-            # 'ac': 2, # count audio channels
+            'ar': 16000,  # audio rate
+            'ac': 1,  # count audio channels
         }
         if DEBUG:
             print(f"[MYDEBUG] Seek position ff_opts['ss'] is {position}")

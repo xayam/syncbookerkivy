@@ -43,7 +43,7 @@ class MySound(SoundFFPy):
         self.ffplayer.seek(pts=position,
                            seek_by_bytes=False,
                            relative=False,
-                           accurate=False)
+                           accurate=True)
         if DEBUG:
             print(f"[MYDEBUG] Exit from function 'load_seek()'")
         return self

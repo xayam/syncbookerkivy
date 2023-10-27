@@ -10,6 +10,7 @@ class Book:
         self.path = path
         self.language = language
 
+        self.length = None
         self.annot = None
         self.txt = None
         self.sync = None

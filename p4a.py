@@ -21,7 +21,7 @@ command = \
     "--version=$APP_VERSION " + \
     "--arch=$TARGET_PLATFORM " + \
     "--bootstrap=sdl2 " + \
-    "--requirements=android,python3,kivy,cython,ffmpeg,libx264,libshine,libvpx," + \
+    "--requirements=android,python3,kivy,mutagen,cython,ffmpeg,libx264,libshine,libvpx," + \
     "av_codecs,ffpyplayer,openssl,ffpyplayer_codecs,setuptools,regex," + \
     "sdl2_image,sdl2_ttf,sdl2_mixer,sdl2"
 

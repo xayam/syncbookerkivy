@@ -1,17 +1,20 @@
 from kivy.core.audio import SoundLoader
 from kivy.core.audio.audio_ffpyplayer import SoundFFPy
-import ffpyplayer
 from ffpyplayer.player import MediaPlayer
-from ffpyplayer.tools import set_log_callback, get_log_callback, formats_in
+from mutagen.mp3 import MP3 as audio
 
-from src.model.utils import DEBUG
+from src.model.utils import *
 
 
 class MySound(SoundFFPy):
 
     def __init__(self, **kwargs):
         super(MySound, self).__init__(**kwargs)
+        self.model = None
         self.ffplayer = None
+
+    def _get_length(self):
+        return audio(self.source).info.length
 
     def load_seek(self, position):
         self._state = ''
@@ -29,6 +32,7 @@ class MySound(SoundFFPy):
             'ac': 1,  # count audio channels
         }
         if DEBUG:
+            print(f"[MYDEBUG] Length mp3 is {self.length}")
             print(f"[MYDEBUG] Seek position ff_opts['ss'] is {position}")
             print(f"[MYDEBUG] Set self._ffplayer = MediaPlayer({self.source})")
         self._ffplayer = MediaPlayer(self.source,
@@ -43,7 +47,7 @@ class MySound(SoundFFPy):
         self.ffplayer.seek(pts=position,
                            seek_by_bytes=False,
                            relative=False,
-                           accurate=True)
+                           accurate=False)
         if DEBUG:
             print(f"[MYDEBUG] Exit from function 'load_seek()'")
         return self

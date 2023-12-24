@@ -29,10 +29,11 @@ class MySound(SoundFFPy):
             # 'infbuf': True,
             # 'genpts': True,
             # 'fast': True,
-            'af': "atempo=" + atempo,  # audio speed tempo
             'ar': 16000,  # audio rate
             'ac': 1,  # count audio channels
         }
+        if not ANDROID:
+            ff_opts['af'] = "atempo=" + atempo  # audio speed tempo
         if DEBUG:
             print(f"[MYDEBUG] Length mp3 is {self.length}")
             print(f"[MYDEBUG] Seek position ff_opts['ss'] is {position}")

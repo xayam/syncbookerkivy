@@ -17,57 +17,58 @@ class Options(TabbedPanelItem):
         TabbedPanelItem.__init__(self,
                                  background_normal=self.model.conf.ICON_OPTIONS,
                                  background_down=self.model.conf.ICON_OPTIONS_PRESSED)
+        height1 = self.controller.table_navigator.children[0].height // 2
+        height2 = str(height1 - 10) + "px"
+        width1 = str(2 * height1) + "px"
+        height1 = str(height1) + "px"
         self.options_fontsize_layout = BoxLayout(
             size_hint=(1, None),
-            height=88,
+            height=height1,
             pos_hint={"top": 0.60, "x": 0},
-            padding=(10, 20))
+            # padding=(10, 20)
+        )
         self.options_fontsize_label = Label(text="FontSize scale",
-                                            font_size="28px")
+                                            font_size=height2)
         self.controller.options_fontsize_scale = \
             Label(text=self.model.opt[FONTSIZESCALE],
-                  font_size="32px")
-        # ,
-        # font_size = "32px",
-        # input_filter = 'float',
-        # multiline = False,
-        # write_tab = False,
-        # readonly = True,
-        # focus = False
-        # self.controller.options_fontsize_scale.is_focusable = False
+                  size_hint=(None, 1),
+                  width=width1,
+                  font_size=height2)
         self.options_fontsize_down = Button(
             size_hint=(None, 1),
-            width="48px",
+            width=height1,
             background_normal=self.model.conf.ICON_DOWN,
             background_down=self.model.conf.ICON_DOWN_PRESSED,
             on_release=self.options_fontsize_down_click)
         self.options_fontsize_up = Button(
             size_hint=(None, 1),
-            width="48px",
+            width=height1,
             background_normal=self.model.conf.ICON_UP,
             background_down=self.model.conf.ICON_UP_PRESSED,
             on_release=self.options_fontsize_up_click)
 
         self.options_speed_layout = BoxLayout(
             size_hint=(1, None),
-            height=88,
+            height=height1,
             pos_hint={"top": 0.40, "x": 0},
-            padding=(10, 20)
+            # padding=(10, 20)
         )
         self.options_speed_tempo = Label(text="Speed tempo",
-                                         font_size="28px")
+                                         font_size=height2)
         self.controller.options_speed_tempo = \
             Label(text=self.model.opt[SPEED],
-                  font_size="32px")
+                  size_hint=(None, 1),
+                  width=width1,
+                  font_size=height2)
         self.options_speed_down = Button(
             size_hint=(None, 1),
-            width="48px",
+            width=height1,
             background_normal=self.model.conf.ICON_DOWN,
             background_down=self.model.conf.ICON_DOWN_PRESSED,
             on_release=self.options_speed_down_click)
         self.options_speed_up = Button(
             size_hint=(None, 1),
-            width="48px",
+            width=height1,
             background_normal=self.model.conf.ICON_UP,
             background_down=self.model.conf.ICON_UP_PRESSED,
             on_release=self.options_speed_up_click)
@@ -104,14 +105,18 @@ class Options(TabbedPanelItem):
         self.controller.table_label_right.resize()
 
     def options_speed_down_click(self, _=None):
+        if ANDROID:
+            return
         self.controller.player.pause_button_click()
         value = float(self.controller.options_speed_tempo.text)
-        value = 0.1 if value <= 0.1 else value - 0.1
+        value = 0.5 if value <= 0.5 else value - 0.1
         self.controller.options_speed_tempo.text = "%.1f" % value
         self.model.opt[SPEED] = self.controller.options_speed_tempo.text
         self.model.conf.save_options()
 
     def options_speed_up_click(self, _=None):
+        if ANDROID:
+            return
         self.controller.player.pause_button_click()
         value = float(self.controller.options_speed_tempo.text)
         value = 9.9 if value >= 9.9 else value + 0.1

@@ -104,6 +104,7 @@ class Options(TabbedPanelItem):
         self.controller.table_label_right.resize()
 
     def options_speed_down_click(self, _=None):
+        self.controller.player.pause_button_click()
         value = float(self.controller.options_speed_tempo.text)
         value = 0.1 if value <= 0.1 else value - 0.1
         self.controller.options_speed_tempo.text = "%.1f" % value
@@ -111,6 +112,7 @@ class Options(TabbedPanelItem):
         self.model.conf.save_options()
 
     def options_speed_up_click(self, _=None):
+        self.controller.player.pause_button_click()
         value = float(self.controller.options_speed_tempo.text)
         value = 9.9 if value >= 9.9 else value + 0.1
         self.controller.options_speed_tempo.text = "%.1f" % value

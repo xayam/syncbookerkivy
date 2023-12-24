@@ -59,5 +59,7 @@ class MyTextInput(TextInput):
         self.model.sound = SoundLoader.load(load).load_seek(
             position=self.model.get_sound_pos(),
             atempo=self.model.opt[SPEED])
+        self.model.pts_action = 0
+        self.model.count_action = 0
         self.model.log.debug("Create Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)")
         self.model.clock_action = Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)

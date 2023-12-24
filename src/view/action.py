@@ -54,6 +54,8 @@ class Action:
                             load_seek(position=self.model.get_sound_pos(),
                                       atempo=self.model.opt[SPEED])
                     self.model.conf.save_options()
+                    self.model.pts_action = 0
+                    self.model.count_action = 0
                     self.model.log.debug(f"Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
                     self.model.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
                     return True
@@ -84,7 +86,14 @@ class Action:
             chunk_other = self.model.syncs[self.model.current_select].chunks1
             chunk = self.model.syncs[self.model.current_select].chunks2
             sync = self.model.syncs[self.model.current_select].rus2eng
-        pos = self.model.sound.ffplayer.get_pts()
+        if self.model.count_action == 0:
+            pos = self.model.sound.ffplayer.get_pts()
+            self.model.pts_action = pos
+        else:
+            pos = self.model.pts_action + \
+                  (self.model.sound.ffplayer.get_pts() - self.model.pts_action) * \
+                  float(self.model.opt[SPEED])
+        self.model.count_action += 1
         self.model.log.debug(f"Getting self.model.sound.ffplayer.get_pts()={pos}")
         if self.model.sound.ffplayer.get_pts() + 1.0 >= \
                 self.model.sound.ffplayer.get_metadata()['duration']:

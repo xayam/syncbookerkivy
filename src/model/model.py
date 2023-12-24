@@ -12,6 +12,8 @@ class Model:
 
         self.opt = None
         self.clock_action = None
+        self.count_action = 0
+        self.pts_action = 0
         self.sound_state = 0
         self.touch_pos = 0
         self.nonstop = False

@@ -1,10 +1,9 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.tabbedpanel import TabbedPanelItem
-from kivy.uix.textinput import TextInput
+from kivy.core.window import Window
 
 from src.model.utils import *
 
@@ -17,7 +16,8 @@ class Options(TabbedPanelItem):
         TabbedPanelItem.__init__(self,
                                  background_normal=self.model.conf.ICON_OPTIONS,
                                  background_down=self.model.conf.ICON_OPTIONS_PRESSED)
-        height1 = self.controller.table_navigator.children[0].height // 2
+        # height1 = self.controller.table_navigator.children[0].height
+        height1 = Window.width // 15
         height2 = str(height1 - 10) + "px"
         width1 = str(2 * height1) + "px"
         height1 = str(height1) + "px"
@@ -87,6 +87,7 @@ class Options(TabbedPanelItem):
         self.add_widget(self.item_options_layout)
 
     def options_fontsize_down_click(self, _=None):
+        self.controller.player.pause_button_click()
         value = float(self.controller.options_fontsize_scale.text)
         value = 0.1 if value <= 0.1 else value - 0.1
         self.controller.options_fontsize_scale.text = "%.1f" % value
@@ -96,6 +97,7 @@ class Options(TabbedPanelItem):
         self.controller.table_label_right.resize()
 
     def options_fontsize_up_click(self, _=None):
+        self.controller.player.pause_button_click()
         value = float(self.controller.options_fontsize_scale.text)
         value = 9.9 if value >= 9.9 else value + 0.1
         self.controller.options_fontsize_scale.text = "%.1f" % value

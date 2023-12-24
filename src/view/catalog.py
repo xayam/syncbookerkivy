@@ -134,6 +134,23 @@ class Catalog(TabbedPanelItem):
         self.controller.table_label_left.resize()
         self.controller.table_label_right.resize()
 
+        height1 = Window.width // 15
+        height2 = str(height1 - 10) + "px"
+        width1 = str(2 * height1) + "px"
+        height1 = str(height1) + "px"
+        self.controller.options.options_fontsize_layout.height = height1
+        self.controller.options.options_fontsize_label.font_size = height2
+        self.controller.options_fontsize_scale.width = width1
+        self.controller.options_fontsize_scale.font_size = height2
+        self.controller.options.options_fontsize_down.width = height1
+        self.controller.options.options_fontsize_up.width = height1
+        self.controller.options.options_speed_layout.height = height1
+        self.controller.options.options_speed_tempo.font_size = height2
+        self.controller.options_speed_tempo.width = width1
+        self.controller.options_speed_tempo.font_size = height2
+        self.controller.options.options_speed_down.width = height1
+        self.controller.options.options_speed_up.width = height1
+
     def catalog_button_click(self, value=None):
         self.model.log.debug("Enter to function 'catalog_button_click()'")
         if self.model.clock_action is not None:

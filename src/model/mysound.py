@@ -1,7 +1,7 @@
 from kivy.core.audio import SoundLoader
 from kivy.core.audio.audio_ffpyplayer import SoundFFPy
 from ffpyplayer.player import MediaPlayer
-from mutagen.mp3 import MP3 as audio
+import mutagen.mp3
 
 from src.model.utils import *
 
@@ -15,9 +15,9 @@ class MySound(SoundFFPy):
         self.has_stop = False
 
     def _get_length(self):
-        return audio(self.source).info.length
+        return mutagen.mp3.MP3(self.source).info.length
 
-    def load_seek(self, position):
+    def load_seek(self, position, atempo):
         self._state = ''
         self.state = 'stop'
         self.quitted = False
@@ -29,6 +29,7 @@ class MySound(SoundFFPy):
             # 'infbuf': True,
             # 'genpts': True,
             # 'fast': True,
+            'af': "atempo=" + atempo,  # audio speed tempo
             'ar': 16000,  # audio rate
             'ac': 1,  # count audio channels
         }

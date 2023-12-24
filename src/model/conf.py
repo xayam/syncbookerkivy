@@ -94,6 +94,10 @@ class Conf:
     ICON_STOP_PRESSED = "res/img/stop_pressed.png"
     ICON_NEXT = "res/img/next.png"
     ICON_NEXT_PRESSED = "res/img/next_pressed.png"
+    ICON_DOWN = "res/img/down.png"
+    ICON_DOWN_PRESSED = "res/img/down_pressed.png"
+    ICON_UP = "res/img/up.png"
+    ICON_UP_PRESSED = "res/img/up_pressed.png"
 
     def __init__(self, model):
         self.model = model

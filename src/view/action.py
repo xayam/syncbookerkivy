@@ -38,18 +38,21 @@ class Action:
                 if sync[i][POS_START] > pos:
                     self.model.log.debug("Stop and reload self.model.sound")
                     self.model.sound.stop()
-                    self.model.opt[POSITIONS][self.model.current_select][POSI] = sync[i][TIME_START]
+                    self.model.opt[POSITIONS][self.model.current_select][POSI] = \
+                        sync[i][TIME_START]
                     self.model.set_sound_pos(sync[i][TIME_START])
                     if instance == self.controller.table_label_left:
                         self.model.opt[POSITIONS][self.model.current_select][AUDIO] = EN
                         self.model.sound = SoundLoader.load(
                             self.model.current_select + self.model.conf.ENG_MP3). \
-                            load_seek(self.model.get_sound_pos())
+                            load_seek(position=self.model.get_sound_pos(),
+                                      atempo=self.model.opt[SPEED])
                     else:
                         self.model.opt[POSITIONS][self.model.current_select][AUDIO] = RU
                         self.model.sound = SoundLoader.load(
                             self.model.current_select + self.model.conf.RUS_MP3). \
-                            load_seek(self.model.get_sound_pos())
+                            load_seek(position=self.model.get_sound_pos(),
+                                      atempo=self.model.opt[SPEED])
                     self.model.conf.save_options()
                     self.model.log.debug(f"Create Clock.schedule_interval(self.clock_action_time, timeout=0.5)")
                     self.model.clock_action = Clock.schedule_interval(self.clock_action_time, 0.5)
@@ -149,7 +152,8 @@ class Action:
             self.model.log.debug(type(e).__name__ + ": " + e.__str__())
             return
 
-        self.model.opt[POSITIONS][self.model.current_select][POSI] = str(pos)
+        self.model.opt[POSITIONS][self.model.current_select][POSI] = \
+            str(pos)
         self.model.opt[POSITIONS][self.model.current_select][CHUNK] = self.model.chunk_current
         self.model.set_sound_pos(pos)
         self.model.conf.save_options()

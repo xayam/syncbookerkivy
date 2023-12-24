@@ -42,7 +42,7 @@ class MyTextInput(TextInput):
         height = Window.height - self.controller.container.tab_height - 6
         self.height = max([self.height, height])
         height = self.controller.table_navigator.children[0].height
-        self.font_size = str(height // 3) + "px"
+        self.font_size = str(int(float(self.model.opt[FONTSIZESCALE]) * height / 3)) + "px"
 
     def _on_text(self, mp3):
         self.model.log.debug("Enter to function 'MyTextInput._on_text()'")
@@ -56,6 +56,8 @@ class MyTextInput(TextInput):
                 self.model.clock_action.cancel()
         load = self.model.current_select + mp3
         self.model.log.debug("MySound().load_seek")
-        self.model.sound = SoundLoader.load(load).load_seek(self.model.get_sound_pos())
+        self.model.sound = SoundLoader.load(load).load_seek(
+            position=self.model.get_sound_pos(),
+            atempo=self.model.opt[SPEED])
         self.model.log.debug("Create Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)")
         self.model.clock_action = Clock.schedule_interval(self.controller.action.clock_action_time, 0.5)

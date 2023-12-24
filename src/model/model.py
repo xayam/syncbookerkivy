@@ -42,7 +42,8 @@ class Model:
             BG: (1, 1, 1, 1),
             SEL: (1, 1, 0, 0.4),
             FONT: "Arial",
-            FONTSIZE: 20,
+            FONTSIZESCALE: "1.0",
+            SPEED: "1.0",
             POSITIONS: {
                 path: {
                     POSI: "0.0", AUDIO: EN, CHUNK: 0

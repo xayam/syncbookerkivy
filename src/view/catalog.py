@@ -96,6 +96,11 @@ class Catalog(TabbedPanelItem):
             Color(0, 0, 0, 1)
             Rectangle(size=(Window.width, Window.height - self.controller.container.tab_height - 6),
                       pos=(0, 0))
+        self.controller.options.options_fontsize_layout.canvas.before.clear()
+        with self.controller.options.options_fontsize_layout.canvas.before:
+            Color(0, 0, 0, 1)
+            Rectangle(size=(Window.width, Window.height - self.controller.container.tab_height - 6),
+                      pos=(0, 0))
 
     def resize_catalog(self, _=None):
         self.model.log.debug("Enter to function 'resize_catalog()'")
